@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<persistence-unit name="PersistenceUnit"
+		transaction-type="RESOURCE_LOCAL">
+		<!-- provider -->
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<!-- Déclaration des entités -->
+		<class>fr.iut.csid.empower.elearning.core.domain.student.Student</class>
+		<class>fr.iut.csid.empower.elearning.core.domain.room.Room</class>
+		<class>fr.iut.csid.empower.elearning.core.domain.planning.PlanningEvent</class>
+		<class>fr.iut.csid.empower.elearning.core.domain.course.Course</class>
+		<!-- Ne fonctionne pas en config actuelle, à confirmer -->
+ 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+	
+	</persistence-unit>
+</persistence>
