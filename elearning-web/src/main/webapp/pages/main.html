@@ -26,16 +26,30 @@
 			</div>
 		</div>
 	</div>
+
+
 	<div class="container top-20">
+
 		<div class="jumbotron">
+			<div class="alert alert-danger alert-dismissable"
+				th:if="${(param.error != null) and (param.error[0] == 'true')}">
+				<button class="close" aria-hidden="true" data-dismiss="alert"
+					type="button">×</button>
+				<strong>Erreur d'authentification : </strong> login et/ou mot de
+				passe inconnu(s).
+			</div>
+			<div class="alert alert-success alert-dismissable"
+				th:if="${(param.logout != null) and (param.logout[0] == 'successful')}">
+				<button class="close" aria-hidden="true" data-dismiss="alert"
+					type="button">×</button>
+				<strong>Vous avez été déconnecté du service.</strong></div>
 			<h1>Plateforme E-learning</h1>
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
 				enim enim, commodo eget euismod vestibulum, pellentesque porta
-				lacus. Vivamus quis metus magna.  </p>
-			<p>Suspendisse vestibulum, enim ut
-				pharetra hendrerit, sapien nulla aliquam nisl, ut feugiat risus
-				felis non mi.</p>
-		
+				lacus. Vivamus quis metus magna.</p>
+			<p>Suspendisse vestibulum, enim ut pharetra hendrerit, sapien
+				nulla aliquam nisl, ut feugiat risus felis non mi.</p>
+
 			<p>AND BLABLABLA !</p>
 			<p>
 				<a class="btn btn-primary btn-lg" role="button">S'inscire</a>

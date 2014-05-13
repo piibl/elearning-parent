@@ -28,7 +28,7 @@
         />
         <remember-me user-service-ref="userDetailsService"/>
         <logout logout-url="/logout"
-                logout-success-url="/main"/>
+                logout-success-url="/main?logout=successful"/>
     </http>
 
     <authentication-manager>
