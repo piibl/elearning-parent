@@ -57,7 +57,7 @@
 
 	<!-- Context annotation config -->
 	<context:annotation-config />
-	<context:component-scan base-package="fr.iut.csid.empower.elearning.core**" />
+	<context:component-scan base-package="fr.iut.csid.empower.elearning.**" />
 
 	<!-- Transaction annotation config -->
 	<tx:annotation-driven transaction-manager="transactionManager" />

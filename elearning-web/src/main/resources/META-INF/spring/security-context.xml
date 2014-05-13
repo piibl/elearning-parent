@@ -11,22 +11,24 @@
            http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 
-    <http pattern="/login" security="none"/>
+    <http pattern="/main" security="none"/>
     <http pattern="/assets/**" security="none"/>
 		
     <http auto-config="true" use-expressions="true">
-        <intercept-url pattern="/**" access="isAuthenticated()" />
+    	<intercept-url pattern="/admin*"
+        access="hasRole('ROLE_ADMIN')"/>
+      
         
         <form-login
                 login-processing-url="/authentication"
-                login-page="/login"
-                authentication-failure-url="/login?error=true"
-                default-target-url="/example1"
+                login-page="/main"
+                authentication-failure-url="/main?error=true"
+                default-target-url="/admin"
                 always-use-default-target="false"
         />
         <remember-me user-service-ref="userDetailsService"/>
         <logout logout-url="/logout"
-                logout-success-url="/login"/>
+                logout-success-url="/main"/>
     </http>
 
     <authentication-manager>
@@ -35,7 +37,7 @@
 	
 
     <user-service id="userDetailsService">
-        <user name="admin" password="admin" authorities="ROLE_USER"/>
+        <user name="admin" password="admin" authorities="ROLE_ADMIN"/>
     </user-service>
 
 </beans:beans>

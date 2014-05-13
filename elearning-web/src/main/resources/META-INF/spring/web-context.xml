@@ -47,7 +47,7 @@
 	</bean>
 
 
-	<bean id="homeController" class="fr.iut.csid.empower.elearning.web.mvc.HomeController" />
+<!-- 	<bean id="homeController" class="fr.iut.csid.empower.elearning.web.mvc.HomeController" /> -->
 
 
 	<bean id="contentNegotiatingResolver"
@@ -83,6 +83,6 @@
 
 	<bean id="dateFormatter" class="fr.iut.csid.empower.elearning.web.util.DateFormatter" />
 
-
+	
 
 </beans>

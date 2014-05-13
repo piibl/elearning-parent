@@ -3,7 +3,7 @@
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
 	<link rel="stylesheet" href="../assets/css/bootstrap.css" th:href="@{/assets/css/bootstrap.css}" />
-	<link rel="stylesheet" href="../assets/css/thymeleaf-demo.css" th:href="@{/assets/css/thymeleaf-demo.css}" />
+	<link rel="stylesheet" href="../assets/css/elearning-theme.css" th:href="@{/assets/css/elearning-theme.css}" />
 </head>
 <body>
 	<div id="main-div" class="container-fluid">
@@ -13,7 +13,7 @@
 				 An unexpected error occurs, please contact the support team
 			</div>
 			<form class="form-search" action="#" 
-				th:action="@{/search}" 
+				th:action="@{search}" 
 				th:object="${search}" method="post">
 				<fieldset>
 					<table class="centerAlign">

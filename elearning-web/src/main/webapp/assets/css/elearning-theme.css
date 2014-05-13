@@ -1,39 +1,50 @@
-.center
-{
+body {
+	padding-bottom: 20px;
+	padding-top: 50px;
+}
+
+.top-20 {
+	margin-top: 20px;
+}
+
+.center {
 	text-align: center !important;
 }
 
-.middle
-{
+.middle {
 	vertical-align: middle !important;
 }
 
-.inputLabel
-{
+.inputLabel {
 	width: 100px;
 	text-align: right;
 	padding-right: 20px;
 	font-weight: bold !important;
 }
 
-.right
-{
+.right {
 	text-align: right !important;
 }
 
-.left
-{
+.left {
 	text-align: left !important;
 }
 
-.margined{
+.margined {
 	margin-bottom: 40px;
 	margin-top: 20px;
 }
 
-#footerText
-{
+/* footer {
+	background-color: #F5F5F5;
+	bottom: 0;
+	height: 60px;
+	position: absolute;
+	width: 100%;
+} */
+
+#footerText {
 	text-align: center;
-	position: fixed;  
+	position: fixed;
 	bottom: 0;
 }
