@@ -2,9 +2,10 @@ package fr.iut.csid.empower.elearning.core.service.dao.planning;
 
 import java.util.Date;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import fr.iut.csid.empower.elearning.core.domain.planning.PlanningEvent;
 import fr.iut.csid.empower.elearning.core.domain.room.Room;
-import fr.iut.csid.empower.elearning.core.service.dao.GenericDAO;
 
 /**
  * PlanningEvent Event DAO
@@ -12,7 +13,7 @@ import fr.iut.csid.empower.elearning.core.service.dao.GenericDAO;
  * @author Pierre_pers
  * 
  */
-public interface PlanningEventDAO extends GenericDAO<PlanningEvent> {
+public interface PlanningEventDAO extends JpaRepository<PlanningEvent, Long> {
 
 	/**
 	 * Retourne l'évènement se déroulant aux horaires et dans la salle indiqués
@@ -23,7 +24,7 @@ public interface PlanningEventDAO extends GenericDAO<PlanningEvent> {
 	 * @param targetHalfDay
 	 * @return
 	 */
-	public PlanningEvent findByRoomDateAndHalfDay(Room room, Date date,
-			String targetHalfDay);
+	public PlanningEvent findByRoomAndDateAndTargetHalfDay(Room room,
+			Date date, String targetHalfDay);
 
 }

@@ -11,9 +11,10 @@ import org.slf4j.LoggerFactory;
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.core.domain.planning.PlanningEvent;
 import fr.iut.csid.empower.elearning.core.domain.room.Room;
-import fr.iut.csid.empower.elearning.core.domain.student.Student;
+import fr.iut.csid.empower.elearning.core.domain.user.Student;
 import fr.iut.csid.empower.elearning.core.job.reader.Reader;
 import fr.iut.csid.empower.elearning.core.service.dao.course.CourseDAO;
+import fr.iut.csid.empower.elearning.core.service.dao.planning.PlanningEventDAO;
 import fr.iut.csid.empower.elearning.core.service.dao.room.RoomDAO;
 import fr.iut.csid.empower.elearning.core.service.dao.student.StudentDAO;
 
@@ -34,6 +35,8 @@ public class DataReader implements Reader {
 	private CourseDAO courseDAO;
 	@Inject
 	private RoomDAO roomDAO;
+	@Inject
+	private PlanningEventDAO planningDAO;
 
 	/**
 	 * Job factice d'accées aux données (consultation)...
@@ -58,7 +61,7 @@ public class DataReader implements Reader {
 			container.append("[" + student.getFirstName() + " "
 					+ student.getLastName() + "]");
 		}
-		logger.info("[" + studentDAO.countAll() + "] student(s) found : ["
+		logger.info("[" + studentDAO.count() + "] student(s) found : ["
 				+ container.toString() + "]");
 		// Efficience ?
 		container.delete(0, container.length());
@@ -66,14 +69,19 @@ public class DataReader implements Reader {
 		for (Course course : courseDAO.findAll()) {
 			container.append("[" + course.getLabel() + "]");
 		}
-		logger.info("[" + courseDAO.countAll() + "] course(s) found : ["
+		logger.info("[" + courseDAO.count() + "] course(s) found : ["
 				+ container.toString() + "]");
 		container.delete(0, container.length());
 
 		for (Room room : roomDAO.findAll()) {
 			container.append("[" + room.getLabel() + "]");
 		}
-		logger.info("[" + roomDAO.countAll() + "] classroom(s) found : ["
+		logger.info("[" + roomDAO.count() + "] classroom(s) found : ["
+				+ container.toString() + "]");
+		for (PlanningEvent event : planningDAO.findAll()) {
+			container.append("[" + event.getCourse() + "]");
+		}
+		logger.info("[" + planningDAO.count() + "] planning event(s) found : ["
 				+ container.toString() + "]");
 	}
 
@@ -87,7 +95,7 @@ public class DataReader implements Reader {
 		// TODO paramétrable
 		Long maxSubscription = 3L;
 		List<Course> courses = courseDAO
-				.findBySubscriptionNumber(maxSubscription);
+				.findByStudentsLessThan(maxSubscription);
 		for (Course course : courses) {
 			container.append("[" + course.getLabel() + "]");
 		}
@@ -98,7 +106,7 @@ public class DataReader implements Reader {
 
 		// Toutes les salles libres
 		// TODO paramétrable
-		List<Room> rooms = roomDAO.findFreeRooms();
+		List<Room> rooms = roomDAO.findByPlanningsIsNull();
 		for (Room room : rooms) {
 			container.append("[" + room.getLabel() + "]");
 		}

@@ -1,4 +1,4 @@
-package fr.iut.csid.empower.elearning.core.domain.student;
+package fr.iut.csid.empower.elearning.core.domain.user;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -26,9 +24,7 @@ import fr.iut.csid.empower.elearning.core.domain.course.Course;
  */
 @Entity
 @Table(name = "STUDENT")
-@NamedQueries(value = { @NamedQuery(name = "fr.iut.csid.empower.elearning.core.domain.student.Student.findAll", query = "SELECT s FROM Student s"),
-		@NamedQuery(name = "fr.iut.csid.empower.elearning.core.domain.student.Student.countAll", query = "SELECT count(s) FROM Student s") })
-public class Student {
+public class Student extends EndUser {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "StudentSeq")
 	@SequenceGenerator(name = "StudentSeq", sequenceName = "STUDENT_SEQ", allocationSize = 1, initialValue = 1)

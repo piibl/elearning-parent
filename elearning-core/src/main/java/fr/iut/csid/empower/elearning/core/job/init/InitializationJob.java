@@ -10,7 +10,7 @@ import javax.inject.Named;
 
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.core.domain.room.Room;
-import fr.iut.csid.empower.elearning.core.domain.student.Student;
+import fr.iut.csid.empower.elearning.core.domain.user.Student;
 import fr.iut.csid.empower.elearning.core.job.Job;
 import fr.iut.csid.empower.elearning.core.service.PlanningService;
 import fr.iut.csid.empower.elearning.core.service.RegistrationService;
@@ -21,7 +21,8 @@ import fr.iut.csid.empower.elearning.core.service.dao.student.StudentDAO;
 @Named
 public class InitializationJob implements Job {
 
-	// private static Logger logger = LoggerFactory.getLogger(InitRoutine.class);
+	// private static Logger logger =
+	// LoggerFactory.getLogger(InitRoutine.class);
 
 	@Inject
 	private StudentDAO studentDAO;
@@ -70,7 +71,7 @@ public class InitializationJob implements Job {
 				registrationService.register(student, courses.get(0),
 						courses.get(1), courses.get(2));
 			}
-			studentDAO.immediateCreate(student);
+			studentDAO.save(student);
 		}
 	}
 
@@ -80,7 +81,7 @@ public class InitializationJob implements Job {
 	private void createCourses() {
 		String[] coursesLabel = { "English", "Maths", "Computer Science" };
 		for (int i = 0; i < coursesLabel.length; i++) {
-			courseDAO.immediateCreate(new Course(coursesLabel[i]));
+			courseDAO.save(new Course(coursesLabel[i]));
 		}
 	}
 
@@ -90,7 +91,7 @@ public class InitializationJob implements Job {
 	private void createRooms() {
 		String[] roomsLabel = { "Room 1", "Room 2", "Room 3" };
 		for (int i = 0; i < roomsLabel.length; i++) {
-			roomDAO.immediateCreate(new Room(roomsLabel[i]));
+			roomDAO.save(new Room(roomsLabel[i]));
 		}
 	}
 

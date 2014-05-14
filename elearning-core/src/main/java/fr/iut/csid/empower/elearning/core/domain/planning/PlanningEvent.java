@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -26,10 +24,6 @@ import fr.iut.csid.empower.elearning.core.domain.room.Room;
  */
 @Entity
 @Table(name = "PLANNING_EVENT")
-@NamedQueries(value = {
-		@NamedQuery(name = "fr.iut.csid.empower.elearning.core.domain.planning.PlanningEvent.findAll", query = "SELECT p FROM PlanningEvent p"),
-		@NamedQuery(name = "fr.iut.csid.empower.elearning.core.domain.planning.PlanningEvent.countAll", query = "SELECT count(p) FROM PlanningEvent p"),
-		@NamedQuery(name = "fr.iut.csid.empower.elearning.core.domain.planning.PlanningEvent.findByRoomDateAndHalfDay", query = "SELECT p FROM PlanningEvent p WHERE p.room = :room AND p.date = :date AND p.targetHalfDay = :halfDay ") })
 public class PlanningEvent {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PlanningEventSeq")
@@ -73,7 +67,8 @@ public class PlanningEvent {
 	 * @param date
 	 * @param targetHalfDay
 	 */
-	public PlanningEvent(Course course, Room room, Date date, String targetHalfDay) {
+	public PlanningEvent(Course course, Room room, Date date,
+			String targetHalfDay) {
 		super();
 		this.course = course;
 		this.room = room;

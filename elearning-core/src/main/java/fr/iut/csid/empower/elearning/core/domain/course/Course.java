@@ -9,17 +9,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import fr.iut.csid.empower.elearning.core.domain.planning.PlanningEvent;
-import fr.iut.csid.empower.elearning.core.domain.student.Student;
+import fr.iut.csid.empower.elearning.core.domain.user.Student;
 
 /**
  * Cours
@@ -28,13 +24,6 @@ import fr.iut.csid.empower.elearning.core.domain.student.Student;
  */
 @Entity
 @Table(name = "COURSE")
-@NamedQueries(value = {
-		@NamedQuery(name = "fr.iut.csid.empower.elearning.core.domain.course.Course.findAll", query = "SELECT c FROM Course c"),
-		@NamedQuery(name = "fr.iut.csid.empower.elearning.core.domain.course.Course.countAll", query = "SELECT count(c) FROM Course c"),
-		@NamedQuery(name = "fr.iut.csid.empower.elearning.core.domain.course.Course.findByLabel", query = "SELECT c FROM Course c WHERE c.label = :courseLabel"),
-		// Requete nommée non efficiente et non générique : rendre l'opérateur
-		// de comparaison paramétrable
-		@NamedQuery(name = "fr.iut.csid.empower.elearning.core.domain.course.Course.findBySubscriptionNumber", query = "SELECT c FROM Course c WHERE (SELECT COUNT(s) FROM c.students s) < :numberOfSubscriptions") })
 public class Course {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CourseSeq")
@@ -52,8 +41,7 @@ public class Course {
 	/**
 	 * Etudiants inscrits au cours
 	 */
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "COURSE_REGISTRATION", joinColumns = { @JoinColumn(name = "COURSE_ID") }, inverseJoinColumns = { @JoinColumn(name = "STUDENT_ID") })
+	@ManyToMany(mappedBy = "courses")
 	private Set<Student> students;
 
 	/**

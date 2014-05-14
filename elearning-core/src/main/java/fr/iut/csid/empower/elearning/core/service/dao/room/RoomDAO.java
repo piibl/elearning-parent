@@ -2,8 +2,10 @@ package fr.iut.csid.empower.elearning.core.service.dao.room;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
 import fr.iut.csid.empower.elearning.core.domain.room.Room;
-import fr.iut.csid.empower.elearning.core.service.dao.GenericDAO;
 
 /**
  * Salle DAO
@@ -11,14 +13,15 @@ import fr.iut.csid.empower.elearning.core.service.dao.GenericDAO;
  * @author Pierre_pers
  * 
  */
-public interface RoomDAO extends GenericDAO<Room> {
+public interface RoomDAO extends JpaRepository<Room, Long> {
 
 	/**
 	 * Retourne toutes les salles non rattachées à un ou plusieurs cours
 	 * 
 	 * @return
 	 */
-	public List<Room> findFreeRooms();
+	@Query("SELECT r FROM Room r WHERE (SELECT COUNT(p) FROM r.plannings p) = 0")
+	public List<Room> findByPlanningsIsNull();
 
 	/**
 	 * Retourne la salle correspondant à l'intitulé passé en paramètre

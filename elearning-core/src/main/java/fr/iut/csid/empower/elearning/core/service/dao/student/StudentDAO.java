@@ -1,14 +1,13 @@
 package fr.iut.csid.empower.elearning.core.service.dao.student;
 
-import fr.iut.csid.empower.elearning.core.domain.student.Student;
-import fr.iut.csid.empower.elearning.core.service.dao.GenericDAO;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import fr.iut.csid.empower.elearning.core.domain.user.Student;
 
 /**
  * DAO étudiant
  * 
- * @author Pierre_pers
- * 
  */
-public interface StudentDAO extends GenericDAO<Student> {
+public interface StudentDAO extends JpaRepository<Student, Long> {
 
 }

@@ -2,22 +2,24 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:data="http://www.springframework.org/schema/data/jpa"
 	xsi:schemaLocation=" 
 	http://www.springframework.org/schema/beans 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 	http://www.springframework.org/schema/aop 		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 	http://www.springframework.org/schema/tx 		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 	http://www.springframework.org/schema/context 	http://www.springframework.org/schema/context/spring-context-3.0.xsd
-	">
-	
+	http://www.springframework.org/schema/data/jpa
+    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
 	<!-- Config properties / database -->
 	<bean id="commonPropertyConfigurer"
-			class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="classpath:config.properties" />
 	</bean>
-	
+
 	<!-- Datasource config -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-			destroy-method="close">
+		destroy-method="close">
 		<property name="driverClass" value="${${database.type}.jdbc.driverName}" />
 		<property name="jdbcUrl" value="${jdbc.url}" />
 		<property name="user" value="${jdbc.user}" />
@@ -33,7 +35,8 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="persistenceUnitName" value="PersistenceUnit" />
 		<property name="jpaVendorAdapter">
-			<bean class="fr.iut.csid.empower.elearning.core.util.jpa.CustomJpaVendorAdapter">
+			<bean
+				class="fr.iut.csid.empower.elearning.core.util.jpa.CustomJpaVendorAdapter">
 				<property name="showSql" value="false" />
 				<property name="databasePlatform" value="${${database.type}.database.platform}" />
 				<property name="database_type" value="${database.type}" />
@@ -41,11 +44,13 @@
 				<property name="ddl_generation_mode" value="database" />
 				<property name="ddl_generation" value="drop-and-create-tables" />
 				<property name="logging_level" value="${log.level}" />
-				<property name="logging_logger" value="fr.iut.csid.empower.elearning.core.util.log.Slf4JELSessionLogger" />
+				<property name="logging_logger"
+					value="fr.iut.csid.empower.elearning.core.util.log.Slf4JELSessionLogger" />
 			</bean>
 		</property>
 		<property name="loadTimeWeaver">
-			<bean class="fr.iut.csid.empower.elearning.core.util.jpa.JpaAwareLoadTimeWeaver" />
+			<bean
+				class="fr.iut.csid.empower.elearning.core.util.jpa.JpaAwareLoadTimeWeaver" />
 		</property>
 	</bean>
 
@@ -55,8 +60,7 @@
 		<qualifier value="transactionManager" />
 	</bean>
 
-	<!-- Context annotation config -->
-	<context:annotation-config />
+	<data:repositories base-package="fr.iut.csid.empower.elearning.core.service.dao.**" />
 	<context:component-scan base-package="fr.iut.csid.empower.elearning.**" />
 
 	<!-- Transaction annotation config -->
@@ -66,7 +70,7 @@
 	<bean id="persistanceAnot"
 		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
-	<!-- AOP config (Used by custom annotations)-->
+	<!-- AOP config (Used by custom annotations) -->
 	<aop:aspectj-autoproxy />
 
 </beans>

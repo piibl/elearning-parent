@@ -8,7 +8,7 @@
 		<!-- provider -->
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<!-- Déclaration des entités -->
-		<class>fr.iut.csid.empower.elearning.core.domain.student.Student</class>
+		<class>fr.iut.csid.empower.elearning.core.domain.user.Student</class>
 		<class>fr.iut.csid.empower.elearning.core.domain.room.Room</class>
 		<class>fr.iut.csid.empower.elearning.core.domain.planning.PlanningEvent</class>
 		<class>fr.iut.csid.empower.elearning.core.domain.course.Course</class>
