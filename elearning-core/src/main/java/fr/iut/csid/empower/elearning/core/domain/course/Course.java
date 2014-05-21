@@ -1,21 +1,12 @@
 package fr.iut.csid.empower.elearning.core.domain.course;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import fr.iut.csid.empower.elearning.core.domain.planning.PlanningEvent;
-import fr.iut.csid.empower.elearning.core.domain.user.Student;
 
 /**
  * Cours
@@ -38,18 +29,6 @@ public class Course {
 	@Column(name = "LABEL")
 	private String label;
 
-	/**
-	 * Etudiants inscrits au cours
-	 */
-	@ManyToMany(mappedBy = "courses")
-	private Set<Student> students;
-
-	/**
-	 * Evenements de cours enregistrés
-	 */
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
-	private Set<PlanningEvent> plannings;
-
 	public Course() {
 
 	}
@@ -57,8 +36,6 @@ public class Course {
 	public Course(String label) {
 		super();
 		this.label = label;
-		this.students = new HashSet<Student>();
-		this.plannings = new HashSet<PlanningEvent>();
 	}
 
 	// MUTATEURS
@@ -76,22 +53,6 @@ public class Course {
 
 	public void setLabel(String label) {
 		this.label = label;
-	}
-
-	public Set<Student> getStudents() {
-		return students;
-	}
-
-	public void setStudents(Set<Student> students) {
-		this.students = students;
-	}
-
-	public Set<PlanningEvent> getRooms() {
-		return plannings;
-	}
-
-	public void setRooms(Set<PlanningEvent> plannings) {
-		this.plannings = plannings;
 	}
 
 }

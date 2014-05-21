@@ -1,21 +1,22 @@
 package fr.iut.csid.empower.elearning.core.domain.planning;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
+import org.eclipse.persistence.annotations.Convert;
+import org.eclipse.persistence.annotations.Converter;
+import org.joda.time.DateTime;
+
+import fr.iut.csid.empower.elearning.core.domain.campus.Room;
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
-import fr.iut.csid.empower.elearning.core.domain.room.Room;
+import fr.iut.csid.empower.elearning.core.util.time.DateTimeConverter;
 
 /**
  * Association Cours-Salle
@@ -36,56 +37,39 @@ public class PlanningEvent {
 	 * Cours sujet
 	 */
 	@ManyToOne
-	@PrimaryKeyJoinColumn(name = "COURSE_ID", referencedColumnName = "COURSE_ID")
+	@JoinColumn(name = "COURSE_ID")
 	private Course course;
 
 	/**
 	 * Salle associée
 	 */
 	@ManyToOne
-	@PrimaryKeyJoinColumn(name = "ROOM_ID", referencedColumnName = "ROOM_ID")
+	@JoinColumn(name = "ROOM_ID")
 	private Room room;
 
 	/**
-	 * Date du cours <br/>
-	 * TODO à splitter en "StartTimestamp" et "EndTimestamp"
+	 * Date de départ
 	 */
-	@Temporal(TemporalType.DATE)
-	@Column(name = "DATE")
-	private Date date;
+	@Column(name = "START_DATE", columnDefinition = "TIMESTAMP")
+	@Converter(name = "dateTimeConverter", converterClass = DateTimeConverter.class)
+	@Convert("dateTimeConverter")
+	private DateTime startDate;
 
 	/**
-	 * Demi-journée cible : matin ou après midi. (AM / PM) <br/>
-	 * TODO valeurs possibles à externaliser en enum.
+	 * Date de fin
 	 */
-	@Column(name = "HALF_DAY")
-	private String targetHalfDay;
-
-	/**
-	 * @param course
-	 * @param room
-	 * @param date
-	 * @param targetHalfDay
-	 */
-	public PlanningEvent(Course course, Room room, Date date,
-			String targetHalfDay) {
-		super();
-		this.course = course;
-		this.room = room;
-		this.date = date;
-		this.targetHalfDay = targetHalfDay;
-	}
+	@Column(name = "END_DATE", columnDefinition = "TIMESTAMP")
+	@Converter(name = "dateTimeConverter", converterClass = DateTimeConverter.class)
+	@Convert("dateTimeConverter")
+	private DateTime endDate;
 
 	public PlanningEvent() {
 
 	}
 
+	// MUTATEURS
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public Course getCourse() {
@@ -96,12 +80,16 @@ public class PlanningEvent {
 		return room;
 	}
 
-	public Date getDate() {
-		return date;
+	public DateTime getStartDate() {
+		return startDate;
 	}
 
-	public String getTargetHalfDay() {
-		return targetHalfDay;
+	public DateTime getEndDate() {
+		return endDate;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public void setCourse(Course course) {
@@ -112,12 +100,12 @@ public class PlanningEvent {
 		this.room = room;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setStartDate(DateTime startDate) {
+		this.startDate = startDate;
 	}
 
-	public void setTargetHalfDay(String targetHalfDay) {
-		this.targetHalfDay = targetHalfDay;
+	public void setEndDate(DateTime endDate) {
+		this.endDate = endDate;
 	}
 
 }

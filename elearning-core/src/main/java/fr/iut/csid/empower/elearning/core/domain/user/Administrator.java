@@ -9,21 +9,21 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
- * Etudiant
+ * Administrateur
  * 
  * @author pblanchard
  */
 @Entity
-@Table(name = "STUDENT")
-public class Student extends AbstractUser {
+@Table(name = "ADMINISTRATOR")
+public class Administrator extends AbstractUser {
 
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "StudentSeq")
-	@SequenceGenerator(name = "StudentSeq", sequenceName = "STUDENT_SEQ", allocationSize = 1, initialValue = 1)
-	@Column(name = "STUDENT_ID", nullable = false)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AdministratorSeq")
+	@SequenceGenerator(name = "AdministratorSeq", sequenceName = "ADMINISTRATOR_SEQ", allocationSize = 1, initialValue = 1)
+	@Column(name = "ADMINISTRATOR_ID", nullable = false)
 	@Id
 	private Long id;
 
-	public Student() {
+	public Administrator() {
 
 	}
 
