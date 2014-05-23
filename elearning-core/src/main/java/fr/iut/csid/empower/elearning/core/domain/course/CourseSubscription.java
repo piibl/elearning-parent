@@ -1,6 +1,7 @@
 package fr.iut.csid.empower.elearning.core.domain.course;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,12 +11,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.eclipse.persistence.annotations.Convert;
-import org.eclipse.persistence.annotations.Converter;
 import org.joda.time.DateTime;
 
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
-import fr.iut.csid.empower.elearning.core.util.time.DateTimeConverter;
+import fr.iut.csid.empower.elearning.core.reference.CourseSubscriptionStatus;
+import fr.iut.csid.empower.elearning.core.reference.CourseSubscriptionType;
+import fr.iut.csid.empower.elearning.core.util.converter.reference.CourseSubscriptionStatusConverter;
+import fr.iut.csid.empower.elearning.core.util.converter.reference.CourseSubscriptionTypeConverter;
+import fr.iut.csid.empower.elearning.core.util.converter.time.DateTimeConverter;
 
 /**
  * Association cours - étudiant réprésentant une inscription d'un étudiant à un cours
@@ -44,13 +47,27 @@ public class CourseSubscription {
 	@ManyToOne
 	@JoinColumn(name = "COURSE_ID")
 	private Course course;
+	
+	/**
+	 * Statut de la souscription
+	 */
+	@Column(name="STATUS")
+	@Convert(converter = CourseSubscriptionStatusConverter.class)
+	private CourseSubscriptionStatus status;
+
+	/**
+	 * Type de la souscription
+	 */
+	@Column(name="TYPE")
+	@Convert(converter = CourseSubscriptionTypeConverter.class)
+	private CourseSubscriptionType type;
+	
 
 	/**
 	 * Date de subscription
 	 */
 	@Column(name = "SUBSCRIPTION_DATE", columnDefinition = "TIMESTAMP")
-	@Converter(name = "dateTimeConverter", converterClass = DateTimeConverter.class)
-	@Convert("dateTimeConverter")
+	@Convert(converter = DateTimeConverter.class)
 	private DateTime subscriptionDate;
 
 	/**
