@@ -42,7 +42,7 @@ public class PlanningService {
 	// * demi-journée
 	// */
 	// @Transactional
-	// public void bookRoom(Course course, Room room, Date date,
+	// public void bookRoom(Course course, ClassRoom room, Date date,
 	// String targetHalfDay) {
 	//
 	// // Formateur de date
@@ -58,11 +58,11 @@ public class PlanningService {
 	// room.getCourses().add(planning);
 	// roomDAO.save(room);
 	//
-	// logger.info("Room [" + room.getLabel() + "] is now booked at ["
+	// logger.info("ClassRoom [" + room.getLabel() + "] is now booked at ["
 	// + dateFormat.format(date) + " - " + targetHalfDay
 	// + "] for [" + course.getLabel() + "] course.");
 	// } else {
-	// logger.info("Room [" + room.getLabel() + "] is already booked at ["
+	// logger.info("ClassRoom [" + room.getLabel() + "] is already booked at ["
 	// + dateFormat.format(date) + " - " + targetHalfDay + "]");
 	//
 	// }

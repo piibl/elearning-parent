@@ -30,7 +30,7 @@ public class PlanningServiceTest {
 //	public void bookRoomTest() {
 //		// Init data
 //		Course course = new Course("cours1");
-//		Room room = new Room("room1");
+//		ClassRoom room = new ClassRoom("room1");
 //		Date date = new Date();
 //		PlanningEvent planningEvent = new PlanningEvent(course, room, date, "PM");
 //		
@@ -45,7 +45,7 @@ public class PlanningServiceTest {
 //	public void cancelBookingTest() {
 //		// Init data
 //		Course course = new Course("cours1");
-//		Room room = new Room("room1");
+//		ClassRoom room = new ClassRoom("room1");
 //		Date date = new Date();
 //		PlanningEvent planningEvent = new PlanningEvent(course, room, date, "PM");
 //		

@@ -13,14 +13,13 @@ import javax.persistence.Table;
 
 import org.joda.time.DateTime;
 
-import fr.iut.csid.empower.elearning.core.domain.campus.Room;
+import fr.iut.csid.empower.elearning.core.domain.campus.ClassRoom;
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.core.util.converter.time.DateTimeConverter;
 
 /**
  * Association Cours-Salle
  * 
- * @author pblanchard
  */
 @Entity
 @Table(name = "PLANNING_EVENT")
@@ -44,7 +43,7 @@ public class PlanningEvent {
 	 */
 	@ManyToOne
 	@JoinColumn(name = "ROOM_ID")
-	private Room room;
+	private ClassRoom classRoom;
 
 	/**
 	 * Date de départ
@@ -73,8 +72,8 @@ public class PlanningEvent {
 		return course;
 	}
 
-	public Room getRoom() {
-		return room;
+	public ClassRoom getClassRoom() {
+		return classRoom;
 	}
 
 	public DateTime getStartDate() {
@@ -93,8 +92,8 @@ public class PlanningEvent {
 		this.course = course;
 	}
 
-	public void setRoom(Room room) {
-		this.room = room;
+	public void setClassRoom(ClassRoom classRoom) {
+		this.classRoom = classRoom;
 	}
 
 	public void setStartDate(DateTime startDate) {

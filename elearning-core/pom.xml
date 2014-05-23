@@ -200,6 +200,13 @@
 			<version>1.8.0.10</version>
 		</dependency>
 		<!-- End HSQLDB dependency -->
+		
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.12.6</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 </project>

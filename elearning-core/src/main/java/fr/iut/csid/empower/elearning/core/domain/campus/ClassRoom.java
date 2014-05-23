@@ -10,13 +10,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-/**
- * salle de cours
-*
- */
+import lombok.Data;
+
 @Entity
 @Table(name = "ROOM")
-public class Room {
+public class ClassRoom {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RoomSeq")
 	@SequenceGenerator(name = "RoomSeq", sequenceName = "ROOM_SEQ", allocationSize = 1, initialValue = 1)
@@ -41,11 +39,11 @@ public class Room {
 	@JoinColumn(name = "CAMPUS_ID")
 	private Campus campus;
 
-	public Room() {
+	public ClassRoom() {
 
 	}
 
-	public Room(String label, Campus campus) {
+	public ClassRoom(String label, Campus campus) {
 		super();
 		this.label = label;
 		this.campus = campus;
