@@ -8,11 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-/**
- * Cours
- * 
- * @author pblanchard
- */
 @Entity
 @Table(name = "COURSE")
 public class Course {

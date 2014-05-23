@@ -20,7 +20,6 @@ import fr.iut.csid.empower.elearning.core.util.time.DateTimeConverter;
 /**
  * Association cours - étudiant réprésentant une inscription d'un étudiant à un cours
  * 
- * @author pblanchard
  */
 @Entity
 @Table(name = "COURSE_SUBSCRIPTION")

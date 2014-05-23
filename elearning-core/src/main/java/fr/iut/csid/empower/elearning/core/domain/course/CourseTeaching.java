@@ -15,7 +15,6 @@ import fr.iut.csid.empower.elearning.core.domain.user.Teacher;
 /**
  * Association cours - enseignant réprésentant l'enseignement d'un cours par un professeur
  * 
- * @author pblanchard
  */
 @Entity
 @Table(name = "COURSE_TEACHING")

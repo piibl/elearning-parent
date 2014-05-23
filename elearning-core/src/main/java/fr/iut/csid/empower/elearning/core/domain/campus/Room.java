@@ -12,8 +12,7 @@ import javax.persistence.Table;
 
 /**
  * salle de cours
- * 
- * @author pblanchard
+*
  */
 @Entity
 @Table(name = "ROOM")

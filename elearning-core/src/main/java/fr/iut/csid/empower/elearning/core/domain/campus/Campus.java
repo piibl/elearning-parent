@@ -10,9 +10,7 @@ import javax.persistence.Table;
 
 /**
  * Campus = lieu avec plusieurs salles
- * 
- * @author pblanchard
- */
+*/
 @Entity
 @Table(name = "CAMPUS")
 public class Campus {
