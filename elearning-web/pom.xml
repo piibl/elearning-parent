@@ -250,5 +250,13 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	<repositories>
+		<!-- Repository Diamis -->
+		<repository>
+			<id>nexus</id>
+			<name>Repository Diamis</name>
+			<url>http://corail:8080/nexus-2.6.3-01/content/groups/public/</url>
+		</repository>
+	</repositories>
 
 </project>

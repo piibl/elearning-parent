@@ -60,6 +60,30 @@
 		</property>
 	</bean>
 
+	<!-- INTERNATIONALIZATION/LOCALE POURS MESSAGES EN PLUSIEURS LANGUES... -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="basenames">
+			<list>
+				<!-- Répertoire des fichiers de messages -->
+				<value>classpath:i18n/messages</value>
+			</list>
+		</property>
+		<property name="fallbackToSystemLocale" value="false" />
+	</bean>
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="fr" />
+	</bean>
+
+	<bean id="localeChangeInterceptor"
+		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="lang" />
+	</bean>
+
+	<!-- THYMELEAF RESOLVERS + ENGINE -->
 	<bean id="templateResolver"
 		class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
 		<property name="characterEncoding" value="UTF-8" />
@@ -79,8 +103,9 @@
 		<property name="characterEncoding" value="UTF-8" />
 	</bean>
 
+	<!-- FORMATTER DE DATE -->
 	<bean id="dateFormatter" class="fr.iut.csid.empower.elearning.web.util.DateFormatter" />
 
-	
+
 
 </beans>

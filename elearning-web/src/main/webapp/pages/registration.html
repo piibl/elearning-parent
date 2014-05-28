@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment/common :: headerFragment">
+</head>
+<body>
+	<div th:include="fragment/common :: unsigned-navbar"
+		class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+	</div>
+	<div class="container top-20">
+
+		<div class="alert alert-danger alert-dismissable"
+			th:if="${(param.error != null) and (param.error[0] == 'true')}">
+			<button class="close" aria-hidden="true" data-dismiss="alert"
+				type="button">×</button>
+			<strong>Erreur d'authentification : </strong> login et/ou mot de
+			passe inconnu(s).
+		</div>
+		<div class="alert alert-success alert-dismissable"
+			th:if="${(param.logout != null) and (param.logout[0] == 'successful')}">
+			<button class="close" aria-hidden="true" data-dismiss="alert"
+				type="button">×</button>
+			<strong>Vous avez été déconnecté du service.</strong>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-4 col-md-offset-2">
+				<form  th:action="@{/registration}" th:object="${student}" method="post" role="form">
+
+					<legend th:text="#{form.registration.legend}">Formulaire d'inscription</legend>
+					
+					<div class="form-group">
+						<label for="firstName">Prénom</label> <input type="text" th:field="*{firstName}" class="form-control"
+							autofocus="autofocus" required="required"
+							placeholder="Bryan" />
+							<p class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+					</div>
+					<div class="form-group">
+						<label for="lastName">Nom de famille</label> <input type="text"
+							class="form-control" id="lastName" placeholder="Singer"
+							autofocus="autofocus" required="required" th:field="*{lastName}"
+							/>
+					</div>
+					<div class="form-group">
+						<label for="login">Login</label> <input type="text" th:field="*{login}" class="form-control"
+							id="login" placeholder="BryanSinger123" autofocus="autofocus"
+							required="required"  />
+					</div>
+					<div class="form-group">
+						<label for="email">Adresse email</label> <input type="email" th:field="*{email}"
+							class="form-control" id="email"
+							placeholder="bryan.singer123@trololo.com" autofocus="autofocus"
+							required="required"  />
+					</div>
+					<div class="form-group">
+						<label for="pwd">Password</label> <input type="password" th:field="*{password}"
+							class="form-control" id="pwd"
+							placeholder="Rentre donc un mot de passe..."
+							autofocus="autofocus" required="required" />
+					</div>
+					<!-- <div class="form-group">
+								<label for="exampleInputFile">File input</label> <input type="file"
+									id="exampleInputFile"/>
+								<p class="help-block">Example block-level help text here.</p>
+							</div> -->
+					<!-- <div class="checkbox">
+								<label> <input type="checkbox"/> Check me out
+								</label>
+							</div> -->
+					<div class="submit">
+						<button type="submit" class="btn btn-primary btn-lg" role="button">Valider</button>
+					</div>
+
+
+				</form>
+			</div>
+			<div class="col-md-4">
+				<h1>Création d'un compte</h1>
+				<p>Mode d'emploi : Lorem ipsum dolor sit amet, consectetur
+					adipiscing elit. Nunc enim enim, commodo eget euismod vestibulum,
+					pellentesque porta lacus. Vivamus quis metus magna.</p>
+
+				<p>AND BLABLABLA !</p>
+			</div>
+		</div>
+	</div>
+
+	<footer th:include="fragment/common :: [//footer]"></footer>
+</body>
+</html>
