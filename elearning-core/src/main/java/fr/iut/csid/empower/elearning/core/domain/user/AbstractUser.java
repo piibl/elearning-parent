@@ -1,41 +1,53 @@
 package fr.iut.csid.empower.elearning.core.domain.user;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
+
+import org.joda.time.DateTime;
+
+import fr.iut.csid.empower.elearning.core.util.converter.time.DateTimeConverter;
 
 /**
  * Classe abstraite des entités utilisateur
  */
 @MappedSuperclass
-public abstract class AbstractUser {
+public abstract class AbstractUser implements User {
 
 	// TODO utilité ??
 	/**
 	 * Prénom de l'utilisateur
 	 */
 	@Column(name = "FIRST_NAME")
-	private String firstName;
+	protected String firstName;
 
 	/**
 	 * Nom de l'utilisateur
 	 */
 	@Column(name = "LAST_NAME")
-	private String lastName;
+	protected String lastName;
 
 	/**
 	 * Login de l'utilisateur
 	 */
-	@Column(name = "LOGIN")
-	private String login;
+	@Column(name = "LOGIN", nullable = false, unique = true)
+	protected String login;
 
 	/**
 	 * TODO Cryptage, stockage du hash en bdd
 	 */
 	@Column(name = "PWD")
-	private String password;
+	protected String password;
 
 	@Column(name = "EMAIL")
-	private String email;
+	protected String email;
+
+	/**
+	 * Date de subscription
+	 */
+	@Column(name = "SUBSCRIPTION_DATE", columnDefinition = "TIMESTAMP")
+	@Convert(converter = DateTimeConverter.class)
+	protected DateTime subscriptionDate;
 
 	public AbstractUser() {
 
@@ -57,11 +69,14 @@ public abstract class AbstractUser {
 	 * @param email
 	 *            : email de l'utilisateur
 	 */
-	public AbstractUser(String login, String password, String email) {
+	public AbstractUser(String firstName, String lastName, String login, String password, String email) {
 		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.login = login;
 		this.password = password;
 		this.email = email;
+		this.subscriptionDate = new DateTime();
 	}
 
 	public String getLastName() {
@@ -98,6 +113,14 @@ public abstract class AbstractUser {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public DateTime getSubscriptionDate() {
+		return subscriptionDate;
+	}
+
+	public void setSubscriptionDate(DateTime subscriptionDate) {
+		this.subscriptionDate = subscriptionDate;
 	}
 
 }

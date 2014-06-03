@@ -1,4 +1,4 @@
-package fr.iut.csid.empower.elearning.core.service;
+package fr.iut.csid.empower.elearning.core.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implémentation abstraite des fonctionnalités CRUD des services<br/>
- * TODO Utilité ???!!!!
  * 
  * @param <T>
  *            : Entité cible du service

@@ -1,38 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
-  <display-name>E-Learning</display-name>
-  <welcome-file-list>
-    <welcome-file>main.html</welcome-file>
-  </welcome-file-list>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>E-Learning</display-name>
+	<welcome-file-list>
+		<welcome-file>main.html</welcome-file>
+	</welcome-file-list>
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:META-INF/spring/security-context.xml</param-value>
+		<param-value>classpath:META-INF/spring/web-context.xml classpath:META-INF/spring/security-context.xml</param-value>
 	</context-param>
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
+
 	<servlet>
 		<servlet-name>E-Learning</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>classpath:META-INF/spring/web-context.xml</param-value>
-		</init-param>	
+		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+
 	<servlet-mapping>
-	 	<servlet-name>E-Learning</servlet-name>
+		<servlet-name>E-Learning</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-    <filter>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
-    
+
+	<!-- FILTRES -->
+
+	<!-- Filtre de sécurité personnalisé, intérêt à voir... -->
+	<!-- A noter que la sécurité ne fait de mal à personne -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<!-- Filtre d'encodage, on veut de l'UTF-8 et que ça saute ! -->
 	<filter>
 		<filter-name>characterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -45,13 +54,49 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
-	
+
+	<!-- Filtre Cross-origin resource sharing CORS pour hypotétiques services 
+		json -->
+	<!-- voir http://tomcat.apache.org/tomcat-7.0-doc/config/filter.html#CORS_Filter -->
+	<filter>
+		<filter-name>corsFilter</filter-name>
+		<filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+		<init-param>
+			<param-name>cors.allowed.origins</param-name>
+			<param-value>*</param-value>
+		</init-param>
+		<init-param>
+			<param-name>cors.allowed.methods</param-name>
+			<!-- DELETE ?? -->
+			<param-value>GET, POST, PUT, DELETE, OPTIONS</param-value>
+		</init-param>
+		<init-param>
+			<param-name>cors.allowed.headers</param-name>
+			<param-value>X-Requested-With, Origin, Accept, Content-Type</param-value>
+		</init-param>
+	</filter>
+
+	<!-- Filtre pour requetes http encapsulées (put, delete, toussa toussa) -->
+	<filter>
+		<filter-name>hiddenHttpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
+
+	<!-- Mappings des différents filtres, encodage TOUJOURS en premier -->
 	<filter-mapping>
-    	<filter-name>characterEncodingFilter</filter-name>
-    	<url-pattern>/pages/*</url-pattern>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>/pages/*</url-pattern>
 	</filter-mapping>
-    <filter-mapping>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <servlet-name>E-Learning</servlet-name>
-    </filter-mapping>				
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<servlet-name>E-Learning</servlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>corsFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>hiddenHttpMethodFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 </web-app>

@@ -64,7 +64,7 @@
 	<data:repositories base-package="fr.iut.csid.empower.elearning.core.service.dao.**" />
 	
 	<!-- Scan des annotations, collecte automatique dans les packages enfants -->
-	<context:component-scan base-package="fr.iut.csid.empower.elearning.**" />
+	<context:component-scan base-package="fr.iut.csid.empower.elearning.core**" />
 
 	<!-- Transaction annotation config -->
 	<tx:annotation-driven transaction-manager="transactionManager" />

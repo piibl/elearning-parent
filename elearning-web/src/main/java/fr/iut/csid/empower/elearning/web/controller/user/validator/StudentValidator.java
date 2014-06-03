@@ -1,4 +1,4 @@
-package fr.iut.csid.empower.elearning.web.controller.validator;
+package fr.iut.csid.empower.elearning.web.controller.user.validator;
 
 import javax.inject.Named;
 

@@ -10,13 +10,13 @@
 	</appender>
 
 	<!-- logger courant -->
-	<logger name="fr.iut.csid.empower.elearning" level="INFO" additivity="true" />
+	<logger name="fr.iut.csid.empower.elearning" level="DEBUG" additivity="true" />
 
 	<!-- Datasource logger -->
 	<logger name="com.mchange" level="OFF" additivity="false"/>
 
 	<!-- root, DEBUG désactivé -->
-	<root level="INFO">
+	<root level="DEBUG">
 		<appender-ref ref="stdout" />
 	</root>
 

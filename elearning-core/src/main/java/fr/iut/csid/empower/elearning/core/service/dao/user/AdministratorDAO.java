@@ -9,4 +9,12 @@ import fr.iut.csid.empower.elearning.core.domain.user.Administrator;
  */
 public interface AdministratorDAO extends JpaRepository<Administrator, Long> {
 
+	/**
+	 * Retourne l'administrateur correspondant au login passé en paramètre
+	 * 
+	 * @param login
+	 * @return
+	 */
+	public Administrator findByLogin(String login);
+
 }

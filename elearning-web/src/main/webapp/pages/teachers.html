@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment/common :: headerFragment">
+</head>
+<body>
+	<div th:include="fragment/common :: unsigned-navbar"
+		class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+	</div>
+
+
+	<div class="container top-20">
+		<div class="row row-offcanvas row-offcanvas-left">
+			<!-- sidebar -->
+			<div class="col-xs-4 col-sm-2 sidebar-offcanvas top-20" id="sidebar"
+				role="navigation">
+				<ul class="nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#">Link 1</a></li>
+					<li><a href="#">Link 2</a></li>
+					<li><a href="#">Link 3</a></li>
+				</ul>
+			</div>
+			<div class="col-xs-12 col-sm-9">
+				<h2>Liste des enseignants</h2>
+				<p th:if="${#lists.isEmpty(teachers)}">Aucun enseignant n'est enregistré sur la plateforme.</p>
+				<div class="row" th:unless="${#lists.isEmpty(teachers)}">
+					<div class="span10">
+						<table class="table table-striped table-hover">
+							<thead>
+								<th>Login</th>
+								<th>Prénom</th>
+								<th>Nom</th>
+							</thead>
+							<tbody>
+								<tr th:each="teacher : ${teachers}">
+									<td class="span6" th:text="${teacher.content.login}">Bryan123</td>
+									<td class="span6" th:text="${teacher.content.firstName}">Bryan</td>
+									<td class="span6" th:text="${teacher.content.lastName}">Godzilla</td>
+									<td class="span2"><a class="render-partial"
+										href="./edit.html" th:href="${teacher.getLink('edit').href}"><i
+											class="glyphicon glyphicon-pencil"></i></a></td>
+									<td class="span2"><a class="render-modal"
+										href="./delete.html"
+										th:href="${teacher.getLink('delete').href}"><i
+											class="glyphicon glyphicon-remove"></i></a></td>
+								</tr>
+							</tbody>
+
+
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+	<footer th:include="fragment/common :: [//footer]"></footer>
+</body>
+</html>

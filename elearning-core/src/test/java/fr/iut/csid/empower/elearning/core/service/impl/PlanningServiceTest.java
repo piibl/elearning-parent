@@ -1,4 +1,4 @@
-package fr.iut.csid.empower.elearning.core.service;
+package fr.iut.csid.empower.elearning.core.service.impl;
 
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

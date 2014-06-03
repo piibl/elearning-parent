@@ -2,9 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx 		http://www.springframework.org/schema/tx/spring-tx.xsd
+		">
 
 	<!-- CORE context -->
 	<import resource="classpath*:META-INF/spring/core-context.xml" />
@@ -13,6 +16,9 @@
 	<mvc:resources location="/assets/img/" mapping="/assets/img/**" />
 	<mvc:resources location="/assets/css/" mapping="/assets/css/**" />
 	<mvc:resources location="/assets/js/" mapping="/assets/js/**" />
+	<mvc:resources location="/assets/fonts/" mapping="/assets/fonts/**" />
+	
+	<mvc:annotation-driven />
 
 
 	<bean id="securityInterceptor"
@@ -32,10 +38,15 @@
 		<property name="supportedMediaTypes" value="text/plain;charset=UTF-8" />
 	</bean>
 
+	<bean id="jsonMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	</bean>
+
 	<bean id="defaultMessageConverters" class="java.util.ArrayList">
 		<constructor-arg>
 			<list>
 				<ref bean="httpMessageConverter" />
+				<ref bean="jsonMessageConverter" />
 			</list>
 		</constructor-arg>
 	</bean>
@@ -93,19 +104,28 @@
 		<property name="cacheable" value="false" />
 	</bean>
 
-	<bean id="templateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
+	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
 		<property name="templateResolver" ref="templateResolver" />
 	</bean>
 
 
-	<bean class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
+	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine" />
 		<property name="characterEncoding" value="UTF-8" />
 	</bean>
 
 	<!-- FORMATTER DE DATE -->
 	<bean id="dateFormatter" class="fr.iut.csid.empower.elearning.web.util.DateFormatter" />
+	
+	<!-- Fournisseur d'authentification pour Spring Security -->
+	<bean id="customUserDetailsService" class="fr.iut.csid.empower.elearning.web.security.service.CustomUserDetailsService" />
 
+	<!-- Scan des annotations, collecte automatique dans les packages enfants -->
+	<context:component-scan base-package="fr.iut.csid.empower.elearning.web.**" />
+
+	<!-- Transaction annotation config -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
 
 
 </beans>
