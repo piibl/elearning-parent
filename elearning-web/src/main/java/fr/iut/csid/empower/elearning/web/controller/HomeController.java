@@ -10,9 +10,9 @@ import fr.iut.csid.empower.elearning.web.reference.PathFragment;
 @Controller
 public class HomeController {
 
-	@RequestMapping(value = { "/", "/main" }, method = RequestMethod.GET)
-	public String getMainPage(Model model) {
+	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
+	public String getHomePage(Model model) {
 		// Retourne la page d'accueil
-		return PathFragment.BASE.getName() + "main";
+		return PathFragment.HOME.getPath();
 	}
 }

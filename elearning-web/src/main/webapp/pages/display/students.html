@@ -1,29 +1,45 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head th:include="fragment/common :: headerFragment">
+<script>
+	$(document).ready(function() {
+		// Formulaire d'ajout
+		$('#modalAddForm').click(function(), function(e) {
+			$("#modalContent").text("");
+			$.ajax({
+				url : "students/new",
+				cache : false
+			}).done(function(html) {
+				$("#modalContent").append(html);
+				$("modal").modal({show:true});
+			});
+		});
+		// Formulaire de recherche TODO
+	});
+</script>
 </head>
+
 <body>
-	<div th:include="fragment/common :: unsigned-navbar"
-		class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-
-	</div>
-
-
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation"
+		th:include="fragment/navbars :: signed-navbar"></div>
 	<div class="container top-20">
 		<div class="row row-offcanvas row-offcanvas-left">
 			<!-- sidebar -->
-			<div class="col-xs-4 col-sm-2 sidebar-offcanvas top-20" id="sidebar"
+			<div class="col-md-3 sidebar-offcanvas top-20" id="sidebar"
 				role="navigation">
 				<ul class="nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#">Link 1</a></li>
-					<li><a href="#">Link 2</a></li>
-					<li><a href="#">Link 3</a></li>
+					<li><a id="modalAddForm" class="btn" href="/students/new"
+						th:href="@{/students/new}" role="button" data-toggle="modal"
+						data-target="#modal"><i class="glyphicon glyphicon-plus"></i>
+							Ajouter un étudiant</a></li>
+					<li><a class="btn" href="#" role="button"><i
+							class="glyphicon glyphicon-search"></i> Chercher un étudiant</a></li>
 				</ul>
 			</div>
-			<div class="col-xs-12 col-sm-9">
+			<div class="col-md-9">
 				<h2>Liste des étudiants</h2>
-				<p th:if="${#lists.isEmpty(students)}">Aucun étudiant n'est enregistré sur la plateforme.</p>
+				<p th:if="${#lists.isEmpty(students)}">Aucun étudiant n'est
+					enregistré sur la plateforme.</p>
 				<div class="row" th:unless="${#lists.isEmpty(students)}">
 
 					<div class="span10">
@@ -39,8 +55,7 @@
 									<td class="span6" th:text="${student.content.firstName}">Bryan</td>
 									<td class="span6" th:text="${student.content.lastName}">Godzilla</td>
 									<td class="span2"><a class="render-partial"
-										href="./edit.html"
-										th:href="${student.getLink('edit').href}"><i
+										href="./edit.html" th:href="${student.getLink('edit').href}"><i
 											class="glyphicon glyphicon-pencil"></i></a></td>
 									<td class="span2"><a class="render-modal"
 										href="./delete.html"
@@ -51,10 +66,10 @@
 						</table>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
-
+		<div th:replace="fragment/common :: simple-modal"></div>
 	</div>
 
 

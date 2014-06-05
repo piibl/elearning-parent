@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headerFragment">
+<title>Plateforme E-Learning</title>
+<link rel="stylesheet" href="../assets/css/bootstrap.min.css"
+	th:href="@{/assets/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="../assets/css/elearning-theme.css"
+	th:href="@{/assets/css/elearning-theme.css}" />
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../assets/js/bootstrap.min.js"
+	th:src="@{/assets/js/bootstrap.min.js}"></script>
+<!-- NOTRE SCRIPT MAISON -->
+<script src="../assets/js/elearning.js"
+	th:src="@{/assets/js/elearning.js}"></script>
+</head>
+<body>
+	<!-- Modal -->
+	<div th:fragment="simple-modal" class="modal fade" id="modal"
+		tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content" id="modalContent"></div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- FOOTER -->
+	<footer th:fragment="footer">
+		<span id="footerText" class="container"> Copyright 2014 EMPOWER
+			| <a href="http://www.iut.univ-paris8.fr/">IUT de Montreuil</a> |
+			Plateforme E-Learning
+		</span>
+	</footer>
+</body>
+
+</html>

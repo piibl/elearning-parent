@@ -1,0 +1,189 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment/common :: headerFragment">
+</head>
+<body>
+	<!-- Formulaire d'ajout enseignant -->
+	<div th:fragment="add-teacher-form">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+			<h3 class="modal-title">Ajouter un enseignant</h3>
+		</div>
+		<form class="addForm" th:action="@{/teachers}"
+			th:object="${teacherStructure}" method="post" role="form">
+			<div class="modal-body">
+
+				<div class="form-group">
+					<label for="firstName"
+						th:text="#{form.registration.label.firstname}">Prénom</label> <input
+						type="text" th:field="*{firstName}" class="form-control"
+						autofocus="autofocus" required="required" placeholder="Bryan" />
+					<span class="help-block" th:if="${#fields.hasErrors('firstName')}"
+						th:errors="*{firstName}">Prénom incorrect</span>
+				</div>
+				<div class="form-group">
+					<label for="lastName" th:text="#{form.registration.label.lastname}">Nom
+						de famille</label> <input type="text" class="form-control" id="lastName"
+						placeholder="Singer" autofocus="autofocus" required="required"
+						th:field="*{lastName}" /> <span class="help-block"
+						th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Nom
+						incorrect</span>
+				</div>
+				<div class="form-group">
+					<label for="login" th:text="#{form.registration.label.login}">Login</label>
+					<input type="text" th:field="*{login}" class="form-control"
+						id="login" placeholder="BryanSinger123" autofocus="autofocus"
+						required="required" /> <span class="help-block"
+						th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Prénom
+						incorrect</span>
+				</div>
+				<div class="form-group">
+					<label for="email" th:text="#{form.registration.label.email}">Adresse
+						email</label> <input type="email" th:field="*{email}" class="form-control"
+						id="email" placeholder="bryan.singer123@trololo.com"
+						autofocus="autofocus" required="required" /> <span
+						class="help-block" th:if="${#fields.hasErrors('firstName')}"
+						th:errors="*{firstName}">Prénom incorrect</span>
+				</div>
+				<div class="form-group">
+					<label for="pwd" th:text="#{form.registration.label.password}">Password</label>
+					<input type="password" th:field="*{password}" class="form-control"
+						id="pwd" placeholder="Mot de passe" autofocus="autofocus"
+						required="required" />
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary btn-lg" role="button">Valider</button>
+			</div>
+		</form>
+	</div>
+	<!-- Formulaire d'ajout administrateur -->
+	<!-- TODO virer thymeleaf, on passe seulement par des requetes ajax -->
+	<div th:fragment="add-administrator-form">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+			<h3 class="modal-title">Ajouter un administrateur</h3>
+		</div>
+		<form class="addForm" th:action="@{/administrators}"
+			th:object="${administratorStructure}" method="post" role="form">
+			<div class="modal-body">
+				<div class="form-group">
+					<label for="firstName"
+						th:text="#{form.registration.label.firstname}">Prénom</label> <input
+						type="text" th:field="*{firstName}" class="form-control"
+						autofocus="autofocus" required="required" placeholder="Bryan" />
+				</div>
+				<div class="form-group">
+					<label for="lastName" th:text="#{form.registration.label.lastname}">Nom
+						de famille</label> <input type="text" class="form-control" id="lastName"
+						placeholder="Singer" autofocus="autofocus" required="required"
+						th:field="*{lastName}" />
+				</div>
+				<div class="form-group">
+					<label for="login" th:text="#{form.registration.label.login}">Login</label>
+					<input type="text" th:field="*{login}" class="form-control"
+						id="login" placeholder="BryanSinger123" autofocus="autofocus"
+						required="required" />
+				</div>
+				<div class="form-group">
+					<label for="email" th:text="#{form.registration.label.email}">Adresse
+						email</label> <input type="email" th:field="*{email}" class="form-control"
+						id="email" placeholder="bryan.singer123@trololo.com"
+						autofocus="autofocus" required="required" />
+				</div>
+				<div class="form-group">
+					<label for="pwd" th:text="#{form.registration.label.password}">Password</label>
+					<input type="password" th:field="*{password}" class="form-control"
+						id="pwd" placeholder="Mot de passe" autofocus="autofocus"
+						required="required" />
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary btn-lg" role="button">Valider</button>
+			</div>
+		</form>
+	</div>
+	<!-- Formulaire d'ajout étudiant -->
+	<div th:fragment="add-student-form">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+			<h3 class="modal-title">Ajouter un étudiant</h3>
+		</div>
+		<form class="addForm" th:action="@{/students}"
+			th:object="${studentStructure}" method="post" role="form">
+			<div class="modal-body">
+
+				<div class="form-group">
+					<label for="firstName"
+						th:text="#{form.registration.label.firstname}">Prénom</label> <input
+						type="text" th:field="*{firstName}" class="form-control"
+						autofocus="autofocus" required="required" placeholder="Bryan" />
+					<span class="help-block" th:if="${#fields.hasErrors('firstName')}"
+						th:errors="*{firstName}">Prénom incorrect</span>
+				</div>
+				<div class="form-group">
+					<label for="lastName" th:text="#{form.registration.label.lastname}">Nom
+						de famille</label> <input type="text" class="form-control" id="lastName"
+						placeholder="Singer" autofocus="autofocus" required="required"
+						th:field="*{lastName}" /> <span class="help-block"
+						th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Nom
+						incorrect</span>
+				</div>
+				<div class="form-group">
+					<label for="login" th:text="#{form.registration.label.login}">Login</label>
+					<input type="text" th:field="*{login}" class="form-control"
+						id="login" placeholder="BryanSinger123" autofocus="autofocus"
+						required="required" /> <span class="help-block"
+						th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Prénom
+						incorrect</span>
+				</div>
+				<div class="form-group">
+					<label for="email" th:text="#{form.registration.label.email}">Adresse
+						email</label> <input type="email" th:field="*{email}" class="form-control"
+						id="email" placeholder="bryan.singer123@trololo.com"
+						autofocus="autofocus" required="required" /> <span
+						class="help-block" th:if="${#fields.hasErrors('firstName')}"
+						th:errors="*{firstName}">Prénom incorrect</span>
+				</div>
+				<div class="form-group">
+					<label for="pwd" th:text="#{form.registration.label.password}">Password</label>
+					<input type="password" th:field="*{password}" class="form-control"
+						id="pwd" placeholder="Mot de passe" autofocus="autofocus"
+						required="required" />
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary btn-lg" role="button">Valider</button>
+			</div>
+		</form>
+	</div>
+	<!-- Formulaire d'ajout cours -->
+	<div th:fragment="add-course-form">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+			<h3 class="modal-title">Création d'un cours</h3>
+		</div>
+		<form class="addForm" th:action="@{/courses}"
+			th:object="${courseStructure}" method="post" role="form">
+			<div class="modal-body">
+
+				<div class="form-group">
+					<label for="label">Intitulé du cours</label> <input type="text"
+						th:field="*{label}" class="form-control" autofocus="autofocus"
+						required="required"
+						placeholder="Mathématiques appliquées, Anglais avancé..." /> <span
+						class="help-block" th:if="${#fields.hasErrors('label')}"
+						th:errors="*{label}">label incorrect</span>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary btn-lg" role="button">Valider</button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

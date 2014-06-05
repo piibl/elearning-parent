@@ -8,7 +8,7 @@ import org.springframework.hateoas.Resource;
 import org.springframework.util.Assert;
 
 import fr.iut.csid.empower.elearning.core.domain.user.Teacher;
-import fr.iut.csid.empower.elearning.web.controller.user.TeacherController;
+import fr.iut.csid.empower.elearning.web.controller.entity.user.TeacherController;
 import fr.iut.csid.empower.elearning.web.hateoas.AbstractResourceAssembler;
 import fr.iut.csid.empower.elearning.web.hateoas.ControllerLinkBuilderFactory;
 import fr.iut.csid.empower.elearning.web.reference.PathFragment;
@@ -36,10 +36,10 @@ public class TeacherResourceAssembler extends AbstractResourceAssembler<Teacher,
 		// Adressage de tous les enseignants
 		Link studentsLink = linkBuilderFactory.linkTo(TeacherController.class).withRel(Relation.TEACHERS.getName());
 		// Adressage pour la suppression d'un enseignant
-		Link deleteLink = linkBuilderFactory.linkTo(TeacherController.class).slash(teacher.getId()).slash(PathFragment.DELETE.getName())
+		Link deleteLink = linkBuilderFactory.linkTo(TeacherController.class).slash(teacher.getId()).slash(PathFragment.DELETE.getPath())
 				.withRel(Relation.DELETE.getName());
 		// Adressage pour la modification d'un enseignant
-		Link editLink = linkBuilderFactory.linkTo(TeacherController.class).slash(teacher.getId()).slash(PathFragment.EDIT.getName())
+		Link editLink = linkBuilderFactory.linkTo(TeacherController.class).slash(teacher.getId()).slash(PathFragment.EDIT.getPath())
 				.withRel(Relation.EDIT.getName());
 		return new Resource<Teacher>(teacher, selfLink, studentsLink, deleteLink, editLink);
 	}

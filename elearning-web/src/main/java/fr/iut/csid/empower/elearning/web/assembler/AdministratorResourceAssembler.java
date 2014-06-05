@@ -8,7 +8,7 @@ import org.springframework.hateoas.Resource;
 import org.springframework.util.Assert;
 
 import fr.iut.csid.empower.elearning.core.domain.user.Administrator;
-import fr.iut.csid.empower.elearning.web.controller.user.AdministratorController;
+import fr.iut.csid.empower.elearning.web.controller.entity.user.AdministratorController;
 import fr.iut.csid.empower.elearning.web.hateoas.AbstractResourceAssembler;
 import fr.iut.csid.empower.elearning.web.hateoas.ControllerLinkBuilderFactory;
 import fr.iut.csid.empower.elearning.web.reference.PathFragment;
@@ -36,10 +36,10 @@ public class AdministratorResourceAssembler extends AbstractResourceAssembler<Ad
 		// Adressage de tous les administrateurs
 		Link studentsLink = linkBuilderFactory.linkTo(AdministratorController.class).withRel(Relation.ADMINISTRATORS.getName());
 		// Adressage pour la suppression d'un administrateur
-		Link deleteLink = linkBuilderFactory.linkTo(AdministratorController.class).slash(administrator.getId()).slash(PathFragment.DELETE.getName())
+		Link deleteLink = linkBuilderFactory.linkTo(AdministratorController.class).slash(administrator.getId()).slash(PathFragment.DELETE.getPath())
 				.withRel(Relation.DELETE.getName());
 		// Adressage pour la modification d'un administrateur
-		Link editLink = linkBuilderFactory.linkTo(AdministratorController.class).slash(administrator.getId()).slash(PathFragment.EDIT.getName())
+		Link editLink = linkBuilderFactory.linkTo(AdministratorController.class).slash(administrator.getId()).slash(PathFragment.EDIT.getPath())
 				.withRel(Relation.EDIT.getName());
 		return new Resource<Administrator>(administrator, selfLink, studentsLink, deleteLink, editLink);
 	}

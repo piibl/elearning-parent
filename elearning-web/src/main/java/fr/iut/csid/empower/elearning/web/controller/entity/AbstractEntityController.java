@@ -1,22 +1,31 @@
-package fr.iut.csid.empower.elearning.web.controller;
+package fr.iut.csid.empower.elearning.web.controller.entity;
 
 import java.io.Serializable;
 import java.util.List;
 
-import javax.validation.Valid;
+import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.Resource;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.iut.csid.empower.elearning.core.service.CrudService;
 import fr.iut.csid.empower.elearning.web.hateoas.BatchResourceAssembler;
-import fr.iut.csid.empower.elearning.web.reference.PathFragment;
+import fr.iut.csid.empower.elearning.web.hateoas.ControllerLinkBuilderFactory;
 
 public abstract class AbstractEntityController<T, X extends Serializable> {
+
+	private static final Logger logger = LoggerFactory.getLogger(AbstractEntityController.class);
+
+	/**
+	 * Constructeur de liens
+	 */
+	@Inject
+	protected ControllerLinkBuilderFactory linkBuilderFactory;
 
 	/**
 	 * Retourne le service CRUD du type de l'entité cible
@@ -35,7 +44,12 @@ public abstract class AbstractEntityController<T, X extends Serializable> {
 	 * 
 	 * @return
 	 */
-	protected abstract String getBaseViewPage();
+	protected abstract String getBaseView();
+
+	/**
+	 * Retourne le path de la vue détaillée d'une instance
+	 */
+	protected abstract String getDetailsView();
 
 	/**
 	 * Retourne le nom de l'attribut associé à la liste de toutes les entités du type cible
@@ -52,6 +66,13 @@ public abstract class AbstractEntityController<T, X extends Serializable> {
 	protected abstract String getSingleEntityAtributeName();
 
 	/**
+	 * Retourne le nom de l'attribut associé à une seule entité du type cible
+	 * 
+	 * @return
+	 */
+	protected abstract String getAddFormPath();
+
+	/**
 	 * Vue globale, affiche tous les éléments du type de l'entité
 	 * 
 	 * @param model
@@ -64,34 +85,27 @@ public abstract class AbstractEntityController<T, X extends Serializable> {
 		// Le container contient à la fois l'objet cible et les liens des ressources afférentes
 		List<Resource<T>> entitiesResources = getResourceAssembler().toResource(entities);
 		model.addAttribute(getEntitiesAtributeName(), entitiesResources);
-		return PathFragment.BASE.getName() + getBaseViewPage();
+		return getBaseView();
+	}
+
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
+	public String getAddForm(Model model) {
+		return getAddFormPath();
 	}
 
 	/**
-	 * Crée une nouvelle entité <br/>
-	 * Un validateur doit être implémenté par le controller concret si besoin
+	 * Soumission via json
 	 * 
 	 * @param entity
-	 * @param result
-	 * @param model
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public String insertNew(@Valid T entity, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			/***
-			 * TODO IMPLEMENTATION Validateur !!
-			 */
-
-			// Cas impossible, pas de validation pour l'instant ;)
-		}
-		getCrudService().save(entity);
-		/***
-		 * TODO IMPLEMENTATION SUCCESS !!
-		 */
-		// Retourne la vue de base
-		return PathFragment.REDIRECT.getName() + getBaseViewPage();
-	}
+	// @RequestMapping(method = RequestMethod.POST)
+	// public String insertNewJSON(@RequestBody T entity) {
+	// logger.info("JSON submission");
+	// getCrudService().save(entity);
+	// // Retourne la vue de base
+	// return getBaseViewPage();
+	// }
 
 	/**
 	 * Retourne l'entité correspondant à l'id cible
@@ -102,8 +116,11 @@ public abstract class AbstractEntityController<T, X extends Serializable> {
 	 */
 	@RequestMapping(value = "/{entityId}", method = RequestMethod.GET)
 	public String getEntity(@PathVariable("entityId") X id, Model model) {
-		model.addAttribute(getSingleEntityAtributeName(), getCrudService().find(id));
-		return PathFragment.BASE.getName() + getBaseViewPage();
+		// TODO Quick'n'dirty, j'aime !
+		Resource<T> resource = getResourceAssembler().toResource(getCrudService().find(id));
+		model.addAttribute(getSingleEntityAtributeName(), resource);
+		logger.info("getDetails calls : [" + getDetailsView() + "]");
+		return getDetailsView();
 	}
 
 	/**
@@ -117,13 +134,14 @@ public abstract class AbstractEntityController<T, X extends Serializable> {
 	public String deleteEntity(@PathVariable("entityId") X id, Model model) {
 		T entityTodelete = getCrudService().find(id);
 		getCrudService().delete(entityTodelete);
-
+		// TODO externalisation / personnalisation selon entités
+		// Message de suppression
 		List<T> entities = getCrudService().findAll();
 		// Construction des liens d'action et mise en container
 		// Le container contient à la fois l'objet cible et les liens des ressources afférentes
 		List<Resource<T>> entitiesResources = getResourceAssembler().toResource(entities);
 		model.addAttribute(getEntitiesAtributeName(), entitiesResources);
-		return PathFragment.REDIRECT.getName() + getBaseViewPage();
+		return getAll(model);
 	}
 
 }

@@ -24,6 +24,18 @@ public class Administrator extends AbstractUser {
 
 	// MUTATEURS
 
+	/**
+	 * @param firstName
+	 * @param lastName
+	 * @param login
+	 * @param password
+	 * @param email
+	 * @param id
+	 */
+	public Administrator(String firstName, String lastName, String login, String password, String email) {
+		super(firstName, lastName, login, password, email);
+	}
+
 	public Long getId() {
 		return id;
 	}

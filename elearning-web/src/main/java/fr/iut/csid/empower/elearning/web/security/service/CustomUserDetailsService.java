@@ -102,8 +102,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 		if (user instanceof Administrator) {
 			logger.debug("User [" + user.getLogin() + "] is administrator");
 			// Tous les droits sur tout !
-			roles.add("ROLE_STUDENT");
-			roles.add("ROLE_TEACHER");
 			roles.add("ROLE_ADMIN");
 
 		} else if (user instanceof Teacher) {

@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment/common :: headerFragment">
+</head>
+<body>
+	<!-- admin -->
+	<div class="col-md-3 sidebar-offcanvas top-20" id="sidebar"
+		role="navigation">
+		<ul class="nav">
+			<li><a class="btn" href="/administrators"
+				th:href="@{/administrators}" role="button"><i class="glyphicon glyphicon-search"></i>
+					Administrateurs</a></li>
+			<li><a class="btn" href="/teachers"
+				th:href="@{/teachers}" role="button"><i
+					class="glyphicon glyphicon-search"></i> Enseignants</a></li>
+			<li><a class="btn" href="/students"
+				th:href="@{/students}" role="button"><i
+					class="glyphicon glyphicon-search"></i> Etudiants</a></li>
+		</ul>
+	</div>
+	<!-- teacher -->
+	<div class="container top-20" th:fragment="sidebar-teacher">
+		<div class="row row-offcanvas row-offcanvas-left">
+			<!-- sidebar -->
+			<div class="col-xs-4 col-sm-2 sidebar-offcanvas top-20" id="sidebar"
+				role="navigation">
+				<ul class="nav">
+					<li><a href="#">Link 1</a></li>
+					<li><a href="#">Link 2</a></li>
+					<li><a href="#">Link 3</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+</body>
+
+</html>

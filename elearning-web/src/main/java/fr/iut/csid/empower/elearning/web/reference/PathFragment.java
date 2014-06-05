@@ -6,18 +6,27 @@ package fr.iut.csid.empower.elearning.web.reference;
 public enum PathFragment {
 
 	// Racine des templates thymeleaf
-	BASE("pages/"), REDIRECT("redirect:/"),
-	// paths métier
-	NEW("new"), EDIT("edit"), DELETE("delete");
+	REDIRECT("redirect:/"),
+	// paths métier globaux (CRUD)
+	NEW("new"), EDIT("edit"), DELETE("delete"),
+	// Paths métiers spécifiques
+	// Student
+	COURSES("courses"),
+	// Paths communs
+	HOME("home"), DENIED("denied"),
+	// Tableaux de bord
+	ADMIN_DASHBOARD("dashboards/admindashboard"), STUDENT_DASHBOARD("dashboards/studentdashboard"), TEACHER_DASHBOARD("dashboards/teacherdashboard"),
+	//
+	;
 
-	private String name;
+	private String path;
 
-	private PathFragment(String name) {
-		this.name = name;
+	private PathFragment(String path) {
+		this.path = path;
 	}
 
-	public String getName() {
-		return name;
+	public String getPath() {
+		return path;
 	}
 
 }

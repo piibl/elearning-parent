@@ -8,7 +8,7 @@ import org.springframework.hateoas.Resource;
 import org.springframework.util.Assert;
 
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
-import fr.iut.csid.empower.elearning.web.controller.user.StudentController;
+import fr.iut.csid.empower.elearning.web.controller.entity.user.StudentController;
 import fr.iut.csid.empower.elearning.web.hateoas.AbstractResourceAssembler;
 import fr.iut.csid.empower.elearning.web.hateoas.ControllerLinkBuilderFactory;
 import fr.iut.csid.empower.elearning.web.reference.PathFragment;
@@ -36,12 +36,15 @@ public class StudentResourceAssembler extends AbstractResourceAssembler<Student,
 		// Adressage de tous les étudiants
 		Link studentsLink = linkBuilderFactory.linkTo(StudentController.class).withRel(Relation.STUDENTS.getName());
 		// Adressage pour la suppression d'un étudiant
-		Link deleteLink = linkBuilderFactory.linkTo(StudentController.class).slash(student.getId()).slash(PathFragment.DELETE.getName())
+		Link deleteLink = linkBuilderFactory.linkTo(StudentController.class).slash(student.getId()).slash(PathFragment.DELETE.getPath())
 				.withRel(Relation.DELETE.getName());
 		// Adressage pour la modification d'un étudiant
-		Link editLink = linkBuilderFactory.linkTo(StudentController.class).slash(student.getId()).slash(PathFragment.EDIT.getName())
+		Link editLink = linkBuilderFactory.linkTo(StudentController.class).slash(student.getId()).slash(PathFragment.EDIT.getPath())
 				.withRel(Relation.EDIT.getName());
-		return new Resource<Student>(student, selfLink, studentsLink, deleteLink, editLink);
+		// Adressage pour la visualisation des cours auxqueles est inscrit l'étudiant
+		Link coursesLink = linkBuilderFactory.linkTo(StudentController.class).slash(student.getId()).slash(PathFragment.COURSES.getPath())
+				.withRel(Relation.COURSES.getName());
+		return new Resource<Student>(student, selfLink, studentsLink, deleteLink, editLink, coursesLink);
 	}
 
 }

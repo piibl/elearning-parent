@@ -13,6 +13,6 @@ public class AccessController {
 	@RequestMapping(value = { "/denied" }, method = RequestMethod.GET)
 	public String getMainPage(Model model) {
 		// Retourne la page d'accès refusé
-		return PathFragment.BASE.getName() + "denied";
+		return PathFragment.DENIED.getPath();
 	}
 }

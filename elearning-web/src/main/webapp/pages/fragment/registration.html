@@ -7,12 +7,11 @@
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal"
 				aria-hidden="true">&times;</button>
+				<h3 class="modal-title">Formulaire d'inscription</h3>
 		</div>
 		<form th:action="@{/registration}" th:object="${studentStructure}"
 			method="post" role="form">
 			<div class="modal-body">
-				<legend th:text="#{form.registration.legend}">Formulaire
-					d'inscription</legend>
 
 				<div class="form-group">
 					<label for="firstName"
@@ -49,7 +48,7 @@
 				<div class="form-group">
 					<label for="pwd" th:text="#{form.registration.label.password}">Password</label>
 					<input type="password" th:field="*{password}" class="form-control"
-						id="pwd" placeholder="Rentre donc un mot de passe..."
+						id="pwd" placeholder="Mot de passe"
 						autofocus="autofocus" required="required" />
 				</div>
 			</div>

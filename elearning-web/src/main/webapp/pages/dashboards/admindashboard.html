@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment/common :: headerFragment">
+</head>
+
+
+<body>
+	<!-- navbar -->
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation"
+		th:include="fragment/navbars :: signed-navbar"></div>
+	<div class="container top-20">
+		<div class="row row-offcanvas row-offcanvas-left">
+			<!-- sidebar -->
+			<!-- admin -->
+			<div class="col-md-3 sidebar-offcanvas" id="sidebar"
+				role="navigation">
+				<ul class="nav">
+					<li><a class="btn displayLink" href="/administrators"
+						th:href="${administratorsLink.href}" role="button"><i
+							class="glyphicon glyphicon-search"></i> Administrateurs</a></li>
+					<li><a class="btn displayLink" href="/teachers"
+						th:href="${teachersLink.href}" role="button"><i
+							class="glyphicon glyphicon-search"></i> Enseignants</a></li>
+					<li><a class="btn displayLink" href="/students"
+						th:href="${studentsLink.href}" role="button"><i
+							class="glyphicon glyphicon-search"></i> Etudiants</a></li>
+				</ul>
+			</div>
+			<!-- Corps -->
+			<div class="col-md-9">
+			
+				<!-- Message Ajax -->
+				<div id="ajaxMessage"></div>
+				<!-- Contenu de la page -->
+				<div id="ajaxPanel">
+					<p>Bienvenue sur la plateforme E-Learning</p>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	<!-- Modal, si besoin -->
+	<div th:replace="fragment/common :: simple-modal"></div>
+
+	<footer th:include="fragment/common :: [//footer]"></footer>
+</body>
+</html>
