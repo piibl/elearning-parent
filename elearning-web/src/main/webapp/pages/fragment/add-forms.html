@@ -10,47 +10,37 @@
 				aria-hidden="true">&times;</button>
 			<h3 class="modal-title">Ajouter un enseignant</h3>
 		</div>
-		<form class="addForm" th:action="@{/teachers}"
-			th:object="${teacherStructure}" method="post" role="form">
+		<form class="addForm" th:action="@{/teachers}" method="post"
+			role="form">
 			<div class="modal-body">
 
 				<div class="form-group">
 					<label for="firstName"
 						th:text="#{form.registration.label.firstname}">Prénom</label> <input
-						type="text" th:field="*{firstName}" class="form-control"
-						autofocus="autofocus" required="required" placeholder="Bryan" />
-					<span class="help-block" th:if="${#fields.hasErrors('firstName')}"
-						th:errors="*{firstName}">Prénom incorrect</span>
+						type="text" class="form-control" autofocus="autofocus"
+						required="required" placeholder="God" />
 				</div>
 				<div class="form-group">
 					<label for="lastName" th:text="#{form.registration.label.lastname}">Nom
 						de famille</label> <input type="text" class="form-control" id="lastName"
-						placeholder="Singer" autofocus="autofocus" required="required"
-						th:field="*{lastName}" /> <span class="help-block"
-						th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Nom
-						incorrect</span>
+						placeholder="Zilla" autofocus="autofocus" required="required" />
 				</div>
 				<div class="form-group">
 					<label for="login" th:text="#{form.registration.label.login}">Login</label>
-					<input type="text" th:field="*{login}" class="form-control"
-						id="login" placeholder="BryanSinger123" autofocus="autofocus"
-						required="required" /> <span class="help-block"
-						th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Prénom
-						incorrect</span>
+					<input type="text" class="form-control" id="login"
+						placeholder="Godzilla123" autofocus="autofocus"
+						required="required" />
 				</div>
 				<div class="form-group">
 					<label for="email" th:text="#{form.registration.label.email}">Adresse
-						email</label> <input type="email" th:field="*{email}" class="form-control"
-						id="email" placeholder="bryan.singer123@trololo.com"
-						autofocus="autofocus" required="required" /> <span
-						class="help-block" th:if="${#fields.hasErrors('firstName')}"
-						th:errors="*{firstName}">Prénom incorrect</span>
+						email</label> <input type="email" class="form-control" id="email"
+						placeholder="god.zilla123@trololo.com" autofocus="autofocus"
+						required="required" />
 				</div>
 				<div class="form-group">
 					<label for="pwd" th:text="#{form.registration.label.password}">Password</label>
-					<input type="password" th:field="*{password}" class="form-control"
-						id="pwd" placeholder="Mot de passe" autofocus="autofocus"
-						required="required" />
+					<input type="password" class="form-control" id="pwd"
+						placeholder="G0j!Ra" autofocus="autofocus" required="required" />
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -66,38 +56,36 @@
 				aria-hidden="true">&times;</button>
 			<h3 class="modal-title">Ajouter un administrateur</h3>
 		</div>
-		<form class="addForm" th:action="@{/administrators}"
-			th:object="${administratorStructure}" method="post" role="form">
+		<form class="addForm" th:action="@{/administrators}" method="post"
+			role="form">
 			<div class="modal-body">
 				<div class="form-group">
 					<label for="firstName"
 						th:text="#{form.registration.label.firstname}">Prénom</label> <input
-						type="text" th:field="*{firstName}" class="form-control"
-						autofocus="autofocus" required="required" placeholder="Bryan" />
+						type="text" class="form-control" autofocus="autofocus"
+						required="required" placeholder="God" />
 				</div>
 				<div class="form-group">
 					<label for="lastName" th:text="#{form.registration.label.lastname}">Nom
 						de famille</label> <input type="text" class="form-control" id="lastName"
-						placeholder="Singer" autofocus="autofocus" required="required"
-						th:field="*{lastName}" />
+						placeholder="Zilla" autofocus="autofocus" required="required" />
 				</div>
 				<div class="form-group">
 					<label for="login" th:text="#{form.registration.label.login}">Login</label>
-					<input type="text" th:field="*{login}" class="form-control"
-						id="login" placeholder="BryanSinger123" autofocus="autofocus"
+					<input type="text" class="form-control" id="login"
+						placeholder="Godzilla123" autofocus="autofocus"
 						required="required" />
 				</div>
 				<div class="form-group">
 					<label for="email" th:text="#{form.registration.label.email}">Adresse
-						email</label> <input type="email" th:field="*{email}" class="form-control"
-						id="email" placeholder="bryan.singer123@trololo.com"
-						autofocus="autofocus" required="required" />
+						email</label> <input type="email" class="form-control" id="email"
+						placeholder="god.zilla123@trololo.com" autofocus="autofocus"
+						required="required" />
 				</div>
 				<div class="form-group">
 					<label for="pwd" th:text="#{form.registration.label.password}">Password</label>
-					<input type="password" th:field="*{password}" class="form-control"
-						id="pwd" placeholder="Mot de passe" autofocus="autofocus"
-						required="required" />
+					<input type="password" class="form-control" id="pwd"
+						placeholder="G0j!Ra" autofocus="autofocus" required="required" />
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -112,47 +100,37 @@
 				aria-hidden="true">&times;</button>
 			<h3 class="modal-title">Ajouter un étudiant</h3>
 		</div>
-		<form class="addForm" th:action="@{/students}"
-			th:object="${studentStructure}" method="post" role="form">
+		<form class="addForm" th:action="@{/students}" method="post"
+			role="form">
 			<div class="modal-body">
 
 				<div class="form-group">
 					<label for="firstName"
 						th:text="#{form.registration.label.firstname}">Prénom</label> <input
-						type="text" th:field="*{firstName}" class="form-control"
-						autofocus="autofocus" required="required" placeholder="Bryan" />
-					<span class="help-block" th:if="${#fields.hasErrors('firstName')}"
-						th:errors="*{firstName}">Prénom incorrect</span>
+						type="text" class="form-control" autofocus="autofocus"
+						required="required" placeholder="God" />
 				</div>
 				<div class="form-group">
 					<label for="lastName" th:text="#{form.registration.label.lastname}">Nom
 						de famille</label> <input type="text" class="form-control" id="lastName"
-						placeholder="Singer" autofocus="autofocus" required="required"
-						th:field="*{lastName}" /> <span class="help-block"
-						th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Nom
-						incorrect</span>
+						placeholder="Zilla" autofocus="autofocus" required="required" />
 				</div>
 				<div class="form-group">
 					<label for="login" th:text="#{form.registration.label.login}">Login</label>
-					<input type="text" th:field="*{login}" class="form-control"
-						id="login" placeholder="BryanSinger123" autofocus="autofocus"
-						required="required" /> <span class="help-block"
-						th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Prénom
-						incorrect</span>
+					<input type="text" class="form-control" id="login"
+						placeholder="Godzilla123" autofocus="autofocus"
+						required="required" />
 				</div>
 				<div class="form-group">
 					<label for="email" th:text="#{form.registration.label.email}">Adresse
-						email</label> <input type="email" th:field="*{email}" class="form-control"
-						id="email" placeholder="bryan.singer123@trololo.com"
-						autofocus="autofocus" required="required" /> <span
-						class="help-block" th:if="${#fields.hasErrors('firstName')}"
-						th:errors="*{firstName}">Prénom incorrect</span>
+						email</label> <input type="email" class="form-control" id="email"
+						placeholder="god.zilla123@trololo.com" autofocus="autofocus"
+						required="required" />
 				</div>
 				<div class="form-group">
 					<label for="pwd" th:text="#{form.registration.label.password}">Password</label>
-					<input type="password" th:field="*{password}" class="form-control"
-						id="pwd" placeholder="Mot de passe" autofocus="autofocus"
-						required="required" />
+					<input type="password" class="form-control" id="pwd"
+						placeholder="G0j!Ra" autofocus="autofocus" required="required" />
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -167,18 +145,17 @@
 				aria-hidden="true">&times;</button>
 			<h3 class="modal-title">Création d'un cours</h3>
 		</div>
-		<form class="addForm" th:action="@{/courses}"
-			th:object="${courseStructure}" method="post" role="form">
+		<form class="addForm" th:action="@{/courses}" method="post"
+			role="form">
 			<div class="modal-body">
 
 				<div class="form-group">
 					<label for="label">Intitulé du cours</label> <input type="text"
-						th:field="*{label}" class="form-control" autofocus="autofocus"
-						required="required"
-						placeholder="Mathématiques appliquées, Anglais avancé..." /> <span
-						class="help-block" th:if="${#fields.hasErrors('label')}"
-						th:errors="*{label}">label incorrect</span>
+						class="form-control" autofocus="autofocus" required="required"
+						placeholder="Mathématiques appliquées, Anglais avancé..." />
 				</div>
+				<!-- Champs caché permettant d'identifier le créateur du cours -->
+				<input type="hidden" name="ownerId" th:value="${teacher.content.id}">
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-primary btn-lg" role="button">Valider</button>

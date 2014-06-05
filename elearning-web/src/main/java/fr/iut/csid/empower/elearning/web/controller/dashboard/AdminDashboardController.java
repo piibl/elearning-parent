@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import fr.iut.csid.empower.elearning.web.controller.entity.course.CourseController;
 import fr.iut.csid.empower.elearning.web.controller.entity.user.AdministratorController;
 import fr.iut.csid.empower.elearning.web.controller.entity.user.StudentController;
 import fr.iut.csid.empower.elearning.web.controller.entity.user.TeacherController;
@@ -27,6 +28,11 @@ public class AdminDashboardController extends AbstractDashboardController {
 	@ModelAttribute("studentsLink")
 	public Link getStudentsLink() {
 		return linkBuilderFactory.linkTo(StudentController.class).withSelfRel();
+	}
+
+	@ModelAttribute("coursesLink")
+	public Link getCoursesLink() {
+		return linkBuilderFactory.linkTo(CourseController.class).withSelfRel();
 	}
 
 	@Override

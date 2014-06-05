@@ -154,7 +154,6 @@ $(document)
 				    'click',
 				    "a.addForm",
 				    function(event) {
-					alert("click on addForm link !");
 					event.preventDefault;
 					$("#modalContent").empty();
 

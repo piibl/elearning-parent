@@ -1,11 +1,11 @@
-package fr.iut.csid.empower.elearning.web.dto;
+package fr.iut.csid.empower.elearning.core.dto;
 
 import java.io.Serializable;
 
 /**
  * Objet tampon servant à la conversion Json -> Objet
  */
-public class UserDTO implements Serializable {
+public class UserDTO implements Serializable, IDTO {
 
 	private String firstName;
 

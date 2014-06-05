@@ -10,14 +10,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.Resource;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import fr.iut.csid.empower.elearning.core.dto.IDTO;
 import fr.iut.csid.empower.elearning.core.service.CrudService;
 import fr.iut.csid.empower.elearning.web.hateoas.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.hateoas.ControllerLinkBuilderFactory;
 
-public abstract class AbstractEntityController<T, X extends Serializable> {
+public abstract class AbstractEntityController<T, X extends Serializable, Y extends IDTO> {
 
 	private static final Logger logger = LoggerFactory.getLogger(AbstractEntityController.class);
 
@@ -30,7 +32,7 @@ public abstract class AbstractEntityController<T, X extends Serializable> {
 	/**
 	 * Retourne le service CRUD du type de l'entité cible
 	 */
-	protected abstract CrudService<T, X> getCrudService();
+	protected abstract CrudService<T, X, Y> getCrudService();
 
 	/**
 	 * Retourne l'assembleur de ressources associé au type de l'entité cible
@@ -88,6 +90,12 @@ public abstract class AbstractEntityController<T, X extends Serializable> {
 		return getBaseView();
 	}
 
+	/**
+	 * Retourne le formulaire de saisie d'une nouvelle instance
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String getAddForm(Model model) {
 		return getAddFormPath();
@@ -99,13 +107,13 @@ public abstract class AbstractEntityController<T, X extends Serializable> {
 	 * @param entity
 	 * @return
 	 */
-	// @RequestMapping(method = RequestMethod.POST)
-	// public String insertNewJSON(@RequestBody T entity) {
-	// logger.info("JSON submission");
-	// getCrudService().save(entity);
-	// // Retourne la vue de base
-	// return getBaseViewPage();
-	// }
+	@RequestMapping(method = RequestMethod.POST)
+	public String insertNewJSON(@RequestBody Y entityDTO, Model model) {
+		logger.info("JSON submission");
+		getCrudService().saveFromDTO(entityDTO);
+		// Alimenter le modèle avec la liste mise à jour
+		return getAll(model);
+	}
 
 	/**
 	 * Retourne l'entité correspondant à l'id cible

@@ -1,9 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head th:include="fragment/common :: headerFragment">
-<script>
-	
-</script>
 </head>
 
 
@@ -14,43 +11,33 @@
 	<div class="container top-20">
 		<div class="row row-offcanvas row-offcanvas-left">
 			<!-- sidebar -->
-			<div class="col-md-3 sidebar-offcanvas top-20" id="sidebar"
+			<!-- teacher -->
+			<div class="col-md-3 sidebar-offcanvas" id="sidebar"
 				role="navigation">
-				<ul class="nav">
-					<li><a class="btn" href="dashboard/cours"
-						th:href="@{/students/}" role="button"><i
-							class="glyphicon glyphicon-search"></i> Cours</a></li>
-					<!-- <li><a class="btn" href="/teachers"
-				th:href="@{/teachers}" role="button"><i
-					class="glyphicon glyphicon-plus"></i> Souscrire à un cours</a></li>
-			<li><a class="btn" href="/students"
-				th:href="@{/students}" role="button"><i
-					class="glyphicon glyphicon-search"></i></a></li> -->
+				<ul class="nav nav-pills nav-stacked">
+					<li><a class="displayLink" href="/courses"
+						th:href="${coursesAffiliationsLink.href}" role="button"><i
+							class="glyphicon glyphicon-chevron-right"></i>  Gérer les cours
+					</a></li>
+					<li><a class="displayLink" href="/courses"
+						th:href="${coursesLink.href}" role="button"><i
+							class="glyphicon glyphicon-chevron-right"></i>  Visualiser tous les cours </a></li>
+					<li><a class="displayLink" href="/new"
+						th:href="${newCourseLink.href}" role="button"><i
+							class="glyphicon glyphicon-chevron-right"></i>  Créer un cours </a></li>
 				</ul>
 			</div>
 			<!-- Corps -->
 			<div class="col-md-9">
-				<h4>Vous êtes connecté sous le compte <strong th:text="${login}">login</strong>.</h4>
-				<p th:if="${#lists.isEmpty(courses)}">Vous n'êtes inscrit à
-					aucun cours.</p>
-				<div class="row" th:unless="${#lists.isEmpty(courses)}">
-					<p>Vous êtes inscrit aux cours suivants :</p>
-					<div class="span10">
-						<table class="table table-striped table-hover">
-							<thead>
-								<th>Intitulé du cours</th>
-							</thead>
-							<tbody>
-								<tr th:each="course : ${courses}">
-									<td class="span6" th:text="${course.content.label}">Maths</td>
-									<td class="span2"><a class="render-partial"
-										href="./course.html" th:href="${course.getLink('self').href}"><i
-											class="glyphicon glyphicon-list-alt"></i></a></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+
+				<!-- Message Ajax -->
+				<div id="ajaxMessage"></div>
+				<!-- Contenu de la page -->
+				<div id="ajaxPanel">
+					<p>Bienvenue sur la plateforme E-Learning</p>
 				</div>
+
+
 			</div>
 		</div>
 	</div>

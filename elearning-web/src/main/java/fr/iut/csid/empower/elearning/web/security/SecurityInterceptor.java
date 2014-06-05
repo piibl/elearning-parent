@@ -17,26 +17,24 @@ import org.springframework.security.web.access.expression.WebSecurityExpressionR
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-public class SecurityInterceptor extends HandlerInterceptorAdapter
-{
+/**
+ * TODO à faire sauter <br/>
+ * Thymeleaf supporte maintenant un dialecte Security
+ */
+public class SecurityInterceptor extends HandlerInterceptorAdapter {
 	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception
-	{
-		if (modelAndView != null)
-		{
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+		if (modelAndView != null) {
 			ServletRequest req = (ServletRequest) request;
 			ServletResponse resp = (ServletResponse) response;
-			FilterInvocation filterInvocation = new FilterInvocation(req, resp, new FilterChain()
-			{
-				public void doFilter(ServletRequest request, ServletResponse response) throws IOException, ServletException
-				{
+			FilterInvocation filterInvocation = new FilterInvocation(req, resp, new FilterChain() {
+				public void doFilter(ServletRequest request, ServletResponse response) throws IOException, ServletException {
 					throw new UnsupportedOperationException();
 				}
 			});
 
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			if (authentication != null)
-			{
+			if (authentication != null) {
 				WebSecurityExpressionRoot sec = new WebSecurityExpressionRoot(authentication, filterInvocation);
 				sec.setTrustResolver(new AuthenticationTrustResolverImpl());
 				modelAndView.getModel().put("sec", sec);

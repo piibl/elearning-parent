@@ -22,6 +22,10 @@ public class Teacher extends AbstractUser {
 
 	}
 
+	public Teacher(String firstName, String lastName, String login, String password, String email) {
+		super(firstName, lastName, login, password, email);
+	}
+
 	// MUTATEURS
 
 	public Long getId() {

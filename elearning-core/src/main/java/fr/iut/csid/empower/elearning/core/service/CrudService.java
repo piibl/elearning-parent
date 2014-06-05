@@ -3,9 +3,25 @@ package fr.iut.csid.empower.elearning.core.service;
 import java.io.Serializable;
 import java.util.List;
 
-public interface CrudService<T, X extends Serializable> {
+import fr.iut.csid.empower.elearning.core.dto.IDTO;
 
+public interface CrudService<T, X extends Serializable, Y extends IDTO> {
+
+	/**
+	 * Sauvegarde une entité
+	 * 
+	 * @param entityToSave
+	 * @return
+	 */
 	public T save(T entityToSave);
+
+	/**
+	 * Crée et sauvegarde une entité à partir de son DTO
+	 * 
+	 * @param entityDTO
+	 * @return
+	 */
+	public T saveFromDTO(Y entityDTO);
 
 	/**
 	 * Sauvegarde une entité en utilisant une transaction indépendante

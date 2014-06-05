@@ -14,21 +14,25 @@
 			<!-- admin -->
 			<div class="col-md-3 sidebar-offcanvas" id="sidebar"
 				role="navigation">
-				<ul class="nav">
-					<li><a class="btn displayLink" href="/administrators"
+				<ul class="nav nav-pills nav-stacked">
+					<li><a class="displayLink" href="/administrators"
 						th:href="${administratorsLink.href}" role="button"><i
-							class="glyphicon glyphicon-search"></i> Administrateurs</a></li>
-					<li><a class="btn displayLink" href="/teachers"
+							class="glyphicon glyphicon-chevron-right"></i>  Gérer les administrateurs
+					</a></li>
+					<li><a class="displayLink" href="/teachers"
 						th:href="${teachersLink.href}" role="button"><i
-							class="glyphicon glyphicon-search"></i> Enseignants</a></li>
-					<li><a class="btn displayLink" href="/students"
+							class="glyphicon glyphicon-chevron-right"></i>  Gérer les enseignants </a></li>
+					<li><a class="displayLink" href="/students"
 						th:href="${studentsLink.href}" role="button"><i
-							class="glyphicon glyphicon-search"></i> Etudiants</a></li>
+							class="glyphicon glyphicon-chevron-right"></i>  Gérer les étudiants </a></li>
+					<li><a class="displayLink" href="/courses"
+						th:href="${coursesLink.href}" role="button"><i
+							class="glyphicon glyphicon-chevron-right"></i>  Gérer les cours </a></li>
 				</ul>
 			</div>
 			<!-- Corps -->
 			<div class="col-md-9">
-			
+
 				<!-- Message Ajax -->
 				<div id="ajaxMessage"></div>
 				<!-- Contenu de la page -->

@@ -4,10 +4,10 @@ import javax.inject.Inject;
 
 import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
+import fr.iut.csid.empower.elearning.core.dto.CourseDTO;
 import fr.iut.csid.empower.elearning.core.service.CourseService;
 import fr.iut.csid.empower.elearning.core.service.CrudService;
 import fr.iut.csid.empower.elearning.web.assembler.CourseResourceAssembler;
@@ -16,9 +16,10 @@ import fr.iut.csid.empower.elearning.web.hateoas.BatchResourceAssembler;
 
 @Controller
 @RequestMapping("/courses")
-public class CourseController extends AbstractEntityController<Course, Long> {
+public class CourseController extends AbstractEntityController<Course, Long, CourseDTO> {
 
-	private String mainView = "courses";
+	private String mainView = "display/courses :: display-courses";
+	private String detailsView = "display/courses :: display-details";
 	private String entitiesAttributeName = "courses";
 	private String singleEntityAttributeName = "course";
 	private String addForm = "fragment/add-forms :: add-course-form";
@@ -28,20 +29,9 @@ public class CourseController extends AbstractEntityController<Course, Long> {
 
 	@Inject
 	private CourseResourceAssembler courseResourceAssembler;
-	private String detailsView;
-
-	@ModelAttribute("courseStructure")
-	public Course getCourseStructure() {
-		return new Course();
-	}
-
-	// @Inject
-	// private ControllerLinkBuilderFactory linkBuilderFactory;
-
-	// private Logger logger = LoggerFactory.getLogger(StudentController.class);
 
 	@Override
-	protected CrudService<Course, Long> getCrudService() {
+	protected CrudService<Course, Long, CourseDTO> getCrudService() {
 		return courseService;
 	}
 
