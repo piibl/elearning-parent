@@ -48,6 +48,24 @@
 						</table>
 					</div>
 				</div>
+				<div class="row" th:unless="${#lists.isEmpty(availableCourses)}">
+					<p>Vous pouvez vous inscrire aux cours suivants :</p>
+					<div class="span10">
+						<table class="table table-striped table-hover">
+							<thead>
+								<th>Intitulé du cours</th>
+							</thead>
+							<tbody>
+								<tr th:each="course : ${availableCourses}">
+									<td class="span6" th:text="${course.content.label}">Maths</td>
+									<td class="span2"><a class="render-partial"
+										href="./course.html" th:href="${course.getLink('self').href}"><i
+											class="glyphicon glyphicon-list-alt"></i></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
