@@ -54,7 +54,7 @@ public class CourseServiceImplTest {
 		courseDTO.setOwnerId("1");
 
 		// Process
-		Course course = courseService.createCourse(courseDTO);
+		Course course = courseService.createFromDTO(courseDTO);
 
 		// Assert
 		Assert.assertNotNull(course);
@@ -73,7 +73,7 @@ public class CourseServiceImplTest {
 		courseDTO.setOwnerId("1");
 
 		// Process
-		courseService.createCourse(courseDTO);
+		courseService.createFromDTO(courseDTO);
 	}
 
 	@Test(expected = NumberFormatException.class)
@@ -85,7 +85,7 @@ public class CourseServiceImplTest {
 		courseDTO.setOwnerId("gh<ksgk<");
 
 		// Process
-		courseService.createCourse(courseDTO);
+		courseService.createFromDTO(courseDTO);
 	}
 
 	@Test

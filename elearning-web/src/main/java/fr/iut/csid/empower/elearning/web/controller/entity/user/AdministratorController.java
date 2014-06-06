@@ -22,7 +22,8 @@ public class AdministratorController extends AbstractEntityController<Administra
 	private String detailsView = "display/administrators :: display-details";
 	private String entitiesAttributeName = "administrators";
 	private String singleEntityAttributeName = "administrator";
-	private String addForm = "fragment/add-forms :: add-administrator-form";
+	private String addForm = "forms/add-forms :: add-administrator-form";
+	private String editForm = "forms/edit-forms :: edit-administrator-form";
 
 	@Inject
 	private AdministratorService administratorService;
@@ -63,5 +64,10 @@ public class AdministratorController extends AbstractEntityController<Administra
 	@Override
 	protected String getDetailsView() {
 		return detailsView;
+	}
+
+	@Override
+	protected String getEditFormPath() {
+		return editForm;
 	}
 }

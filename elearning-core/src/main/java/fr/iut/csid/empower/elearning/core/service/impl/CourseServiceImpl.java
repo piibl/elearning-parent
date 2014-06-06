@@ -39,15 +39,9 @@ public class CourseServiceImpl extends AbstractCrudService<Course, Long> impleme
 		return courseDAO;
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED)
-	public Course saveFromDTO(CourseDTO entityDTO) {
-		Course course = new Course(entityDTO.getLabel());
-		return courseDAO.save(course);
-	}
-
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { UserNotExistsException.class, NumberFormatException.class })
-	public Course createCourse(CourseDTO courseDTO) {
+	public Course createFromDTO(CourseDTO courseDTO) {
 		// Création d'un cours et save pour obtenir un id
 		Course course = new Course(courseDTO.getLabel());
 		course = courseDAO.save(course);
@@ -63,6 +57,18 @@ public class CourseServiceImpl extends AbstractCrudService<Course, Long> impleme
 			// Pas d'enseignant associé à cet id
 			throw new UserNotExistsException();
 		}
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public Course saveFromDTO(CourseDTO entityDTO, Long id) {
+		Course course = courseDAO.findOne(id);
+		if (course != null) {
+			// Pas de questions, on reporte tous les changements
+			course.setLabel(entityDTO.getLabel());
+			return courseDAO.save(course);
+		} else
+			throw new CourseNotExistsException();
+
 	}
 
 	@Override

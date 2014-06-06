@@ -8,6 +8,8 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.Resource;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -68,11 +70,18 @@ public abstract class AbstractEntityController<T, X extends Serializable, Y exte
 	protected abstract String getSingleEntityAtributeName();
 
 	/**
-	 * Retourne le nom de l'attribut associé à une seule entité du type cible
+	 * Retourne le path du formulaire d'ajout
 	 * 
 	 * @return
 	 */
 	protected abstract String getAddFormPath();
+
+	/**
+	 * Retourne le path du formulaire de modification
+	 * 
+	 * @return
+	 */
+	protected abstract String getEditFormPath();
 
 	/**
 	 * Vue globale, affiche tous les éléments du type de l'entité
@@ -91,26 +100,26 @@ public abstract class AbstractEntityController<T, X extends Serializable, Y exte
 	}
 
 	/**
-	 * Retourne le formulaire de saisie d'une nouvelle instance
+	 * Retourne le formulaire de saisie d'une nouvelle instance <br/>
+	 * Si recquiert l'utilisation du profil de l'utilisateur courant, surcharger la méthode dans la classe concrète.
 	 * 
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String getAddForm(Model model) {
+	public String getAddForm(Model model, @AuthenticationPrincipal User user) {
 		return getAddFormPath();
 	}
 
 	/**
-	 * Soumission via json
+	 * Demande de création
 	 * 
 	 * @param entity
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public String insertNewJSON(@RequestBody Y entityDTO, Model model) {
-		logger.info("JSON submission");
-		getCrudService().saveFromDTO(entityDTO);
+		getCrudService().createFromDTO(entityDTO);
 		// Alimenter le modèle avec la liste mise à jour
 		return getAll(model);
 	}
@@ -129,6 +138,38 @@ public abstract class AbstractEntityController<T, X extends Serializable, Y exte
 		model.addAttribute(getSingleEntityAtributeName(), resource);
 		logger.info("getDetails calls : [" + getDetailsView() + "]");
 		return getDetailsView();
+	}
+
+	/**
+	 * Retourne le formulaire d'édition associé à l'instance
+	 * 
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/{entityId}/edit", method = RequestMethod.GET)
+	public String editEntity(@PathVariable("entityId") X id, Model model) {
+		Resource<T> resource = getResourceAssembler().toResource(getCrudService().find(id));
+		// TODO externalisation / personnalisation selon entités
+		// Message de suppression
+		// Construction des liens d'action et mise en container
+		// Le container contient à la fois l'objet cible et les liens des ressources afférentes
+		model.addAttribute(getSingleEntityAtributeName(), resource);
+		return getEditFormPath();
+	}
+
+	/**
+	 * demande de modification
+	 * 
+	 * @param entity
+	 * @return
+	 */
+	@RequestMapping(value = "/{entityId}/edit", method = RequestMethod.POST)
+	public String updateJSON(@RequestBody Y entityDTO, @PathVariable("entityId") X id, Model model) {
+		logger.info("JSON submission");
+		getCrudService().saveFromDTO(entityDTO, id);
+		// Alimenter le modèle avec la liste mise à jour
+		return getAll(model);
 	}
 
 	/**

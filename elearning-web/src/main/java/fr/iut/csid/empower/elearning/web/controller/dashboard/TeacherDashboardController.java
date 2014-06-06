@@ -27,7 +27,14 @@ public class TeacherDashboardController extends AbstractDashboardController {
 		// Recherche de l'utilisateur
 		Teacher teacher = teacherService.findByLogin(principal.getName());
 		// TODO nullcheck sur entité. Le cas ne devrait pas se produire, mais sait-on jamais...
-		return linkBuilderFactory.linkTo(CourseController.class).slash("?teacher=" + teacher.getId()).withSelfRel();
+		return linkBuilderFactory.linkTo(CourseController.class).slash(Relation.SEARCH.getName()).slash(teacher.getId()).withSelfRel();
+	}
+
+	@ModelAttribute("currentTeacher")
+	public Teacher getCurrentTeacher(Principal principal) {
+		// Quick'n'dirty encore, un art de vivre
+		// TODO null check... au cas où, hein....
+		return teacherService.findByLogin(principal.getName());
 	}
 
 	@ModelAttribute("coursesLink")

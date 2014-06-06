@@ -50,7 +50,11 @@
 								<td class="span2"><a class="detailsLink" href="./view.html"
 									th:href="${administrator.getLink('self').href}"><i
 										class="glyphicon glyphicon-list-alt"></i></a></td>
-								<td class="span2"><a class="deleteLink"
+								<td sec:authorize="hasRole('ROLE_ADMIN')" class="span2"><a class="editLink"
+									href="./edit.html"
+									th:href="${administrator.getLink('edit').href}"><i
+										class="glyphicon glyphicon-pencil"></i></a></td>
+								<td sec:authorize="hasRole('ROLE_ADMIN')" class="span2"><a class="deleteLink"
 									href="./delete.html"
 									th:href="${administrator.getLink('delete').href}"><i
 										class="glyphicon glyphicon-remove"></i></a></td>

@@ -22,7 +22,8 @@ public class TeacherController extends AbstractEntityController<Teacher, Long, U
 	private String detailsView = "display/teachers :: display-details";
 	private String entitiesAttributeName = "teachers";
 	private String singleEntityAttributeName = "teacher";
-	private String addForm = "fragment/add-forms :: add-teacher-form";
+	private String addForm = "forms/add-forms :: add-teacher-form";
+	private String editForm = "forms/edit-forms :: edit-teacher-form";
 
 	@Inject
 	private TeacherService teacherService;
@@ -63,5 +64,10 @@ public class TeacherController extends AbstractEntityController<Teacher, Long, U
 	@Override
 	protected String getDetailsView() {
 		return detailsView;
+	}
+
+	@Override
+	protected String getEditFormPath() {
+		return editForm;
 	}
 }

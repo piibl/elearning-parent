@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.iut.csid.empower.elearning.core.domain.user.Teacher;
 import fr.iut.csid.empower.elearning.core.dto.UserDTO;
+import fr.iut.csid.empower.elearning.core.exception.UserNotExistsException;
 import fr.iut.csid.empower.elearning.core.service.TeacherService;
 import fr.iut.csid.empower.elearning.core.service.dao.user.TeacherDAO;
 
@@ -36,12 +37,29 @@ public class TeacherServiceImpl extends AbstractCrudService<Teacher, Long> imple
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public Teacher saveFromDTO(UserDTO entityDTO) {
+	public Teacher createFromDTO(UserDTO entityDTO) {
 		logger.info("Try saving entityDTO [" + entityDTO.toString() + "] : [" + entityDTO.getFirstName() + "][" + entityDTO.getLastName() + "]["
 				+ entityDTO.getLogin() + "][" + entityDTO.getPassword() + "][" + entityDTO.getEmail() + "]");
 		Teacher teacher = new Teacher(entityDTO.getFirstName(), entityDTO.getLastName(), entityDTO.getLogin(), entityDTO.getPassword(),
 				entityDTO.getEmail());
 		return teacherDAO.save(teacher);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public Teacher saveFromDTO(UserDTO entityDTO, Long id) {
+		Teacher teacher = teacherDAO.findOne(id);
+		if (teacher != null) {
+			// Pas de questions, on reporte tous les changements
+			teacher.setFirstName(entityDTO.getFirstName());
+			teacher.setLastName(entityDTO.getLastName());
+			teacher.setLogin(entityDTO.getLogin());
+			teacher.setEmail(entityDTO.getEmail());
+			// TODO ??? sécurité ???
+			teacher.setPassword(entityDTO.getPassword());
+			return teacherDAO.save(teacher);
+		} else
+			throw new UserNotExistsException();
+
 	}
 
 }

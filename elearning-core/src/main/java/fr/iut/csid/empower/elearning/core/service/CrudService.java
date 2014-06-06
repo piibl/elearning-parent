@@ -21,7 +21,15 @@ public interface CrudService<T, X extends Serializable, Y extends IDTO> {
 	 * @param entityDTO
 	 * @return
 	 */
-	public T saveFromDTO(Y entityDTO);
+	public T createFromDTO(Y entityDTO);
+
+	/**
+	 * met à jour et sauvegarde une entité à partir de son DTO
+	 * 
+	 * @param entityDTO
+	 * @return
+	 */
+	public T saveFromDTO(Y entityDTO, X id);
 
 	/**
 	 * Sauvegarde une entité en utilisant une transaction indépendante
