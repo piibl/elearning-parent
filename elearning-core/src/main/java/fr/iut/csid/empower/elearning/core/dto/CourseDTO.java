@@ -10,9 +10,9 @@ public class CourseDTO implements Serializable, IDTO {
 	private String label;
 
 	/**
-	 * Identifiant du créateur du cours
+	 * Identifiant du créateur du cours au format chaine de caractère
 	 */
-	private Long ownerId;
+	private String ownerId;
 
 	public String getLabel() {
 		return label;
@@ -22,11 +22,11 @@ public class CourseDTO implements Serializable, IDTO {
 		this.label = label;
 	}
 
-	public Long getOwnerId() {
+	public String getOwnerId() {
 		return ownerId;
 	}
 
-	public void setOwnerId(Long ownerId) {
+	public void setOwnerId(String ownerId) {
 		this.ownerId = ownerId;
 	}
 

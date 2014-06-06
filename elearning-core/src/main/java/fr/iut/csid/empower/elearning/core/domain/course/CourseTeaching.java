@@ -18,7 +18,6 @@ import fr.iut.csid.empower.elearning.core.util.converter.time.DateTimeConverter;
 
 /**
  * Association cours - enseignant réprésentant l'enseignement d'un cours par un professeur
- * 
  */
 @Entity
 @Table(name = "COURSE_TEACHING")
@@ -45,8 +44,8 @@ public class CourseTeaching {
 	private Course course;
 
 	/**
-	* Date d'affiliation
-	*/
+	 * Date d'affiliation
+	 */
 	@Column(name = "SUBSCRIPTION_DATE", columnDefinition = "TIMESTAMP")
 	@Convert(converter = DateTimeConverter.class)
 	private DateTime subscriptionDate;
