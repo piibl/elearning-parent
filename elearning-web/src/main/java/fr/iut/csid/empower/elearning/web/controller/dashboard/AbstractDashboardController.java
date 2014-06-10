@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import fr.iut.csid.empower.elearning.web.hateoas.ControllerLinkBuilderFactory;
+import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilderFactory;
 
 public abstract class AbstractDashboardController {
 

@@ -7,12 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
-import fr.iut.csid.empower.elearning.core.dto.UserDTO;
+import fr.iut.csid.empower.elearning.core.dto.impl.UserDTO;
 import fr.iut.csid.empower.elearning.core.service.CrudService;
 import fr.iut.csid.empower.elearning.core.service.StudentService;
-import fr.iut.csid.empower.elearning.web.assembler.StudentResourceAssembler;
 import fr.iut.csid.empower.elearning.web.controller.entity.AbstractEntityController;
-import fr.iut.csid.empower.elearning.web.hateoas.BatchResourceAssembler;
+import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
+import fr.iut.csid.empower.elearning.web.link.assembler.StudentResourceAssembler;
 
 @Controller
 @RequestMapping("/students")

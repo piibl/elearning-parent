@@ -1,8 +1,8 @@
-package fr.iut.csid.empower.elearning.core.service.dao.planning;
+package fr.iut.csid.empower.elearning.core.service.dao.campus.planning;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import fr.iut.csid.empower.elearning.core.domain.planning.PlanningEvent;
+import fr.iut.csid.empower.elearning.core.domain.campus.planning.PlanningEvent;
 
 /**
  * PlanningEvent Event DAO

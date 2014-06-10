@@ -13,7 +13,7 @@ public enum Relation {
 	// Utilisateurs
 	STUDENTS("students"), ADMINISTRATORS("administrators"), TEACHERS("teachers"),
 	// Cours
-	COURSES("courses");
+	COURSES("courses"), SESSIONS("sessions");
 
 	private String name;
 

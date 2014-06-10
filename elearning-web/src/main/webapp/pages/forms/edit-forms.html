@@ -10,21 +10,22 @@
 				aria-hidden="true">&times;</button>
 			<h3 class="modal-title">Modification d'un enseignant</h3>
 		</div>
-		<form class="editForm" th:action="${teacher.getLink('edit').href}" method="post"
-			role="form">
+		<form class="editForm" th:action="${teacher.getLink('edit').href}"
+			method="post" role="form">
 			<div class="modal-body">
 
 				<div class="form-group">
 					<label for="firstName"
 						th:text="#{form.registration.label.firstname}">Prénom</label> <input
 						name="firstName" type="text" class="form-control"
-						autofocus="autofocus" required="required" th:placeholder="${teacher.content.firstName}" />
+						autofocus="autofocus" required="required"
+						th:placeholder="${teacher.content.firstName}" />
 				</div>
 				<div class="form-group">
 					<label for="lastName" th:text="#{form.registration.label.lastname}">Nom
 						de famille</label> <input name="lastName" type="text" class="form-control"
-						id="lastName" th:placeholder="${teacher.content.lastName}" autofocus="autofocus"
-						required="required" />
+						id="lastName" th:placeholder="${teacher.content.lastName}"
+						autofocus="autofocus" required="required" />
 				</div>
 				<div class="form-group">
 					<label for="email" th:text="#{form.registration.label.email}">Adresse
@@ -45,29 +46,31 @@
 				aria-hidden="true">&times;</button>
 			<h3 class="modal-title">Modification d'un profil administrateur</h3>
 		</div>
-		<form class="editForm" th:action="${administrator.getLink('edit').href}" method="post"
+		<form class="editForm"
+			th:action="${administrator.getLink('edit').href}" method="post"
 			role="form">
 			<div class="modal-body">
 				<div class="form-group">
 					<label for="firstName"
 						th:text="#{form.registration.label.firstname}">Prénom</label> <input
 						name="firstName" type="text" class="form-control"
-						autofocus="autofocus" required="required" th:placeholder="${administrator.content.firstName}" />
+						autofocus="autofocus" required="required"
+						th:placeholder="${administrator.content.firstName}" />
 				</div>
 				<div class="form-group">
 					<label for="lastName" th:text="#{form.registration.label.lastname}">Nom
 						de famille</label> <input name="lastName" type="text" class="form-control"
-						id="lastName" th:placeholder="${administrator.content.lastName}" autofocus="autofocus"
-						required="required" />
+						id="lastName" th:placeholder="${administrator.content.lastName}"
+						autofocus="autofocus" required="required" />
 				</div>
-			
+
 				<div class="form-group">
 					<label for="email" th:text="#{form.registration.label.email}">Adresse
 						email</label><input name="email" type="email" class="form-control"
 						id="email" th:placeholder="${administrator.content.email}"
 						autofocus="autofocus" required="required" />
 				</div>
-				
+
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-primary btn-lg" role="button">Valider</button>
@@ -81,21 +84,22 @@
 				aria-hidden="true">&times;</button>
 			<h3 class="modal-title">Modification d'un profil étudiant</h3>
 		</div>
-		<form class="editForm" th:action="${student.getLink('edit').href}" method="post"
-			role="form">
+		<form class="editForm" th:action="${student.getLink('edit').href}"
+			method="post" role="form">
 			<div class="modal-body">
 
 				<div class="form-group">
 					<label for="firstName"
 						th:text="#{form.registration.label.firstname}">Prénom</label> <input
 						name="firstName" type="text" class="form-control"
-						autofocus="autofocus" required="required" th:placeholder="${student.content.firstName}" />
+						autofocus="autofocus" required="required"
+						th:placeholder="${student.content.firstName}" />
 				</div>
 				<div class="form-group">
 					<label for="lastName" th:text="#{form.registration.label.lastname}">Nom
 						de famille</label> <input name="lastName" type="text" class="form-control"
-						id="lastName" th:placeholder="${student.content.lastName}" autofocus="autofocus"
-						required="required" />
+						id="lastName" th:placeholder="${student.content.lastName}"
+						autofocus="autofocus" required="required" />
 				</div>
 				<div class="form-group">
 					<label for="email" th:text="#{form.registration.label.email}">Adresse
@@ -128,6 +132,34 @@
 				<!-- 				<div class="form-group"> -->
 				<!-- 					<input name="ownerId" type="hidden" th:value="${currentTeacher.id}" /> -->
 				<!-- 				</div> -->
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary btn-lg" role="button">Valider
+					les modifications</button>
+			</div>
+		</form>
+	</div>
+	<!-- Formulaire d'édition session -->
+	<div th:fragment="edit-session-form">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+			<h3 class="modal-title">Modifier une session</h3>
+		</div>
+		<form class="editForm"
+			th:action="${courseSession.getLink('edit').href}" method="post"
+			role="form">
+			<div class="modal-body">
+
+				<div class="form-group">
+					<label for="label">Nouvel intitulé</label><input name="label"
+						type="text" class="form-control" autofocus="autofocus"
+						required="required"
+						th:placeholder="${courseSession.content.label}" />
+				</div>
+				<div class="form-group">
+					<input name="ownerId" type="hidden" th:value="${ownerEntity.id}" />
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-primary btn-lg" role="button">Valider

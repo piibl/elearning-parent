@@ -1,6 +1,8 @@
-package fr.iut.csid.empower.elearning.core.dto;
+package fr.iut.csid.empower.elearning.core.dto.impl;
 
 import java.io.Serializable;
+
+import fr.iut.csid.empower.elearning.core.dto.IDTO;
 
 /**
  * Objet tampon servant à la conversion Json -> Objet

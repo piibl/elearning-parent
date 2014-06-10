@@ -10,13 +10,12 @@ public enum PathFragment {
 	// paths métier globaux (CRUD)
 	NEW("new"), EDIT("edit"), DELETE("delete"),
 	// Paths métiers spécifiques
-	// Student
-	COURSES("courses"),
+	COURSES("courses"), SESSIONS("sessions"), SUBSCRIBE("subscribe"),
 	// Paths communs
 	HOME("home"), DENIED("denied"),
 	// Tableaux de bord
 	ADMIN_DASHBOARD("dashboards/admindashboard"), STUDENT_DASHBOARD("dashboards/studentdashboard"), TEACHER_DASHBOARD("dashboards/teacherdashboard"),
-	//
+
 	;
 
 	private String path;

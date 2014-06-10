@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.iut.csid.empower.elearning.core.domain.user.Teacher;
-import fr.iut.csid.empower.elearning.core.dto.UserDTO;
+import fr.iut.csid.empower.elearning.core.dto.impl.UserDTO;
 import fr.iut.csid.empower.elearning.core.exception.UserNotExistsException;
 import fr.iut.csid.empower.elearning.core.service.TeacherService;
 import fr.iut.csid.empower.elearning.core.service.dao.user.TeacherDAO;

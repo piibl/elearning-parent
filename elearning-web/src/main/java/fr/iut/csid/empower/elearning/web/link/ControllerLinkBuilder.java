@@ -1,4 +1,4 @@
-package fr.iut.csid.empower.elearning.web.hateoas;
+package fr.iut.csid.empower.elearning.web.link;
 
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.Assert;

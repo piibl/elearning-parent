@@ -1,6 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head th:include="fragment/common :: headerFragment">
+
 </head>
 
 <body>
@@ -8,12 +9,6 @@
 		<div class="row row-offcanvas row-offcanvas-left">
 			<!-- Le cadre de rendu est délégué au template appelant -->
 			<div th:fragment="display-courses">
-				<div th:if="${course}" class="alert alert-sucess alert-dismissable">
-					<button class="close" aria-hidden="true" data-dismiss="alert"
-						type="button">×</button>
-					Le cours <strong th:text="${course.label}">label</strong> a bien
-					été crée.
-				</div>
 				<!-- Boutons d'action -->
 				<ul class="nav nav-pills">
 					<li sec:authorize="hasRole('ROLE_TEACHER')"><a
@@ -47,8 +42,11 @@
 									<td class="span2"><a class="detailsLink"
 										href="./view.html" th:href="${course.getLink('self').href}"><i
 											class="glyphicon glyphicon-list-alt"></i></a></td>
-									<td class="span2"><a class="editLink"
-										href="./view.html" th:href="${course.getLink('edit').href}"><i
+									<td class="span2"><a class="sessionsLink" href="./sessions.html"
+										th:href="${course.getLink('sessions').href}"><i
+											class="glyphicon glyphicon-tags"></i></a></td>
+									<td class="span2"><a class="editLink" href="./edit.html"
+										th:href="${course.getLink('edit').href}"><i
 											class="glyphicon glyphicon-pencil"></i></a></td>
 									<td class="span2"><a class="deleteLink"
 										href="./delete.html"
@@ -73,8 +71,8 @@
 									<td class="span2"><a class="detailsLink"
 										href="./view.html" th:href="${course.getLink('self').href}"><i
 											class="glyphicon glyphicon-list-alt"></i></a></td>
-									<td class="span2"><a sec:authorize="hasRole('ROLE_ADMIN')" class="deleteLink"
-										href="./delete.html"
+									<td class="span2"><a sec:authorize="hasRole('ROLE_ADMIN')"
+										class="deleteLink" href="./delete.html"
 										th:href="${course.getLink('delete').href}"><i
 											class="glyphicon glyphicon-remove"></i></a></td>
 								</tr>

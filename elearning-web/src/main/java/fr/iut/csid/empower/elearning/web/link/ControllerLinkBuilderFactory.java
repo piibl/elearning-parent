@@ -1,4 +1,4 @@
-package fr.iut.csid.empower.elearning.web.hateoas;
+package fr.iut.csid.empower.elearning.web.link;
 
 import javax.inject.Named;
 

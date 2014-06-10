@@ -1,4 +1,4 @@
-package fr.iut.csid.empower.elearning.web.assembler;
+package fr.iut.csid.empower.elearning.web.link.assembler;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -9,8 +9,8 @@ import org.springframework.util.Assert;
 
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.web.controller.entity.course.CourseController;
-import fr.iut.csid.empower.elearning.web.hateoas.AbstractResourceAssembler;
-import fr.iut.csid.empower.elearning.web.hateoas.ControllerLinkBuilderFactory;
+import fr.iut.csid.empower.elearning.web.link.AbstractResourceAssembler;
+import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilderFactory;
 import fr.iut.csid.empower.elearning.web.reference.PathFragment;
 import fr.iut.csid.empower.elearning.web.reference.Relation;
 
@@ -29,22 +29,25 @@ public class CourseResourceAssembler extends AbstractResourceAssembler<Course, R
 	}
 
 	@Override
-	public Resource<Course> toResource(Course administrator) {
-		Assert.notNull(administrator);
+	public Resource<Course> toResource(Course course) {
+		Assert.notNull(course);
 		// Adressage d'un cours
-		Link selfLink = linkBuilderFactory.linkTo(CourseController.class).slash(administrator.getId()).withRel(Relation.SELF.getName());
+		Link selfLink = linkBuilderFactory.linkTo(CourseController.class).slash(course.getId()).withRel(Relation.SELF.getName());
 		// Adressage de tous les cours
-		Link studentsLink = linkBuilderFactory.linkTo(CourseController.class).withRel(Relation.COURSES.getName());
+		Link coursesLink = linkBuilderFactory.linkTo(CourseController.class).withRel(Relation.COURSES.getName());
 		// Adressage pour la suppression d'un cours
-		Link deleteLink = linkBuilderFactory.linkTo(CourseController.class).slash(administrator.getId()).slash(PathFragment.DELETE.getPath())
+		Link deleteLink = linkBuilderFactory.linkTo(CourseController.class).slash(course.getId()).slash(PathFragment.DELETE.getPath())
 				.withRel(Relation.DELETE.getName());
 		// Adressage pour la modification d'un cours
-		Link editLink = linkBuilderFactory.linkTo(CourseController.class).slash(administrator.getId()).slash(PathFragment.EDIT.getPath())
+		Link editLink = linkBuilderFactory.linkTo(CourseController.class).slash(course.getId()).slash(PathFragment.EDIT.getPath())
 				.withRel(Relation.EDIT.getName());
+		// Adressage pour accéder aux sessions d'un cours
+		Link sessionsLink = linkBuilderFactory.linkTo(CourseController.class).slash(course.getId()).slash(PathFragment.SESSIONS.getPath())
+				.withRel(Relation.SESSIONS.getName());
 		// TODO chapitres
 		// TODO notes
 		// TODO étudiants / profs rattachés
-		return new Resource<Course>(administrator, selfLink, studentsLink, deleteLink, editLink);
+		return new Resource<Course>(course, selfLink, coursesLink, deleteLink, editLink, sessionsLink);
 	}
 
 }

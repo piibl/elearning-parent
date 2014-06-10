@@ -3,7 +3,7 @@ package fr.iut.csid.empower.elearning.core.service;
 import java.util.List;
 
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
-import fr.iut.csid.empower.elearning.core.dto.CourseDTO;
+import fr.iut.csid.empower.elearning.core.dto.impl.CourseDTO;
 
 public interface CourseService extends CrudService<Course, Long, CourseDTO> {
 

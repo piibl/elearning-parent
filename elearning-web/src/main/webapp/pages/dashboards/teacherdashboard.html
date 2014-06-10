@@ -17,23 +17,16 @@
 				<ul class="nav nav-pills nav-stacked">
 					<li><a class="displayLink" href="/courses"
 						th:href="${coursesAffiliationsLink.href}" role="button"><i
-							class="glyphicon glyphicon-chevron-right"></i>  Gérer les cours
+							class="glyphicon glyphicon-chevron-right"></i>  Gérer vos cours
 					</a></li>
-					<li><a class="displayLink" href="/courses"
-						th:href="${coursesLink.href}" role="button"><i
-							class="glyphicon glyphicon-chevron-right"></i>  Visualiser tous les cours </a></li>
+					<li><a href="#"
+						 role="button"><i
+							class="glyphicon glyphicon-chevron-right"></i> Emploi du temps
+					</a></li>
 				</ul>
 			</div>
 			<!-- Corps -->
-			<div class="col-md-9">
-
-				<!-- Message Ajax -->
-				<div id="ajaxMessage"></div>
-				<!-- Contenu de la page -->
-				<div id="ajaxPanel">
-					<p>Bienvenue sur la plateforme E-Learning</p>
-				</div>
-
+			<div class="col-md-9" th:include="fragment/common :: ajax-content">
 
 			</div>
 		</div>

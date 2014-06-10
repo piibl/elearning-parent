@@ -9,11 +9,8 @@ import fr.iut.csid.empower.elearning.core.domain.campus.ClassRoom;
 
 /**
  * Salle DAO
- * 
- * @author Pierre_pers
- * 
  */
-public interface RoomDAO extends JpaRepository<ClassRoom, Long> {
+public interface ClassRoomDAO extends JpaRepository<ClassRoom, Long> {
 
 	/**
 	 * Retourne toutes les salles non rattachées à un ou plusieurs cours

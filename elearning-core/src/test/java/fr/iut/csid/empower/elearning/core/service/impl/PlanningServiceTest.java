@@ -12,7 +12,7 @@ public class PlanningServiceTest {
 //	private PlanningEventDAO planningDAOMock;
 //	
 //	@Mock
-//	private RoomDAO roomDAOMock;
+//	private ClassRoomDAO roomDAOMock;
 //	
 //	@Resource
 //	@InjectMocks

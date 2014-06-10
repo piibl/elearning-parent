@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.iut.csid.empower.elearning.core.domain.user.Administrator;
-import fr.iut.csid.empower.elearning.core.dto.UserDTO;
+import fr.iut.csid.empower.elearning.core.dto.impl.UserDTO;
 import fr.iut.csid.empower.elearning.core.exception.UserNotExistsException;
 import fr.iut.csid.empower.elearning.core.service.AdministratorService;
 import fr.iut.csid.empower.elearning.core.service.dao.user.AdministratorDAO;

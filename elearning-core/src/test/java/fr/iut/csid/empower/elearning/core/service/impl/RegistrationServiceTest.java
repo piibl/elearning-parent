@@ -12,7 +12,7 @@ public class RegistrationServiceTest {
 	// private StudentDAO studentDAOMock;
 	//
 	// @Mock
-	// private CourseDAO courseDAOMock;
+	// private CourseSessionDAO courseDAOMock;
 	//
 	// @Resource
 	// @InjectMocks

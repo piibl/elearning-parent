@@ -19,7 +19,7 @@ import config.CoreTest;
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.core.domain.course.CourseTeaching;
 import fr.iut.csid.empower.elearning.core.domain.user.Teacher;
-import fr.iut.csid.empower.elearning.core.dto.CourseDTO;
+import fr.iut.csid.empower.elearning.core.dto.impl.CourseDTO;
 import fr.iut.csid.empower.elearning.core.exception.UserNotExistsException;
 import fr.iut.csid.empower.elearning.core.service.CourseService;
 import fr.iut.csid.empower.elearning.core.service.dao.course.CourseDAO;

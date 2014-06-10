@@ -14,7 +14,7 @@ import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.core.domain.course.CourseSubscription;
 import fr.iut.csid.empower.elearning.core.domain.course.CourseTeaching;
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
-import fr.iut.csid.empower.elearning.core.dto.UserDTO;
+import fr.iut.csid.empower.elearning.core.dto.impl.UserDTO;
 import fr.iut.csid.empower.elearning.core.exception.CourseNotExistsException;
 import fr.iut.csid.empower.elearning.core.exception.UserNotExistsException;
 import fr.iut.csid.empower.elearning.core.service.StudentService;

@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
-import fr.iut.csid.empower.elearning.core.dto.CourseDTO;
+import fr.iut.csid.empower.elearning.core.dto.impl.CourseDTO;
 import fr.iut.csid.empower.elearning.core.service.CourseService;
 import fr.iut.csid.empower.elearning.core.service.CrudService;
 import fr.iut.csid.empower.elearning.core.service.TeacherService;
-import fr.iut.csid.empower.elearning.web.assembler.CourseResourceAssembler;
 import fr.iut.csid.empower.elearning.web.controller.entity.AbstractEntityController;
-import fr.iut.csid.empower.elearning.web.hateoas.BatchResourceAssembler;
+import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
+import fr.iut.csid.empower.elearning.web.link.assembler.CourseResourceAssembler;
 
 @Controller
 @RequestMapping("/courses")

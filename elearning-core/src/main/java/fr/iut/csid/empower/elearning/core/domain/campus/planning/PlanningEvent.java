@@ -1,4 +1,4 @@
-package fr.iut.csid.empower.elearning.core.domain.planning;
+package fr.iut.csid.empower.elearning.core.domain.campus.planning;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -14,12 +14,11 @@ import javax.persistence.Table;
 import org.joda.time.DateTime;
 
 import fr.iut.csid.empower.elearning.core.domain.campus.ClassRoom;
-import fr.iut.csid.empower.elearning.core.domain.course.Course;
+import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
 import fr.iut.csid.empower.elearning.core.util.converter.time.DateTimeConverter;
 
 /**
  * Association Cours-Salle
- * 
  */
 @Entity
 @Table(name = "PLANNING_EVENT")
@@ -36,7 +35,7 @@ public class PlanningEvent {
 	 */
 	@ManyToOne
 	@JoinColumn(name = "COURSE_ID")
-	private Course course;
+	private CourseSession courseSession;
 
 	/**
 	 * Salle associée
@@ -68,8 +67,8 @@ public class PlanningEvent {
 		return id;
 	}
 
-	public Course getCourse() {
-		return course;
+	public CourseSession getCourseSession() {
+		return courseSession;
 	}
 
 	public ClassRoom getClassRoom() {
@@ -88,8 +87,8 @@ public class PlanningEvent {
 		this.id = id;
 	}
 
-	public void setCourse(Course course) {
-		this.course = course;
+	public void setCourseSession(CourseSession courseSession) {
+		this.courseSession = courseSession;
 	}
 
 	public void setClassRoom(ClassRoom classRoom) {

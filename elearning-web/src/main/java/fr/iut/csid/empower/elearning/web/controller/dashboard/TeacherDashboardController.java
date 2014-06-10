@@ -37,10 +37,10 @@ public class TeacherDashboardController extends AbstractDashboardController {
 		return teacherService.findByLogin(principal.getName());
 	}
 
-	@ModelAttribute("coursesLink")
-	public Link getCoursesLink() {
-		return linkBuilderFactory.linkTo(CourseController.class).withSelfRel();
-	}
+	// @ModelAttribute("coursesLink")
+	// public Link getCoursesLink() {
+	// return linkBuilderFactory.linkTo(CourseController.class).withSelfRel();
+	// }
 
 	@ModelAttribute("newCourseLink")
 	public Link getNewCourseLink() {
@@ -53,7 +53,7 @@ public class TeacherDashboardController extends AbstractDashboardController {
 	// model.addAttribute("dashboardLink", linkBuilderFactory.linkTo(getConcreteClass()).withSelfRel());
 	// // Récupération de l'enseignant authentifié
 	// // Teacher teacher = teacherService.findByLogin(principal.getName());
-	// // String coursesAffiliationsLink = linkBuilderFactory.linkTo(CourseController.class).slash("?teacher=" + teacher.getId()).withSelfRel()
+	// // String coursesAffiliationsLink = linkBuilderFactory.linkTo(CourseSessionController.class).slash("?teacher=" + teacher.getId()).withSelfRel()
 	// // .getHref();
 	// // model.addAttribute("coursesAffiliationsLink", coursesAffiliationsLink);
 	// // Retourne la page d'accueil

@@ -69,7 +69,7 @@ $(document)
 							// Requête ko
 							$('#ajaxMessage')
 								.html(
-									'<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button> <strong>Ooops !</strong> Veuillez ressayer dans quelques instants, merci !</div>');
+									'<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button> <strong>Ooops !</strong> Petit plantage, veuillez ressayer dans quelques instants, merci !</div>');
 						    }
 						});
 				    });
@@ -108,7 +108,7 @@ $(document)
 							// Requête ko
 							$('#ajaxMessage')
 								.html(
-									'<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button> <strong>Ooops !</strong> Veuillez ressayer dans quelques instants, merci !</div>');
+									'<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button> <strong>Ooops !</strong> Petit plantage, veuillez  ressayer dans quelques instants, merci !</div>');
 						    }
 						});
 				    });
@@ -147,7 +147,7 @@ $(document)
 							// Requête ko
 							$('#ajaxMessage')
 								.html(
-									'<div class="alert alert-danger alert-dismissable"><button class="close"aria-hidden="true" data-dismiss="alert"type="button">×</button> <strong>Ooops !</strong> Veuillez ressayer dans quelques instants, merci !</div>');
+									'<div class="alert alert-danger alert-dismissable"><button class="close"aria-hidden="true" data-dismiss="alert"type="button">×</button> <strong>Ooops !</strong> Petit plantage, veuillez  ressayer dans quelques instants, merci !</div>');
 						    }
 						});
 				    });
@@ -191,7 +191,7 @@ $(document)
 							// Requête ko
 							$('#ajaxMessage')
 								.html(
-									'<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button> <strong>Ooops !</strong> Veuillez ressayer dans quelques instants, merci !</div>');
+									'<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button> <strong>Ooops !</strong> Petit plantage, veuillez  ressayer dans quelques instants, merci !</div>');
 						    }
 						});
 				    });
@@ -234,7 +234,8 @@ $(document)
 								.empty();
 							$('#modal').modal(
 								'hide');
-
+							// Affichage du message
+							$('#ajaxMessage').empty().append('<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert"type="button">×</button>L\'instance a bien été crée.</div>');
 							// Mise à jour du panel
 							$('#ajaxPanel').empty();
 							$("#ajaxPanel").append(
@@ -294,7 +295,7 @@ $(document)
 							// Requête ko
 							$('#ajaxMessage')
 								.html(
-									'<div class="alert alert-danger alert-dismissable"><button class="close"aria-hidden="true" data-dismiss="alert"type="button">×</button> <strong>Ooops !</strong> Veuillez ressayer dans quelques instants, merci !</div>');
+									'<div class="alert alert-danger alert-dismissable"><button class="close"aria-hidden="true" data-dismiss="alert"type="button">×</button> <strong>Ooops !</strong> Petit plantage, veuillez  ressayer dans quelques instants, merci !</div>');
 						    }
 						});
 				    });
@@ -361,6 +362,44 @@ $(document)
 
 						});
 
+				    });
+		 // Détails d'une entité
+		    $("#ajaxPanel")
+			    .on(
+				    'click',
+				    'a.sessionsLink',
+				    function(event) {
+					alert("click");
+					event.preventDefault();
+					$("#ajaxMessage").empty();
+					$
+						.ajax({
+						    type : 'GET',
+						    // URL déterminée par
+						    // l'attribut href
+						    url : $(this).attr('href'),
+						    beforeSend : function() {
+							// En attente
+							$('#ajaxMessage')
+								.html(
+									'<div class="alert alert-info alert-dismissable"><p>Loading...</p></div>');
+						    },
+						    success : function(data) {
+							$('#ajaxMessage')
+								.empty();
+							$('#ajaxPanel')
+							.empty();
+							// Requete ok
+							$('#ajaxPanel')
+								.append(data);
+						    },
+						    error : function() {
+							// Requête ko
+							$('#ajaxMessage')
+								.html(
+									'<div class="alert alert-danger alert-dismissable"><button class="close"aria-hidden="true" data-dismiss="alert"type="button">×</button> <strong>Ooops !</strong> Petit plantage, veuillez  ressayer dans quelques instants, merci !</div>');
+						    }
+						});
 				    });
 
 		});
