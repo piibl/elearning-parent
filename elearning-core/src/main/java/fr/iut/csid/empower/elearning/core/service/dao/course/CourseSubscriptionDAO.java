@@ -14,5 +14,12 @@ import fr.iut.csid.empower.elearning.core.domain.user.Student;
  */
 public interface CourseSubscriptionDAO extends JpaRepository<CourseSubscription, Long> {
 
+	/**
+	 * Retourne la liste des souscriptions de l'étudiant
+	 * 
+	 * @param student
+	 *            : étudiant
+	 * @return
+	 */
 	public List<CourseSubscription> findByStudent(Student student);
 }

@@ -11,14 +11,18 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
+import fr.iut.csid.empower.elearning.core.domain.course.CourseSubscription;
 import fr.iut.csid.empower.elearning.core.domain.course.CourseTeaching;
+import fr.iut.csid.empower.elearning.core.domain.user.Student;
 import fr.iut.csid.empower.elearning.core.domain.user.Teacher;
 import fr.iut.csid.empower.elearning.core.dto.impl.CourseDTO;
 import fr.iut.csid.empower.elearning.core.exception.CourseNotExistsException;
 import fr.iut.csid.empower.elearning.core.exception.UserNotExistsException;
 import fr.iut.csid.empower.elearning.core.service.CourseService;
 import fr.iut.csid.empower.elearning.core.service.dao.course.CourseDAO;
+import fr.iut.csid.empower.elearning.core.service.dao.course.CourseSubscriptionDAO;
 import fr.iut.csid.empower.elearning.core.service.dao.course.CourseTeachingDAO;
+import fr.iut.csid.empower.elearning.core.service.dao.user.StudentDAO;
 import fr.iut.csid.empower.elearning.core.service.dao.user.TeacherDAO;
 
 /**
@@ -32,7 +36,11 @@ public class CourseServiceImpl extends AbstractCrudService<Course, Long> impleme
 	@Inject
 	private CourseTeachingDAO courseTeachingDAO;
 	@Inject
+	private CourseSubscriptionDAO courseSubscriptionDAO;
+	@Inject
 	private TeacherDAO teacherDAO;
+	@Inject
+	private StudentDAO studentDAO;
 
 	@Override
 	protected JpaRepository<Course, Long> getDAO() {
@@ -104,5 +112,28 @@ public class CourseServiceImpl extends AbstractCrudService<Course, Long> impleme
 			throw new UserNotExistsException();
 		}
 
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Course> findByStudent(Long studentId) {
+		List<Course> courses = new ArrayList<Course>();
+		// Récupération de l'étudiant
+		Student student = studentDAO.findOne(studentId);
+		if (student != null) {
+			// recherche de toutes les souscriptions de l'étudiant
+			for (CourseSubscription courseSubscription : courseSubscriptionDAO.findByStudent(student)) {
+				if (courseDAO.exists(courseSubscription.getCourse().getId())) {
+					courses.add(courseDAO.getOne(courseSubscription.getCourse().getId()));
+				} else {
+					// TODO ignorer les orphelins ?
+					throw new CourseNotExistsException();
+				}
+			}
+			return courses;
+		} else {
+			// Pas d'étudiant associé à cet id
+			throw new UserNotExistsException();
+		}
 	}
 }

@@ -15,4 +15,12 @@ public interface CourseService extends CrudService<Course, Long, CourseDTO> {
 	 */
 	public List<Course> findByTeacher(Long teacherId);
 
+	/**
+	 * Retourne les cours auxquels un étudiant est inscrit
+	 * 
+	 * @param studentId
+	 *            : id de l'étudiant
+	 */
+	public List<Course> findByStudent(Long studentId);
+
 }
