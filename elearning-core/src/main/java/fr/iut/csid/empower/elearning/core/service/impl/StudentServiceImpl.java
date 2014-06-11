@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.core.domain.course.CourseSubscription;
-import fr.iut.csid.empower.elearning.core.domain.course.CourseTeaching;
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
 import fr.iut.csid.empower.elearning.core.dto.impl.UserDTO;
 import fr.iut.csid.empower.elearning.core.exception.CourseNotExistsException;
@@ -30,10 +29,10 @@ public class StudentServiceImpl extends AbstractCrudService<Student, Long> imple
 
 	@Inject
 	private CourseDAO courseDAO;
-	
+
 	@Inject
 	private StudentDAO studentDAO;
-	
+
 	@Inject
 	private CourseSubscriptionDAO courseSubscriptionDAO;
 
@@ -41,7 +40,7 @@ public class StudentServiceImpl extends AbstractCrudService<Student, Long> imple
 	protected JpaRepository<Student, Long> getDAO() {
 		return studentDAO;
 	}
-	
+
 	@Override
 	public Student findByLogin(String login) {
 		return studentDAO.findByLogin(login);
@@ -70,17 +69,18 @@ public class StudentServiceImpl extends AbstractCrudService<Student, Long> imple
 			throw new UserNotExistsException();
 
 	}
-	
-	
-	public List<Course> findSubscribedCourses(Long studentId){
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Course> findSubscribedCourses(Long studentId) {
 		List<Course> courses = new ArrayList<Course>();
 		// Récupération de l'étudiant
 		Student student = studentDAO.findOne(studentId);
 		if (student != null) {
-			// recherche de toutes les affilition de l'étudiant
+			// recherche de toutes les souscriptions de l'étudiant
 			for (CourseSubscription courseSubscription : courseSubscriptionDAO.findByStudent(student)) {
-				if (courseSubscriptionDAO.exists(courseSubscription.getCourse().getId())) {
-					courses.add(courseDAO.getOne(courseSubscription.getCourse().getId()));
+				if (courseDAO.exists(courseSubscription.getCourse().getId())) {
+					courses.add(courseDAO.findOne(courseSubscription.getCourse().getId()));
 				} else {
 					// TODO ignorer les orphelins ?
 					throw new CourseNotExistsException();
@@ -90,13 +90,21 @@ public class StudentServiceImpl extends AbstractCrudService<Student, Long> imple
 		} else {
 			// Pas d'étudiant associé à cet id
 			throw new UserNotExistsException();
-		}		
+		}
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Course> findUnsubscribedCourses(Long studentId) {
-		// TODO Auto-generated method stub
-		return null;
+
+		// Récupération de l'étudiant
+		Student student = studentDAO.findOne(studentId);
+		if (student != null) {
+			return courseDAO.findUnsubscribedCourses(student);
+		} else {
+			// Pas d'étudiant associé à cet id
+			throw new UserNotExistsException();
+		}
 	}
 
 }

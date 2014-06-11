@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.core.domain.course.CourseSubscription;
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
 
@@ -22,4 +23,13 @@ public interface CourseSubscriptionDAO extends JpaRepository<CourseSubscription,
 	 * @return
 	 */
 	public List<CourseSubscription> findByStudent(Student student);
+
+	/**
+	 * Retourne toutes les souscription à un cours donné
+	 * 
+	 * @param course
+	 *            : cours cible
+	 * @return
+	 */
+	public List<CourseSubscription> findByCourse(Course course);
 }

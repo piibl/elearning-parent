@@ -31,20 +31,15 @@ public class CourseSessionResourceAssembler extends AbstractResourceAssembler<Co
 		Assert.notNull(courseSession);
 		// Adressage d'une session
 		Link selfLink = linkBuilderFactory.linkTo(CourseController.class).slash(courseSession.getOwnerCourse().getId())
-				.slash(Relation.SESSIONS.getName()).slash(courseSession.getId()).withRel(Relation.SELF.getName());
+				.slash(PathFragment.SESSIONS.getPath()).slash(courseSession.getId()).withRel(Relation.SELF.getName());
 		// Adressage pour la suppression d'une session
 		Link deleteLink = linkBuilderFactory.linkTo(CourseController.class).slash(courseSession.getOwnerCourse().getId())
-				.slash(Relation.SESSIONS.getName()).slash(courseSession.getId()).slash(PathFragment.DELETE.getPath())
+				.slash(PathFragment.SESSIONS.getPath()).slash(courseSession.getId()).slash(PathFragment.DELETE.getPath())
 				.withRel(Relation.DELETE.getName());
 		// Adressage pour la modification d'une session
 		Link editLink = linkBuilderFactory.linkTo(CourseController.class).slash(courseSession.getOwnerCourse().getId())
-				.slash(Relation.SESSIONS.getName()).slash(courseSession.getId()).slash(PathFragment.EDIT.getPath()).withRel(Relation.EDIT.getName());
-		// Adressage pour accéder aux sessions d'un cours
-		// Link sessionsLink = linkBuilderFactory.linkTo(CourseController.class).slash(courseSession.getId()).slash(PathFragment.SESSIONS.getPath())
-		// .withRel(Relation.SESSIONS.getName());
-		// TODO chapitres
-		// TODO notes
-		// TODO étudiants / profs rattachés
+				.slash(PathFragment.SESSIONS.getPath()).slash(courseSession.getId()).slash(PathFragment.EDIT.getPath())
+				.withRel(Relation.EDIT.getName());
 		return new Resource<CourseSession>(courseSession, selfLink, deleteLink, editLink);
 	}
 

@@ -22,7 +22,6 @@ import fr.iut.csid.empower.elearning.core.util.converter.time.DateTimeConverter;
 
 /**
  * Association cours - étudiant réprésentant une inscription d'un étudiant à un cours
- * 
  */
 @Entity
 @Table(name = "COURSE_SUBSCRIPTION")
@@ -47,21 +46,20 @@ public class CourseSubscription {
 	@ManyToOne
 	@JoinColumn(name = "COURSE_ID")
 	private Course course;
-	
+
 	/**
 	 * Statut de la souscription
 	 */
-	@Column(name="STATUS")
+	@Column(name = "STATUS")
 	@Convert(converter = CourseSubscriptionStatusConverter.class)
 	private CourseSubscriptionStatus status;
 
 	/**
 	 * Type de la souscription
 	 */
-	@Column(name="TYPE")
+	@Column(name = "TYPE")
 	@Convert(converter = CourseSubscriptionTypeConverter.class)
 	private CourseSubscriptionType type;
-	
 
 	/**
 	 * Date de subscription
@@ -85,9 +83,11 @@ public class CourseSubscription {
 	 * @param course
 	 *            : cours
 	 */
-	public CourseSubscription(Student student, Course course) {
+	public CourseSubscription(Student student, Course course, CourseSubscriptionType subscriptionType) {
 		this.student = student;
 		this.course = course;
+		this.status = CourseSubscriptionStatus.IN_PROGRESS;
+		this.type = subscriptionType;
 		this.subscriptionDate = new DateTime();
 	}
 

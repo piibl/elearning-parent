@@ -8,9 +8,10 @@
 	<div class="container top-20">
 		<div class="row row-offcanvas row-offcanvas-left">
 			<!-- Le cadre de rendu est délégué au template appelant -->
-			<div th:fragment="display-courses">
+			<!-- COURS SOUSCRITS -->
+			<div th:fragment="display-subscribed-courses">
 				<!-- Boutons d'action -->
-				<ul class="nav nav-pills">
+				<!-- <ul class="nav nav-pills">
 					<li th:if="${newCourseLink}" sec:authorize="hasRole('ROLE_TEACHER')"><a
 						class="btn addForm" href="/course/new" th:href="${newCourseLink.href}"
 						role="button" data-toggle="modal" data-target="#modal"><i
@@ -24,25 +25,15 @@
 							<li><a tabindex="-1" href="#">Non implémenté</a></li>
 							<li><a tabindex="-1" href="#">Non implémenté</a></li>
 						</ul></li>
-				</ul>
+				</ul> -->
 				<!-- Corps -->
-				<h3 sec:authorize="hasRole('ROLE_STUDENT')">Liste des cours disponibles</h3>
-				<h3 sec:authorize="hasRole('ROLE_TEACHER')">Vos cours</h3>
-				<h3 sec:authorize="hasRole('ROLE_ADMIN')">Liste des cours</h3>
+				<h3
+					th:text="${#lists.isEmpty(courses) ? 'Vous n''êtes inscrit à aucun cours... pour l''instant !!' : 'Vous êtes inscrit aux cours suivants :'}"></h3>
 				<div>
-					<p sec:authorize="hasRole('ROLE_STUDENT')" th:if="${#lists.isEmpty(courses)}">Aucun cours n'est actuellement disponible à l'inscription.</p>
-					<p sec:authorize="hasRole('ROLE_TEACHER')" th:if="${#lists.isEmpty(courses)}">Vous n'avez pas de cours.</p>
-					<p sec:authorize="hasRole('ROLE_ADMIN')" th:if="${#lists.isEmpty(courses)}">Aucun cours n'est
-						enregistré sur la plateforme.</p>
 					<div th:unless="${#lists.isEmpty(courses)}">
 						<table class="table table-striped table-hover">
 							<thead>
 								<th>Intitulé</th>
-								<th>Détails</th>
-								<th>Sessions</th>
-								<th sec:authorize="hasRole('ROLE_TEACHER')">Editer</th>
-								<th sec:authorize="hasRole('ROLE_TEACHER')">Supprimer</th>
-								<th sec:authorize="hasRole('ROLE_STUDENT')">S'inscrire</th>
 							</thead>
 							<tbody>
 								<tr th:each="course : ${courses}">
@@ -50,25 +41,28 @@
 									<td class="span2"><a class="detailsLink"
 										href="./view.html" th:href="${course.getLink('self').href}"><i
 											class="glyphicon glyphicon-list-alt"></i></a></td>
-									<td class="span2"><a class="sessionsLink" href="./sessions.html"
+									<td class="span2"><a class="sessionsLink"
+										href="./sessions.html"
 										th:href="${course.getLink('sessions').href}"><i
 											class="glyphicon glyphicon-tags"></i></a></td>
-									<td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a class="editLink" href="./edit.html"
+									<!-- <td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a class="editLink" href="./edit.html"
 										th:href="${course.getLink('edit').href}"><i
-											class="glyphicon glyphicon-pencil"></i></a></td>
-									<td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a class="deleteLink"
-										href="./delete.html"
-										th:href="${course.getLink('delete').href}" data-redirect_url="none" th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"><i
-											class="glyphicon glyphicon-remove"></i></a></td>
-									<td class="span2" sec:authorize="hasRole('ROLE_STUDENT')"><a class="subscribeLink"
-										href="./subscribe.html"
-										th:href="${course.getLink('subscribe').href}" data-redirect_url="none" th:attr="data-redirect_url=${othersAvailablesCoursesLink != null ? othersAvailablesCoursesLink.href : 'none'}"><i
-											class="glyphicon glyphicon-plus-sign"></i></a></td>
+											class="glyphicon glyphicon-pencil"></i></a></td> -->
+
 								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
+			</div>
+			<!-- Message de succès de souscription à un cours -->
+			<div th:fragment="display-subscrition-message">
+				<div class="alert alert-success alert-dismissable">
+					<button class="close" aria-hidden="true" data-dismiss="alert"
+						type="button">×</button>
+						Vous êtes maintenant inscrit au cours "<strong th:text="${subscribedCourse.label}">intitulé</strong>"
+				</div>
+
 			</div>
 			<!-- Le cadre de rendu est délégué au template appelant -->
 			<div th:fragment="display-details">

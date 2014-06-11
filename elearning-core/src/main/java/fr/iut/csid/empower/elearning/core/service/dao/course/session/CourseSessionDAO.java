@@ -3,7 +3,6 @@ package fr.iut.csid.empower.elearning.core.service.dao.course.session;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
