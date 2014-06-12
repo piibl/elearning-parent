@@ -1,45 +1,45 @@
-package fr.iut.csid.empower.elearning.core.domain.course.session;
+package fr.iut.csid.empower.elearning.core.domain.course.session.resource;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
 
 @Entity
-@Table(name = "SESSION_RESOURCE")
-public class SessionResource {
+@Table(name = "EVALUATION_RESPONSE")
+public class EvaluationResponse {
 
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SessionResourceEventSeq")
-	@SequenceGenerator(name = "SessionResourceEventSeq", sequenceName = "SESSION_RESOURCE_EVENT_SEQ", allocationSize = 1, initialValue = 1)
-	@Column(name = "SESSION_RESOURCE_ID", nullable = false)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EvaluationResponseSeq")
+	@SequenceGenerator(name = "EvaluationResponseSeq", sequenceName = "EVALUATION_RESPONSE_SEQ", allocationSize = 1, initialValue = 1)
+	@Column(name = "EVALUATION_RESPONSE_ID", nullable = false)
 	@Id
 	private Long id;
 
 	/**
 	 * Session propriétaire de la ressource
 	 */
-	@ManyToOne
-	@JoinColumn(name = "COURSE_SESSION_ID")
+	@Transient
 	private CourseSession ownerSession;
 
 	/**
 	 * Type de la ressource TODO enum
 	 */
-	@Column(name = "RESOURCE_TYPE")
+	@Transient
 	private String resourceType;
 
 	/**
 	 * Path de la ressource
 	 */
-	@Column(name = "RESOURCE_PATH")
+	@Transient
 	private String resourcePath;
 
-	public SessionResource() {
+	public EvaluationResponse() {
 
 	}
 
@@ -48,7 +48,7 @@ public class SessionResource {
 	 * @param resourceType
 	 * @param resourcePath
 	 */
-	public SessionResource(CourseSession ownerSession, String resourceType, String resourcePath) {
+	public EvaluationResponse(CourseSession ownerSession, String resourceType, String resourcePath) {
 		this.ownerSession = ownerSession;
 		this.resourceType = resourceType;
 		this.resourcePath = resourcePath;
