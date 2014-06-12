@@ -19,6 +19,6 @@ public class NotificationServiceImpl implements NotificationService {
 	@Override
 	public List<Notification> findByUser(User user) {
 		
-		return notificationDAO.findByNotificationReceiver(user);
+		return notificationDAO.findByReceiver(user);
 	}
 }

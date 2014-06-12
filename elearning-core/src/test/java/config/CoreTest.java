@@ -6,6 +6,7 @@ package config;
 public class CoreTest {
 
 	public static final String SPRING_CONFIG_HSQL = "/test_spring-config-hsql.xml";
+	public static final String SPRING_CONFIG_INIT_DATA = "/config-initdata.xml";
 
 	/**
 	 * TransactionManager courant

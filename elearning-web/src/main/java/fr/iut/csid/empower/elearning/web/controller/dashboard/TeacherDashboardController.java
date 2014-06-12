@@ -33,7 +33,7 @@ public class TeacherDashboardController extends AbstractDashboardController {
 	 */
 	private String coursesViewpath = "display/courses :: display-courses";
 	private String addCourseFormPath = "forms/add-forms :: add-course-form";
-	private String editForm = "forms/edit-forms :: edit-course-form";
+	// private String editForm = "forms/edit-forms :: edit-course-form";
 
 	@Inject
 	private TeacherService teacherService;
@@ -49,12 +49,6 @@ public class TeacherDashboardController extends AbstractDashboardController {
 		// TODO nullcheck sur entité. Le cas ne devrait pas se produire, mais sait-on jamais...
 		return linkBuilderFactory.linkTo(getConcreteClass()).slash(teacher.getId()).slash(PathFragment.COURSES.getPath())
 				.withRel(Relation.COURSES.getName());
-	}
-	
-	@ModelAttribute("notificationsLink")
-	public Link getNotificationsLink() {
-		return linkBuilderFactory.linkTo(getConcreteClass()).slash(PathFragment.NOTIFICATIONS.getPath())
-				.withSelfRel();
 	}
 
 	/**

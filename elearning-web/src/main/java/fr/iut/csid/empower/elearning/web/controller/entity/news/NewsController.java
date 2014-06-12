@@ -1,30 +1,25 @@
-package fr.iut.csid.empower.elearning.web.controller.entity.notification;
+package fr.iut.csid.empower.elearning.web.controller.entity.news;
 
 import javax.inject.Inject;
 
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import fr.iut.csid.empower.elearning.core.service.NotificationService;
-import fr.iut.csid.empower.elearning.core.service.UserService;
+import fr.iut.csid.empower.elearning.core.service.NewsService;
 
 @Controller
-@RequestMapping("*/notifications")
-public class NotificationController {
+@RequestMapping("*/news")
+public class NewsController {
 
-	private String mainView = "display/notifications :: display-notifications";
-	private String detailsView = "display/notifications :: display-details";
-	private String entitiesAttributeName = "notifications";
-	private String singleEntityAttributeName = "notification";
+	private String mainView = "display/news :: display-news";
+	private String detailsView = "display/news :: display-details";
+	private String entitiesAttributeName = "news";
+	private String singleEntityAttributeName = "singleNews";
 
 	@Inject
-	private UserService userService;
-	@Inject
-	private NotificationService notificationService;
+	private NewsService newsService;
 
 	// @Inject
 	// private CourseResourceAssembler courseResourceAssembler;
@@ -39,9 +34,8 @@ public class NotificationController {
 	 * @param user
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String getNotifications(Model model, @AuthenticationPrincipal User user) {
-		fr.iut.csid.empower.elearning.core.domain.user.User loggedUser = userService.findByLogin(user.getUsername());
-		model.addAttribute(getEntitiesAtributeName(), notificationService.findByUser(loggedUser));
+	public String getNotifications(Model model) {
+		model.addAttribute(getEntitiesAtributeName(), newsService.getNews());
 		return getBaseView();
 	}
 

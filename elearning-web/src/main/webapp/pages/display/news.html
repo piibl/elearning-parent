@@ -1,0 +1,56 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment/common :: headerFragment">
+
+</head>
+
+<body>
+	<div class="container top-20">
+		<div class="row row-offcanvas row-offcanvas-left">
+			<!-- Le cadre de rendu est délégué au template appelant -->
+			<div th:fragment="display-news">
+				<!-- Corps -->
+				<!-- <h3 sec:authorize="hasRole('ROLE_STUDENT')">Liste des cours disponibles</h3>
+				<h3 sec:authorize="hasRole('ROLE_TEACHER')">Vos cours</h3>
+				<h3 sec:authorize="hasRole('ROLE_ADMIN')">Liste des cours</h3> -->
+				<div>
+					<h3 th:if="${#lists.isEmpty(news)}">Aucune news à afficher.</h3>
+					<!-- <p sec:authorize="hasRole('ROLE_TEACHER')" th:if="${#lists.isEmpty(news)}">Vous n'avez pas de cours.</p>
+					<p sec:authorize="hasRole('ROLE_ADMIN')" th:if="${#lists.isEmpty(news)}">Aucun cours n'est
+						enregistré sur la plateforme.</p> -->
+					<div th:unless="${#lists.isEmpty(news)}">
+						<h1 class="bordered-bottom">Actualités de la plateforme</h1>
+						<div class="bordered-bottom" th:each="singleNews : ${news}">
+							<h3 th:text="${singleNews.title}">Bryan123</h3>
+							<p th:text="${singleNews.content}">Bryan123</p>
+							<!-- <a th:href="${singleNews.getLink('self').href}">Lire la
+								suite...</a> -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Le cadre de rendu est délégué au template appelant -->
+			<div th:fragment="display-details">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" th:text="${singleNews.content.title}">Détails
+						de la news</h4>
+				</div>
+
+				<div class="modal-body">
+					<p th:text="${singleNews.content.content}">Bryan123</p>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<footer th:include="fragment/common :: [//footer]"></footer>
+</body>
+</html>

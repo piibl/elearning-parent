@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilderFactory;
+import fr.iut.csid.empower.elearning.web.reference.PathFragment;
 
 public abstract class AbstractDashboardController {
 
@@ -29,6 +30,9 @@ public abstract class AbstractDashboardController {
 	public String getDashboardPage(Model model, Principal principal) {
 		model.addAttribute("login", principal.getName());
 		model.addAttribute("dashboardLink", linkBuilderFactory.linkTo(getConcreteClass()).withSelfRel());
+		model.addAttribute("notificationsLink", linkBuilderFactory.linkTo(getConcreteClass()).slash(PathFragment.NOTIFICATIONS.getPath())
+				.withSelfRel());
+		model.addAttribute("newsLink", linkBuilderFactory.linkTo(getConcreteClass()).slash(PathFragment.NEWS.getPath()).withSelfRel());
 		// Retourne la page d'accueil
 		return getMainView();
 	}

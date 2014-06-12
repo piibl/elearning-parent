@@ -28,14 +28,14 @@ public class Notification{
 	private Long id;
 	
 	@Column(name = "SUBJECT")
-	private String notificationSubject;
+	private String subject;
 	
 	@ManyToOne
 	@JoinColumn(name="USER_ID")
-	private User notificationReceiver;
+	private User receiver;
 	
 	@Column(name = "BODY")
-	private String notificationBody;
+	private String body;
 	
 	
 	//CONSTRUCTEURS
@@ -47,23 +47,23 @@ public class Notification{
 	public Notification(String notificationSubject, User notificationReceiver,
 			String notificationBody) {
 		super();
-		this.notificationSubject = notificationSubject;
-		this.notificationReceiver = notificationReceiver;
-		this.notificationBody = notificationBody;
+		this.subject = notificationSubject;
+		this.receiver = notificationReceiver;
+		this.body = notificationBody;
 	}
 
 
 
 
-	public User getNotificationReceiver() {
-		return notificationReceiver;
+	public User getReceiver() {
+		return receiver;
 	}
 
 
 
 
-	public void setNotificationReceiver(User notificationReceiver) {
-		this.notificationReceiver = notificationReceiver;
+	public void setReceiver(User notificationReceiver) {
+		this.receiver = notificationReceiver;
 	}
 
 
@@ -76,15 +76,15 @@ public class Notification{
 
 
 
-	public void setNotificationSubject(String notificationSubject) {
-		this.notificationSubject = notificationSubject;
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 
 
 
 
-	public void setNotificationBody(String notificationBody) {
-		this.notificationBody = notificationBody;
+	public void setBody(String body) {
+		this.body = body;
 	}
 
 
@@ -95,12 +95,12 @@ public class Notification{
 		return id;
 	}
 
-	public String getNotificationSubject() {
-		return notificationSubject;
+	public String getSubject() {
+		return subject;
 	}
 
-	public String getNotificationBody() {
-		return notificationBody;
+	public String getBody() {
+		return body;
 	}
 	
 	
