@@ -1,46 +1,20 @@
 package fr.iut.csid.empower.elearning.core.domain.user;
 
-import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "ADMINISTRATOR")
-public class Administrator extends AbstractUser {
+@DiscriminatorValue("A")
+public class Administrator extends User {
 
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AdministratorSeq")
-	@SequenceGenerator(name = "AdministratorSeq", sequenceName = "ADMINISTRATOR_SEQ", allocationSize = 1, initialValue = 1)
-	@Column(name = "ADMINISTRATOR_ID", nullable = false)
-	@Id
-	private Long id;
-
-	public Administrator() {
-
+	public Administrator(){
+		
 	}
-
-	// MUTATEURS
-
-	/**
-	 * @param firstName
-	 * @param lastName
-	 * @param login
-	 * @param password
-	 * @param email
-	 * @param id
-	 */
-	public Administrator(String firstName, String lastName, String login, String password, String email) {
+	
+	public Administrator(String firstName, String lastName, String login,
+			String password, String email) {
 		super(firstName, lastName, login, password, email);
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	
 }

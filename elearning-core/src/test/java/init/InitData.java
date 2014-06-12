@@ -17,6 +17,7 @@ import fr.iut.csid.empower.elearning.core.service.AdministratorService;
 @ContextConfiguration("classpath*:config-initdata.xml")
 public class InitData {
 
+<<<<<<< HEAD
 	/**
 	 * Strict minimum => un administrateur !!
 	 */
@@ -24,6 +25,12 @@ public class InitData {
 	@Inject
 	private AdministratorService administratorService;
 
+=======
+
+	@Inject
+	private AdministratorService administratorService;
+	
+>>>>>>> 92b49c17604a7ac29c87416243fba7bd7539d889
 	@Test
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@Rollback(false)
