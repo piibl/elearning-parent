@@ -32,6 +32,7 @@ public class CourseSessionServiceImpl extends AbstractCrudService<CourseSession,
 		if (ownerCourse != null) {
 			return courseSessionDAO.save(new CourseSession(entityDTO.getLabel(), ownerCourse, courseSessionDAO.countByOwnerCourse(ownerCourse) + 1,
 					null, null));
+//					entityDTO.getStartDate(), entityDTO.getEndDate()));
 		}
 		return null;
 	}
@@ -42,6 +43,8 @@ public class CourseSessionServiceImpl extends AbstractCrudService<CourseSession,
 		if (courseSession != null) {
 			// TODO update autres champs ?
 			courseSession.setLabel(entityDTO.getLabel());
+//			courseSession.setStartDate(entityDTO.getStartDate());
+//			courseSession.setEndDate(entityDTO.getEndDate());
 			return courseSessionDAO.save(courseSession);
 		}
 		// TODO erreur globale

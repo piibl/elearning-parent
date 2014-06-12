@@ -31,8 +31,8 @@ public class TeacherDashboardController extends AbstractDashboardController {
 	/**
 	 * TODO Externaliser les paths !!!!!!!!!
 	 */
-	private String mainViewpath = "display/courses :: display-courses";
-	private String addFormPath = "forms/add-forms :: add-course-form";
+	private String coursesViewpath = "display/courses :: display-courses";
+	private String addCourseFormPath = "forms/add-forms :: add-course-form";
 	private String editForm = "forms/edit-forms :: edit-course-form";
 
 	@Inject
@@ -49,6 +49,12 @@ public class TeacherDashboardController extends AbstractDashboardController {
 		// TODO nullcheck sur entité. Le cas ne devrait pas se produire, mais sait-on jamais...
 		return linkBuilderFactory.linkTo(getConcreteClass()).slash(teacher.getId()).slash(PathFragment.COURSES.getPath())
 				.withRel(Relation.COURSES.getName());
+	}
+	
+	@ModelAttribute("notificationsLink")
+	public Link getNotificationsLink() {
+		return linkBuilderFactory.linkTo(getConcreteClass()).slash(PathFragment.NOTIFICATIONS.getPath())
+				.withSelfRel();
 	}
 
 	/**
@@ -69,7 +75,7 @@ public class TeacherDashboardController extends AbstractDashboardController {
 				.slash(PathFragment.NEW.getPath()).withSelfRel());
 		model.addAttribute("redirectLink", linkBuilderFactory.linkTo(getConcreteClass()).slash(teacherId).slash(PathFragment.COURSES.getPath())
 				.withRel(Relation.COURSES.getName()));
-		return mainViewpath;
+		return coursesViewpath;
 	}
 
 	/**
@@ -88,7 +94,7 @@ public class TeacherDashboardController extends AbstractDashboardController {
 		// Lien de redirection pour n'avoir que les cours de l'enseignant et non tous les cours
 		model.addAttribute("redirectLink", linkBuilderFactory.linkTo(getConcreteClass()).slash(teacherId).slash(PathFragment.COURSES.getPath())
 				.withRel(Relation.COURSES.getName()));
-		return addFormPath;
+		return addCourseFormPath;
 	}
 
 	/**
