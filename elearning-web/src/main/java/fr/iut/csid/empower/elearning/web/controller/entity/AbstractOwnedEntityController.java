@@ -144,11 +144,10 @@ public abstract class AbstractOwnedEntityController<T, X extends Serializable, Y
 	 * @return
 	 */
 	@RequestMapping(value = "/{entityId}", method = RequestMethod.GET)
-	public String getEntity(@PathVariable("entityId") X id, Model model) {
+	public String getEntity(@PathVariable X ownerEntityId, @PathVariable("entityId") X id, Model model) {
 		// TODO Quick'n'dirty, j'aime !
 		Resource<T> resource = getResourceAssembler().toResource(getCrudService().find(id));
 		model.addAttribute(getSingleEntityAtributeName(), resource);
-		logger.info("getDetails calls : [" + getDetailsView() + "]");
 		return getDetailsView();
 	}
 

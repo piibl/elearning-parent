@@ -8,37 +8,58 @@
 		<div class="row row-offcanvas row-offcanvas-left">
 			<!-- Le cadre de rendu est délégué au template appelant -->
 			<div th:fragment="display-sessions">
+
+				<!-- Fil d'arianne -->
+				<div th:include="fragment/common :: breadcrumb"></div>
 				<!-- Boutons d'action -->
 				<ul class="nav nav-pills">
 					<li sec:authorize="hasRole('ROLE_TEACHER')"><a
-						class="btn addForm" href="/sessions/new" th:href="${addOwnedEntityLink}"
-						role="button" data-toggle="modal" data-target="#modal"><i
-							class="glyphicon glyphicon-plus"></i> Ajouter une session</a></li>
+						class="btn addForm" href="/sessions/new"
+						th:href="${addOwnedEntityLink}" role="button" data-toggle="modal"
+						data-target="#modal"><i class="glyphicon glyphicon-plus"></i>
+							Ajouter un chapitre</a></li>
 				</ul>
-				<!-- Corps -->
-				<!-- Titre -->
-				<h3>Gestion des sessions du cours</h3>
-				<h5>Liste des sessions enregistrées</h5>
+				<!-- Titre prof -->
+				<div sec:authorize="hasRole('ROLE_TEACHER')">
+					<h3>
+						Gestion des chapitres enregistrés pour le cours <strong
+							th:text="${ownerCourseLabel}"></strong>
+					</h3>
+				</div>
+				<div sec:authorize="hasRole('ROLE_STUDENT')">
+					<h5>
+						<strong th:text="${ownerCourseLabel}"></strong> - Chapitres
+					</h5>
+				</div>
+
+
 				<div>
-					<p th:if="${#lists.isEmpty(courseSessions)}">Aucune session n'existe pour ce cours</p>
+					<p th:if="${#lists.isEmpty(courseSessions)}">Aucun chapitre
+						n'existe pour ce cours</p>
 					<div th:unless="${#lists.isEmpty(courseSessions)}">
 						<table class="table table-striped table-hover">
 							<thead>
-								<th>Intitulé de la session</th>
-								<th>Rang de la session</th>
+								<th>Intitulé du chapitre</th>
+								<th sec:authorize="hasRole('ROLE_TEACHER')">Rang du chapitre</th>
+								<th>Détails</th>
+								<th sec:authorize="hasRole('ROLE_TEACHER')">Editer</th>
+								<th sec:authorize="hasRole('ROLE_TEACHER')">Supprimer</th>
 							</thead>
 							<tbody>
 								<tr th:each="courseSession : ${courseSessions}">
 									<td class="span4" th:text="${courseSession.content.label}">Bryan123</td>
-									<td class="span4" th:text="${courseSession.content.sessionRank}">Bryan123</td>
-									<td class="span2"><a class="detailsLink"
-										href="./view.html" th:href="${courseSession.getLink('self').href}"><i
+									<td sec:authorize="hasRole('ROLE_TEACHER')" class="span4"
+										th:text="${courseSession.content.sessionRank}">Bryan123</td>
+									<td class="span2"><a class="displayLinkNotModal"
+										href="./view.html"
+										th:href="${courseSession.getLink('self').href}"><i
 											class="glyphicon glyphicon-list-alt"></i></a></td>
-									<td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a class="editLink"
-										href="./view.html" th:href="${courseSession.getLink('edit').href}"><i
+									<td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a
+										class="editLink" href="./view.html"
+										th:href="${courseSession.getLink('edit').href}"><i
 											class="glyphicon glyphicon-pencil"></i></a></td>
-									<td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a class="deleteLink"
-										href="./delete.html"
+									<td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a
+										class="deleteLink" href="./delete.html"
 										th:href="${courseSession.getLink('delete').href}"><i
 											class="glyphicon glyphicon-remove"></i></a></td>
 								</tr>
@@ -50,28 +71,22 @@
 			<!-- Affichage des détails d'une session -->
 			<!-- Le cadre de rendu est délégué au template appelant -->
 			<div th:fragment="display-details">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Détails de la session</h4>
-				</div>
-
-				<div class="modal-body">
-					<table class="table table-striped table-hover">
-						<thead>
-							<th>Intitulé</th>
-						</thead>
-						<tbody>
-							<tr>
-								<td class="span4" th:text="${courseSession.content.label}">Bryan123</td>
-							</tr>
-						</tbody>
-					</table>
-
-				</div>
-
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+				<div th:include="fragment/common :: breadcrumb"></div>
+				<ul sec:authorize="hasRole('ROLE_TEACHER')" class="nav nav-pills">
+					<li><a class="btn" href="#" role="button"><i
+							class="glyphicon glyphicon-pencil"></i> Editer le chapitre</a></li>
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#"> Gérer les ressources<span
+							class="caret"></span>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a tabindex="-1" href="#">Ajouter une ressource</a></li>
+							<li><a tabindex="-1" href="#">Supprimer une ressource</a></li>
+						</ul></li>
+				</ul>
+				<h3 th:text="${courseSession.content.label}"></h3>
+				<div class="bordered-bottom">
+					<p th:text="${courseSession.content.summary}">Resume</p>
 				</div>
 			</div>
 		</div>

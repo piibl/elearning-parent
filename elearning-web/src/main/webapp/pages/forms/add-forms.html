@@ -175,9 +175,9 @@
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal"
 				aria-hidden="true">&times;</button>
-			<h3 class="modal-title">Créer une session pour le cours '<span th:text="${ownerEntity.label}">intitulé</span>'</h3>
+			<h3 class="modal-title">Créer un chapitre pour le cours <strong th:text="${ownerEntity.label}">intitulé</strong></h3>
 		</div>
-		<form class="addForm" th:action="@{courses/${ownerEntity.id}/sessions}" method="post"
+		<form class="addForm" th:action="@{'courses/'+${ownerEntity.id}+'/sessions'}" method="post"
 			role="form">
 			<div class="modal-body">
 
@@ -186,16 +186,11 @@
 						class="form-control" autofocus="autofocus" required="required"
 						placeholder="Niveau 1, 2..." />
 				</div>
-<!-- 				<div class="form-group">
-					<label for="startDate">Date de début</label><input name="startDate" type="date"
+				<div class="form-group">
+					<label for="summary">Description</label><textarea name="summary"
 						class="form-control" autofocus="autofocus" required="required"
-						placeholder="" />
+						placeholder="Description du chapitre..." />
 				</div>
- 				<div class="form-group">
-					<label for="endDate">Date de fin</label><input name="endDate" type="date"
-						class="form-control" autofocus="autofocus" required="required"
-						placeholder="" /> 
-				</div>-->
 				<div class="form-group">
 					<input name="ownerId" type="hidden" th:value="${ownerEntity.id}" />
 				</div>

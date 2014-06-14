@@ -12,8 +12,9 @@ import fr.iut.csid.empower.elearning.core.dto.OwnedDTO;
 public class CourseSessionDTO implements Serializable, OwnedDTO<Long> {
 
 	private String label;
-//	private DateTime startDate;
-//	private DateTime endDate;
+	private String summary;
+	// private DateTime startDate;
+	// private DateTime endDate;
 	/**
 	 * Identifiant du cours au format chaine de caractère
 	 */
@@ -25,23 +26,23 @@ public class CourseSessionDTO implements Serializable, OwnedDTO<Long> {
 
 	public void setLabel(String label) {
 		this.label = label;
-	}	
-	
-//	public DateTime getStartDate() {
-//		return startDate;
-//	}
-//
-//	public void setStartDate(DateTime startDate) {
-//		this.startDate = startDate;
-//	}
-//
-//	public DateTime getEndDate() {
-//		return endDate;
-//	}
-//
-//	public void setEndDate(DateTime endDate) {
-//		this.endDate = endDate;
-//	}
+	}
+
+	// public DateTime getStartDate() {
+	// return startDate;
+	// }
+	//
+	// public void setStartDate(DateTime startDate) {
+	// this.startDate = startDate;
+	// }
+	//
+	// public DateTime getEndDate() {
+	// return endDate;
+	// }
+	//
+	// public void setEndDate(DateTime endDate) {
+	// this.endDate = endDate;
+	// }
 
 	public Long getOwnerId() {
 		return ownerId;
@@ -49,6 +50,14 @@ public class CourseSessionDTO implements Serializable, OwnedDTO<Long> {
 
 	public void setOwnerId(Long ownerCourseId) {
 		this.ownerId = ownerCourseId;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 
 }

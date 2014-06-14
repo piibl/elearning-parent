@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -42,8 +43,15 @@ public class CourseSession {
 	/**
 	 * Rang de la session par rapport aux autres sessions du même cours
 	 */
-	@Column(name = "SESSION_RANK")
+	@Column(name = "RANK")
 	private int sessionRank;
+
+	/**
+	 * Description de la session
+	 */
+	@Lob
+	@Column(name = "SUMMARY")
+	private String summary;
 
 	/**
 	 * Date de début de la session
@@ -77,12 +85,13 @@ public class CourseSession {
 	 * @param endDate
 	 *            : date de fin de la session
 	 */
-	public CourseSession(String label, Course ownerCourse, int sessionRank, DateTime startDate, DateTime endDate) {
+	public CourseSession(String label, Course ownerCourse, int sessionRank, DateTime startDate, DateTime endDate, String summary) {
 		this.label = label;
 		this.ownerCourse = ownerCourse;
 		this.sessionRank = sessionRank;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.summary = summary;
 	}
 
 	// Mutateurs
@@ -133,6 +142,14 @@ public class CourseSession {
 
 	public void setEndDate(DateTime endDate) {
 		this.endDate = endDate;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 
 }
