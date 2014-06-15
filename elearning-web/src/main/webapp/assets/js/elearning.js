@@ -22,6 +22,41 @@ $(document)
 			});
 			return result;
 		    };
+		    // Fonction de rendu dans le cadre AJAX
+		    function display(target, event) {
+			$("#ajaxMessage").empty();
+			$("#ajaxPanel").empty();
+			// Désactivation du lien
+			event.preventDefault();
+			$
+				.ajax({
+				    type : 'GET',
+				    // URL déterminée par
+				    // l'attribut href
+				    url : $(target).attr('href'),
+				    beforeSend : function() {
+					// Enrichissement
+					$('#ajaxMessage')
+						.html(
+							'<div class="alert alert-info alert-dismissable"><p>Loading...</p></div>');
+				    },
+				    success : function(data) {
+					$('#ajaxMessage').empty();
+					// Requete ok
+					$('#ajaxPanel').empty();
+					$("#ajaxPanel").append(data);
+				    },
+				    error : function() {
+					$('#ajaxPanel').empty();
+					// Requête ko
+					$('#ajaxMessage')
+						.html(
+							'<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button> <strong>Ooops !</strong> Petit plantage, veuillez ressayer dans quelques instants, merci !</div>');
+				    }
+				});
+
+		    }
+		    ;
 		    // Fonction de redirection
 		    function redirectToUrl(redirectUrl, successMessage) {
 			$
@@ -85,39 +120,17 @@ $(document)
 			    .on(
 				    'click',
 				    function(event) {
-					$("#ajaxMessage").empty();
-					$("#ajaxPanel").empty();
-					// Désactivation du lien
-					event.preventDefault();
-					$
-						.ajax({
-						    type : 'GET',
-						    // URL déterminée par
-						    // l'attribut href
-						    url : $(this).attr('href'),
-						    beforeSend : function() {
-							// Enrichissement
-							$('#ajaxMessage')
-								.html(
-									'<div class="alert alert-info alert-dismissable"><p>Loading...</p></div>');
-						    },
-						    success : function(data) {
-							$('#ajaxMessage')
-								.empty();
-							// Requete ok
-							$('#ajaxPanel').empty();
-							$("#ajaxPanel").append(
-								data);
-						    },
-						    error : function() {
-							$('#ajaxPanel').empty();
-							// Requête ko
-							$('#ajaxMessage')
-								.html(
-									'<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button> <strong>Ooops !</strong> Petit plantage, veuillez ressayer dans quelques instants, merci !</div>');
-						    }
-						});
+					// Appel de la fonction de rendu
+					display($(this), event);
 				    });
+		    // Liens display dans le cadre de rendu
+		    $("#ajaxPanel")
+		    .on(
+			    'click',"a.displayLink",
+			    function(event) {
+				// Appel de la fonction de rendu
+				display($(this), event);
+			    });
 		    // Suppression d'objets
 		    $("#ajaxPanel")
 			    .on(
@@ -170,7 +183,7 @@ $(document)
 						    }
 						});
 				    });
-		    // Détails d'une entité
+		    // Détails d'une entité, rendu dans un modal
 		    $("#ajaxPanel")
 			    .on(
 				    'click',
@@ -208,6 +221,14 @@ $(document)
 									'<div class="alert alert-danger alert-dismissable"><button class="close"aria-hidden="true" data-dismiss="alert"type="button">×</button> <strong>Ooops !</strong> Petit plantage, veuillez  ressayer dans quelques instants, merci !</div>');
 						    }
 						});
+				    });
+		    // Détails d'une entité, rendu dans un modal
+		    $("#ajaxPanel")
+			    .on(
+				    'click',
+				    'a.displayLinkNotModal',
+				    function(event) {
+					display($(this), event);
 				    });
 		    // Formulaire d'ajout dans panneau AJAX
 		    $("#ajaxPanel")

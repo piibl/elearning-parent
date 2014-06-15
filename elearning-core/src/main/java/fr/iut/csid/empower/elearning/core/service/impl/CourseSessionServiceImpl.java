@@ -36,7 +36,8 @@ public class CourseSessionServiceImpl extends AbstractCrudService<CourseSession,
 	@Override
 	public CourseSession createFromDTO(CourseSessionDTO entityDTO) {
 		Course ownerCourse = courseDAO.findOne(Long.valueOf(entityDTO.getOwnerId()));
-		CourseSession courseSession = new CourseSession(entityDTO.getLabel(), ownerCourse, courseSessionDAO.countByOwnerCourse(ownerCourse) + 1, null, null);
+		CourseSession courseSession = new CourseSession(entityDTO.getLabel(), ownerCourse, courseSessionDAO.countByOwnerCourse(ownerCourse) + 1, null, null,
+				entityDTO.getSummary());
 		List<CourseTeaching> courseTeachingList = courseTeachingDAO.findByCourse(ownerCourse);
 		if (ownerCourse != null) {
 			courseSessionDAO.save(courseSession);
@@ -45,7 +46,7 @@ public class CourseSessionServiceImpl extends AbstractCrudService<CourseSession,
 						"La session " + courseSession.getLabel() + " a été créée pour le cours " + ownerCourse.getLabel() + ".");
 			}
 			return courseSession;
-//					entityDTO.getStartDate(), entityDTO.getEndDate()));
+			// entityDTO.getStartDate(), entityDTO.getEndDate()));
 		}
 		return null;
 	}
@@ -56,8 +57,8 @@ public class CourseSessionServiceImpl extends AbstractCrudService<CourseSession,
 		if (courseSession != null) {
 			// TODO update autres champs ?
 			courseSession.setLabel(entityDTO.getLabel());
-//			courseSession.setStartDate(entityDTO.getStartDate());
-//			courseSession.setEndDate(entityDTO.getEndDate());
+			// courseSession.setStartDate(entityDTO.getStartDate());
+			// courseSession.setEndDate(entityDTO.getEndDate());
 			return courseSessionDAO.save(courseSession);
 		}
 		// TODO erreur globale

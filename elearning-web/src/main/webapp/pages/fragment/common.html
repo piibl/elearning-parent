@@ -7,10 +7,9 @@
 <link rel="stylesheet" href="../assets/css/elearning-theme.css"
 	th:href="@{/assets/css/elearning-theme.css}" />
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="../assets/js/bootstrap.min.js"
+<script src="../assets/js/jquery-2.1.1.min.js"
+	th:src="@{/assets/js/jquery-2.1.1.min.js}"></script>
+<script src="../assets/js/jquery-2.1.1.min.js"
 	th:src="@{/assets/js/bootstrap.min.js}"></script>
 <!-- NOTRE SCRIPT MAISON -->
 <script src="../assets/js/elearning.js"
@@ -27,6 +26,13 @@
 		</div>
 		<!-- /.modal-dialog -->
 	</div>
+	<!-- Breadcrumb -->
+	<div th:fragment="breadcrumb">
+		<ol th:if="${breadcrumbLinks}" class="breadcrumb">
+			<li th:each="breadcrumbLink : ${breadcrumbLinks}"><a href="#" th:href="${breadcrumbLink.href}" th:text="${breadcrumbLink.label}" th:class="${breadcrumbLink.cssClass}"></a></li>
+		</ol>
+	</div>
+	<!-- Corps de page -->
 	<div class="col-md-9" th:fragment="ajax-content">
 
 		<!-- Message Ajax -->
