@@ -20,9 +20,9 @@
 					<p sec:authorize="hasRole('ROLE_ADMIN')" th:if="${#lists.isEmpty(notifications)}">Aucun cours n'est
 						enregistré sur la plateforme.</p> -->
 					<div th:unless="${#lists.isEmpty(notifications)}">
-						<div class="bordered-bottom" th:each="singleNews : ${news}">
-							<h5 th:text="${notification.content.subject}">Bryan123</h5>
-							<p th:text="${notification.content.body}">Bryan123</p>
+						<div class="bordered-bottom" th:each="notification : ${notifications}">
+							<h5 th:text="${notification.subject}">Bryan123</h5>
+							<p th:text="${notification.body}">Bryan123</p>
 						</div>
 					</div>
 				</div>

@@ -19,6 +19,7 @@ import fr.iut.csid.empower.elearning.core.dto.impl.CourseDTO;
 import fr.iut.csid.empower.elearning.core.exception.CourseNotExistsException;
 import fr.iut.csid.empower.elearning.core.exception.UserNotExistsException;
 import fr.iut.csid.empower.elearning.core.service.CourseService;
+import fr.iut.csid.empower.elearning.core.service.NotificationService;
 import fr.iut.csid.empower.elearning.core.service.dao.course.CourseDAO;
 import fr.iut.csid.empower.elearning.core.service.dao.course.CourseSubscriptionDAO;
 import fr.iut.csid.empower.elearning.core.service.dao.course.CourseTeachingDAO;
@@ -39,7 +40,10 @@ public class CourseServiceImpl extends AbstractCrudService<Course, Long> impleme
 	private CourseSubscriptionDAO courseSubscriptionDAO;
 	@Inject
 	private CourseSessionDAO courseSessionDAO;
-
+	@Inject
+	private NotificationService notificationService;
+	
+	
 	@Inject
 	private TeacherDAO teacherDAO;
 
@@ -58,9 +62,11 @@ public class CourseServiceImpl extends AbstractCrudService<Course, Long> impleme
 		Long ownerId = Long.valueOf(courseDTO.getOwnerId());
 		// Récupération de l'enseignant créateur
 		Teacher teacher = teacherDAO.findOne(ownerId);
+		
 		if (teacher != null) {
 			CourseTeaching courseTeaching = new CourseTeaching(teacher, course);
 			courseTeachingDAO.save(courseTeaching);
+			notificationService.createNotification("Création du cours " + course.getLabel(), teacher, "Le cours " + course.getLabel() + "  a été créé avec succès.");
 			return course;
 		} else {
 			// Pas d'enseignant associé à cet id
@@ -82,9 +88,12 @@ public class CourseServiceImpl extends AbstractCrudService<Course, Long> impleme
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void delete(Course course) {
+	public void delete(Course course) {		
+		
+		List<CourseTeaching> courseTeachingList = courseTeachingDAO.findByCourse(course);
+		
 		// Suppression de toutes les affiliations à ce cours
-		for (CourseTeaching courseTeaching : courseTeachingDAO.findByCourse(course)) {
+		for (CourseTeaching courseTeaching : courseTeachingList) {
 			courseTeachingDAO.delete(courseTeaching.getId());
 		}
 		// Suppression de toutes les subscriptions
@@ -97,6 +106,11 @@ public class CourseServiceImpl extends AbstractCrudService<Course, Long> impleme
 		}
 		// Suppression du cours
 		courseDAO.delete(course);
+		
+		// Notification de la suppression
+		for (CourseTeaching courseTeaching : courseTeachingList){
+			notificationService.createNotification("Suppression du cours " + course.getLabel(), courseTeaching.getTeacher(), "Le cours " + course.getLabel() + "  a été supprimé avec succès.");
+		}
 	}
 
 	@Override

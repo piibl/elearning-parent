@@ -8,11 +8,14 @@ import javax.inject.Named;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
+import fr.iut.csid.empower.elearning.core.domain.course.CourseTeaching;
 import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
 import fr.iut.csid.empower.elearning.core.dto.impl.CourseSessionDTO;
 import fr.iut.csid.empower.elearning.core.exception.CourseNotExistsException;
 import fr.iut.csid.empower.elearning.core.service.CourseSessionService;
+import fr.iut.csid.empower.elearning.core.service.NotificationService;
 import fr.iut.csid.empower.elearning.core.service.dao.course.CourseDAO;
+import fr.iut.csid.empower.elearning.core.service.dao.course.CourseTeachingDAO;
 import fr.iut.csid.empower.elearning.core.service.dao.course.session.CourseSessionDAO;
 
 /**
@@ -25,13 +28,23 @@ public class CourseSessionServiceImpl extends AbstractCrudService<CourseSession,
 	private CourseSessionDAO courseSessionDAO;
 	@Inject
 	private CourseDAO courseDAO;
-
+	@Inject
+	private CourseTeachingDAO courseTeachingDAO;
+	@Inject
+	private NotificationService notificationService;
+	
 	@Override
 	public CourseSession createFromDTO(CourseSessionDTO entityDTO) {
 		Course ownerCourse = courseDAO.findOne(Long.valueOf(entityDTO.getOwnerId()));
+		CourseSession courseSession = new CourseSession(entityDTO.getLabel(), ownerCourse, courseSessionDAO.countByOwnerCourse(ownerCourse) + 1, null, null);
+		List<CourseTeaching> courseTeachingList = courseTeachingDAO.findByCourse(ownerCourse);
 		if (ownerCourse != null) {
-			return courseSessionDAO.save(new CourseSession(entityDTO.getLabel(), ownerCourse, courseSessionDAO.countByOwnerCourse(ownerCourse) + 1,
-					null, null));
+			courseSessionDAO.save(courseSession);
+			for(CourseTeaching courseTeaching : courseTeachingList){
+				notificationService.createNotification("Création de session", courseTeaching.getTeacher(),
+						"La session " + courseSession.getLabel() + " a été créée pour le cours " + ownerCourse.getLabel() + ".");
+			}
+			return courseSession;
 //					entityDTO.getStartDate(), entityDTO.getEndDate()));
 		}
 		return null;
@@ -64,5 +77,16 @@ public class CourseSessionServiceImpl extends AbstractCrudService<CourseSession,
 		}
 		throw new CourseNotExistsException();
 	}
-
+	
+	@Override
+	public void delete(CourseSession courseSession) {
+		super.delete(courseSession);
+		
+		Course ownerCourse = courseSession.getOwnerCourse();
+		List<CourseTeaching> courseTeachingList = courseTeachingDAO.findByCourse(ownerCourse);
+		for(CourseTeaching courseTeaching : courseTeachingList){
+			notificationService.createNotification("Suppression de session", courseTeaching.getTeacher(),
+					"La session " + courseSession.getLabel() + " a été supprimée pour le cours " + ownerCourse.getLabel() + ".");
+		}
+	}
 }

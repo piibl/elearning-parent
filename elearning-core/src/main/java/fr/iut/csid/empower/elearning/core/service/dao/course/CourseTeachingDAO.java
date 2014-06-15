@@ -30,5 +30,4 @@ public interface CourseTeachingDAO extends JpaRepository<CourseTeaching, Long> {
 	 * @return
 	 */
 	public List<CourseTeaching> findByCourse(Course course);
-
 }

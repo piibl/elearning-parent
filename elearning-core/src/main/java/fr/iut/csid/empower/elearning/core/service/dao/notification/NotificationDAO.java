@@ -10,5 +10,5 @@ import fr.iut.csid.empower.elearning.core.domain.user.User;
 public interface NotificationDAO extends JpaRepository<Notification, Long> {
 
 	public List<Notification> findByReceiver(User user);
-
+	
 }
