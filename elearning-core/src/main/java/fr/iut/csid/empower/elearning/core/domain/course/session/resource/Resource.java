@@ -9,9 +9,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.mongodb.gridfs.GridFSDBFile;
 
 import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
 
+/**
+ * Ressource, objet contenant les pointeurs vers les fichiers stockés physiquement en base Mongodb
+ * 
+ * @author A547891
+ */
 @Entity
 @Table(name = "SESSION_RESOURCE")
 public class Resource {
@@ -36,10 +44,18 @@ public class Resource {
 	private String type;
 
 	/**
-	 * Path de la ressource
+	 * Nom de la ressource physique<br/>
+	 * Sert à retrouver la ressource dans la base mongodb;
 	 */
-	@Column(name = "PATH")
-	private String path;
+	@Column(name = "NAME")
+	private String resourceName;
+
+	/**
+	 * Resource physique <br/>
+	 * Aucun référencement persistant, c'est au service {@link ResourceService} de manager et de charger les resources physiques
+	 */
+	@Transient
+	private GridFSDBFile resource;
 
 	public Resource() {
 
@@ -50,10 +66,10 @@ public class Resource {
 	 * @param type
 	 * @param path
 	 */
-	public Resource(CourseSession ownerSession, String resourceType, String resourcePath) {
+	public Resource(CourseSession ownerSession, String resourceType, String resourceName) {
 		this.ownerSession = ownerSession;
 		this.type = resourceType;
-		this.path = resourcePath;
+		this.resourceName = resourceName;
 	}
 
 	// Mutateurs
@@ -65,14 +81,6 @@ public class Resource {
 		return ownerSession;
 	}
 
-	public String getResourceType() {
-		return type;
-	}
-
-	public String getResourcePath() {
-		return path;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -81,12 +89,20 @@ public class Resource {
 		this.ownerSession = ownerSession;
 	}
 
-	public void setResourceType(String resourceType) {
-		this.type = resourceType;
+	public String getType() {
+		return type;
 	}
 
-	public void setResourcePath(String resourcePath) {
-		this.path = resourcePath;
+	public String getResourceName() {
+		return resourceName;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setResourceName(String resourceName) {
+		this.resourceName = resourceName;
 	}
 
 }

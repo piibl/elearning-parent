@@ -15,7 +15,7 @@ public enum PathFragment {
 	HOME("home"), DENIED("denied"),
 	// Tableaux de bord
 	ADMIN_DASHBOARD("dashboards/admindashboard"), STUDENT_DASHBOARD("dashboards/studentdashboard"), TEACHER_DASHBOARD("dashboards/teacherdashboard"), NOTSUBSCRIBED(
-			"not-subscribed"), NOTIFICATIONS("notifications"), NEWS("news"),
+			"not-subscribed"), NOTIFICATIONS("notifications"), NEWS("news"), RESOURCES("resources"),
 
 	;
 

@@ -40,9 +40,10 @@ public class CourseSessionResourceAssembler extends AbstractResourceAssembler<Co
 		Link editLink = linkBuilderFactory.linkTo(CourseController.class).slash(courseSession.getOwnerCourse().getId())
 				.slash(PathFragment.SESSIONS.getPath()).slash(courseSession.getId()).slash(PathFragment.EDIT.getPath())
 				.withRel(Relation.EDIT.getName());
+		// adressages des ressources d'une session
 		Link manageResourcesFilesLink = linkBuilderFactory.linkTo(CourseController.class).slash(courseSession.getOwnerCourse().getId())
-				.slash(PathFragment.SESSIONS.getPath()).slash(courseSession.getId()).slash(PathFragment.EDIT.getPath())
-				.withRel(Relation.EDIT.getName());
+				.slash(PathFragment.SESSIONS.getPath()).slash(courseSession.getId()).slash(PathFragment.RESOURCES.getPath())
+				.withRel(Relation.RESOURCES.getName());
 		return new Resource<CourseSession>(courseSession, selfLink, deleteLink, editLink, manageResourcesFilesLink);
 	}
 

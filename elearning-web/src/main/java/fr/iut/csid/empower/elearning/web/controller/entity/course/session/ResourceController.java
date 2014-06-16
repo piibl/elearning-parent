@@ -16,43 +16,47 @@ import fr.iut.csid.empower.elearning.core.service.CourseService;
 import fr.iut.csid.empower.elearning.core.service.CourseSessionService;
 import fr.iut.csid.empower.elearning.core.service.CrudService;
 import fr.iut.csid.empower.elearning.core.service.OwnedEntityCrudService;
+import fr.iut.csid.empower.elearning.core.service.ResourceService;
 import fr.iut.csid.empower.elearning.web.controller.entity.AbstractOwnedEntityController;
 import fr.iut.csid.empower.elearning.web.controller.entity.course.CourseController;
 import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilderFactory;
 import fr.iut.csid.empower.elearning.web.link.assembler.CourseSessionResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.breadcrumb.BreadcrumbLink;
+import fr.iut.csid.empower.elearning.web.reference.PathFragment;
 import fr.iut.csid.empower.elearning.web.reference.Relation;
 
 @Controller
-@RequestMapping("/courses/{ownerEntityId}/sessions")
-public class CourseSessionController extends AbstractOwnedEntityController<CourseSession, Long, CourseSessionDTO> {
+@RequestMapping("/sessions/{ownerEntityId}/resources")
+public class ResourceController extends AbstractOwnedEntityController<CourseSession, Long, CourseSessionDTO> {
 
-	private String mainView = "display/sessions :: display-sessions";
-	private String detailsView = "display/sessions :: display-details";
-	private String entitiesAttributeName = "courseSessions";
-	private String singleEntityAttributeName = "courseSession";
-	private String addForm = "forms/add-forms :: add-session-form";
-	private String editForm = "forms/edit-forms :: edit-session-form";
+	private String mainView = "display/resources :: display-resources";
+	private String detailsView = "display/resources :: display-details";
+	private String entitiesAttributeName = "resources";
+	private String singleEntityAttributeName = "resource";
+	private String addForm = "forms/add-forms :: add-resource-form";
+	private String editForm = "forms/edit-forms :: edit-resource-form";
 
 	@Inject
 	protected ControllerLinkBuilderFactory linkBuilderFactory;
 
 	@Inject
+	private CourseService courseService;
+	@Inject
 	private CourseSessionService courseSessionService;
 	@Inject
-	private CourseService courseService;
+	private ResourceService resourceService;
 
 	@Inject
-	private CourseSessionResourceAssembler courseSessionResourceAssembler;
+	private CourseSessionResourceAssembler resourceResourceAssembler;
 
-	@ModelAttribute("ownerCourseLabel")
+	@ModelAttribute("ownerSessionLabel")
 	public String getCourseLabel(@PathVariable Long ownerEntityId) {
-		return courseService.find(ownerEntityId).getLabel();
+		return courseSessionService.find(ownerEntityId).getLabel();
 	}
 
 	protected BatchResourceAssembler<CourseSession, Resource<CourseSession>> getResourceAssembler() {
-		return courseSessionResourceAssembler;
+		return resourceResourceAssembler;
 	}
 
 	protected String getBaseView() {
@@ -81,7 +85,7 @@ public class CourseSessionController extends AbstractOwnedEntityController<Cours
 
 	@Override
 	protected CrudService getOwnerCrudService() {
-		return courseService;
+		return courseSessionService;
 	}
 
 	@Override
@@ -99,23 +103,23 @@ public class CourseSessionController extends AbstractOwnedEntityController<Cours
 	@RequestMapping(method = RequestMethod.GET)
 	public String getAll(Model model, @PathVariable Long ownerEntityId) {
 		// Ajout des données du fil d'arianne
+		Long courseId = courseSessionService.find(ownerEntityId).getOwnerCourse().getId();
 		BreadcrumbLink[] breadcrumbLinks = {
 				new BreadcrumbLink("Vos cours", linkBuilderFactory.linkTo(CourseController.class).withSelfRel().getHref(), "displayLink"),
-				new BreadcrumbLink(courseService.find(ownerEntityId).getLabel(), "#", "active") };
+				new BreadcrumbLink(courseService.find(courseId).getLabel(), "#", "active"),
+				new BreadcrumbLink("Chapitres du cours", linkBuilderFactory.linkTo(CourseController.class).slash(courseId)
+						.slash(Relation.SESSIONS.getName()).withSelfRel().getHref(), "displayLink"),
+				new BreadcrumbLink(courseSessionService.find(ownerEntityId).getLabel(), "#"),
+				new BreadcrumbLink("Ressources", linkBuilderFactory.linkTo(CourseController.class).slash(courseId)
+						.slash(PathFragment.SESSIONS.getPath()).slash(ownerEntityId).slash(PathFragment.RESOURCES.getPath()).withSelfRel().getHref(),
+						"displayLink") };
 		model.addAttribute("breadcrumbLinks", breadcrumbLinks);
 		return super.getAll(model, ownerEntityId);
 	}
 
 	@Override
 	public String getEntity(@PathVariable Long ownerEntityId, @PathVariable Long entityId, Model model) {
-		// Ajout des données du fil d'arianne
-		BreadcrumbLink[] breadcrumbLinks = {
-				new BreadcrumbLink("Vos cours", linkBuilderFactory.linkTo(CourseController.class).withSelfRel().getHref(), "displayLink"),
-				new BreadcrumbLink(courseService.find(ownerEntityId).getLabel(), "#"),
-				new BreadcrumbLink("Chapitres du cours", linkBuilderFactory.linkTo(CourseController.class).slash(ownerEntityId)
-						.slash(Relation.SESSIONS.getName()).withSelfRel().getHref(), "displayLink"),
-				new BreadcrumbLink(courseSessionService.find(entityId).getLabel(), "#") };
-		model.addAttribute("breadcrumbLinks", breadcrumbLinks);
-		return super.getEntity(ownerEntityId, entityId, model);
+		// Aucun appel sur une ressource en tant que tel autorisé pour l'instant, fonction de download à postériori
+		return null;
 	}
 }

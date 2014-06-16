@@ -3,13 +3,17 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:data="http://www.springframework.org/schema/data/jpa"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
 	xsi:schemaLocation=" 
 	http://www.springframework.org/schema/beans 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/aop 		http://www.springframework.org/schema/aop/spring-aop.xsd
 	http://www.springframework.org/schema/tx 		http://www.springframework.org/schema/tx/spring-tx.xsd
 	http://www.springframework.org/schema/context 	http://www.springframework.org/schema/context/spring-context.xsd
+	
 	http://www.springframework.org/schema/data/jpa
-    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+    http://www.springframework.org/schema/data/mongo
+    http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
 
 	<!-- Config properties / database -->
 	<bean id="commonPropertyConfigurer"
@@ -27,7 +31,26 @@
 		<property name="maxPoolSize" value="50" />
 		<property name="minPoolSize" value="10" />
 	</bean>
+	
+	<!-- Connexion serveur MongoDB -->
+	<mongo:db-factory host="${mongo.host}" port="${mongo.port}"
+		dbname="${mongo.dbname}"/>
+	<mongo:mapping-converter id="converter"
+		db-factory-ref="mongoDbFactory" />
+		
+	<mongo:mongo host="${mongo.host}" port="${mongo.port}" />
 
+	<!-- MongoDB GridFS Template -->
+	<bean id="gridTemplate" class="org.springframework.data.mongodb.gridfs.GridFsTemplate">
+		<constructor-arg ref="mongoDbFactory" />
+		<constructor-arg ref="converter" />
+	</bean>
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg ref="mongoDbFactory" />
+
+	</bean>
+	
 
 	<!-- JPA config -->
 	<bean id="Em"
@@ -61,19 +84,15 @@
 	</bean>
 
 	<!-- Emplacement des repositories, Spring data -->
-	<data:repositories base-package="fr.iut.csid.empower.elearning.core.service.dao.**" />
-	
+	<data:repositories base-package="fr.iut.csid.empower.elearning.core.service.dao.**" entity-manager-factory-ref="Em"/>
+
 	<!-- Scan des annotations, collecte automatique dans les packages enfants -->
 	<context:component-scan base-package="fr.iut.csid.empower.elearning.core**" />
 
 	<!-- Transaction annotation config -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
-	<!-- JPA annotation (@PersistenceContext) -->
-	<!-- <bean id="persistanceAnot"
-		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" /> -->
-
-	<!-- AOP config (Utilisé par les annotations customisées) -->
+	<!-- AOP config (Utilisé par les annotations customisées) TODO utilité ? -->
 	<aop:aspectj-autoproxy />
 
 </beans>

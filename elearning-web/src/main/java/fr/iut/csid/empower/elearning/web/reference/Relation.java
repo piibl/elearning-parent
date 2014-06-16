@@ -3,7 +3,8 @@ package fr.iut.csid.empower.elearning.web.reference;
 import org.springframework.hateoas.Link;
 
 /**
- * TODO javadoc fil d'arianne entre points logiques : ert à décrire les liens physiques, voir templates d'affichage (display/*)
+ * TODO javadoc <br/>
+ * Fil d'arianne entre points logiques : sert à décrire les liens physiques, voir templates d'affichage (display/*)
  */
 public enum Relation {
 
@@ -13,7 +14,7 @@ public enum Relation {
 	// Utilisateurs
 	STUDENTS("students"), ADMINISTRATORS("administrators"), TEACHERS("teachers"),
 	// Cours
-	COURSES("courses"), SESSIONS("sessions"), SUBSCRIBE("subscribe"), NOTSUBSCRIBED("notSubscribed");
+	COURSES("courses"), SESSIONS("sessions"), SUBSCRIBE("subscribe"), NOTSUBSCRIBED("notSubscribed"), RESOURCES("resources");
 
 	private String name;
 
