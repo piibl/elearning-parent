@@ -1,0 +1,96 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment/common :: headerFragment">
+</head>
+
+<body>
+	<div class="container top-20">
+		<div class="row row-offcanvas row-offcanvas-left">
+			<!-- Le cadre de rendu est délégué au template appelant -->
+			<div th:fragment="display-resources">
+
+				<!-- Fil d'arianne -->
+				<div th:include="fragment/common :: breadcrumb"></div>
+				<!-- Boutons d'action -->
+				<ul class="nav nav-pills">
+					<li sec:authorize="hasRole('ROLE_TEACHER')"><a
+						class="btn addForm" href="/resources/new"
+						th:href="${addOwnedEntityLink}" role="button" data-toggle="modal"
+						data-target="#modal"><i class="glyphicon glyphicon-plus"></i>
+							Ajouter un chapitre</a></li>
+				</ul>
+				<!-- Titre prof -->
+				<div sec:authorize="hasRole('ROLE_TEACHER')">
+					<h3>
+						Gestion des ressources enregistrés pour le chapitre <strong
+							th:text="${ownerSessionLabel}"></strong>
+					</h3>
+				</div>
+				<!-- <div sec:authorize="hasRole('ROLE_STUDENT')">
+					<h5>
+						<strong th:text="${ownerCourseLabel}"></strong> - Chapitres
+					</h5>
+				</div> -->
+
+
+				<div>
+					<p th:if="${#lists.isEmpty(resources)}">Aucun ressource
+						n'existe pour ce cours</p>
+					<div th:unless="${#lists.isEmpty(resources)}">
+						<table class="table table-striped table-hover">
+							<thead>
+								<th>Nom de la ressource</th>
+								<th>Type de la ressource</th>
+								<th sec:authorize="hasRole('ROLE_TEACHER')">Editer</th>
+								<th sec:authorize="hasRole('ROLE_TEACHER')">Supprimer</th>
+							</thead>
+							<tbody>
+								<tr th:each="resource : ${resources}">
+									<td class="span4" th:text="${resource.content.resourceName}">Bryan123</td>
+									<td class="span4"
+										th:text="${resource.content.type}">Bryan123</td>
+									<!-- <td class="span2"><a class="displayLinkNotModal"
+										href="./view.html"
+										th:href="${resource.getLink('self').href}"><i
+											class="glyphicon glyphicon-list-alt"></i></a></td> -->
+									<td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a
+										class="editLink" href="./view.html"
+										th:href="${resource.getLink('edit').href}"><i
+											class="glyphicon glyphicon-pencil"></i></a></td>
+									<td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a
+										class="deleteLink" href="./delete.html"
+										th:href="${resource.getLink('delete').href}"><i
+											class="glyphicon glyphicon-remove"></i></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- Affichage des détails d'une resource -->
+			<!-- Le cadre de rendu est délégué au template appelant -->
+			<div th:fragment="display-details">
+				<div th:include="fragment/common :: breadcrumb"></div>
+				<ul sec:authorize="hasRole('ROLE_TEACHER')" class="nav nav-pills">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#"> Gérer les ressources<span
+							class="caret"></span>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a tabindex="-1" href="#">Ajouter une ressource</a></li>
+							<li><a tabindex="-1" href="#">Supprimer une ressource</a></li>
+						</ul></li>
+				</ul>
+				<h3>Ressources associées au chapitre <strong th:text="${ownerSessionLabel}"></strong></h3>
+				<div class="bordered-bottom">
+					<p th:text="${resource.content.summary}">Resume</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<footer th:include="fragment/common :: [//footer]"></footer>
+</body>
+</html>

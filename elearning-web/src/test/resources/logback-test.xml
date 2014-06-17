@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration>
+<configuration scan="true">
+
+	<!-- Console appender for standard output -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>[%p] %d [%X{INSTANCE}] [%X{PROCESS}] [%t] [%c] : %m%n
+			</Pattern>
+		</encoder>
+	</appender>
+
+	<logger name="fr.iut.csid.empower.elearning" level="DEBUG" />
+
+
+	<!-- Spring Framework logger level -->
+	<logger name="org.springframework" additivity="true" level="info" />
+
+	<!-- Spring Framework JPA logger level -->
+	<logger name="org.springframework.orm.jpa" level="debug" />
+	<logger name="org.eclipselink" level="debug"/>
+
+	<!-- Spring Framework mapping logger level -->
+	<!-- <logger name="org.springframework.orm" additivity="false" level="debug"> -->
+	<!-- <appender-ref ref="STDOUT" /> -->
+	<!-- </logger> -->
+
+	<!-- Spring Framework transaction logger level -->
+	<!-- <logger name="org.springframework.transaction" additivity="false" level="debug"> -->
+	<!-- <appender-ref ref="STDOUT" /> -->
+	<!-- </logger> -->
+
+	<!-- Spring Framework database connectivity logger level -->
+	<!-- <logger name="org.springframework.jdbc" additivity="false" level="debug"> -->
+	<!-- <appender-ref ref="STDOUT" /> -->
+	<!-- </logger> -->
+
+
+	<!-- Datasource logger level -->
+	<logger name="com.mchange" additivity="false" level="error" />
+
+	<!-- Log root -->
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>

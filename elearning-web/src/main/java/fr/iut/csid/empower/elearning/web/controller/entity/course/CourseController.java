@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
-import fr.iut.csid.empower.elearning.core.dto.impl.CourseDTO;
-import fr.iut.csid.empower.elearning.core.service.CourseService;
-import fr.iut.csid.empower.elearning.core.service.CourseSubscriptionService;
-import fr.iut.csid.empower.elearning.core.service.CrudService;
-import fr.iut.csid.empower.elearning.core.service.StudentService;
 import fr.iut.csid.empower.elearning.web.controller.entity.AbstractEntityController;
+import fr.iut.csid.empower.elearning.web.dto.impl.CourseDTO;
 import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.assembler.CourseResourceAssembler;
+import fr.iut.csid.empower.elearning.web.service.CourseService;
+import fr.iut.csid.empower.elearning.web.service.CourseSubscriptionService;
+import fr.iut.csid.empower.elearning.web.service.CrudService;
+import fr.iut.csid.empower.elearning.web.service.StudentService;
 
 @Controller
 @RequestMapping("/courses")
@@ -32,7 +32,7 @@ public class CourseController extends AbstractEntityController<Course, Long, Cou
 	private String singleEntityAttributeName = "course";
 	private String addForm = "forms/add-forms :: add-course-form";
 	private String editForm = "forms/edit-forms :: edit-course-form";
-	private String subscriptionSuccessMessageView = "dashboards/display/student/student-courses :: display-subscrition-message";
+	private String subscriptionSuccessMessageView = "dashboards/display/student/student-courses :: display-subscription-message";
 
 	@Inject
 	private CourseService courseService;

@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import fr.iut.csid.empower.elearning.core.dto.IDTO;
-import fr.iut.csid.empower.elearning.core.service.CrudService;
+import fr.iut.csid.empower.elearning.web.dto.IDTO;
 import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilderFactory;
+import fr.iut.csid.empower.elearning.web.service.CrudService;
 
 public abstract class AbstractEntityController<T, X extends Serializable, Y extends IDTO> {
 

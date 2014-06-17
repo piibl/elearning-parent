@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
-import fr.iut.csid.empower.elearning.core.dto.impl.CourseSessionDTO;
-import fr.iut.csid.empower.elearning.core.service.CourseService;
-import fr.iut.csid.empower.elearning.core.service.CourseSessionService;
-import fr.iut.csid.empower.elearning.core.service.CrudService;
-import fr.iut.csid.empower.elearning.core.service.OwnedEntityCrudService;
 import fr.iut.csid.empower.elearning.web.controller.entity.AbstractOwnedEntityController;
 import fr.iut.csid.empower.elearning.web.controller.entity.course.CourseController;
+import fr.iut.csid.empower.elearning.web.dto.impl.CourseSessionDTO;
 import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilderFactory;
 import fr.iut.csid.empower.elearning.web.link.assembler.CourseSessionResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.breadcrumb.BreadcrumbLink;
 import fr.iut.csid.empower.elearning.web.reference.Relation;
+import fr.iut.csid.empower.elearning.web.service.CourseService;
+import fr.iut.csid.empower.elearning.web.service.CourseSessionService;
+import fr.iut.csid.empower.elearning.web.service.CrudService;
+import fr.iut.csid.empower.elearning.web.service.OwnedEntityCrudService;
 
 @Controller
 @RequestMapping("/courses/{ownerEntityId}/sessions")

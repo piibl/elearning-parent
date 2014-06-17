@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import fr.iut.csid.empower.elearning.core.service.NotificationService;
-import fr.iut.csid.empower.elearning.core.service.UserService;
+import fr.iut.csid.empower.elearning.web.service.NotificationService;
+import fr.iut.csid.empower.elearning.web.service.UserService;
 
 @Controller
 @RequestMapping("*/notifications")

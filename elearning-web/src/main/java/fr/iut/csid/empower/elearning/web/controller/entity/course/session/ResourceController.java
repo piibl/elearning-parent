@@ -10,25 +10,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
-import fr.iut.csid.empower.elearning.core.dto.impl.CourseSessionDTO;
-import fr.iut.csid.empower.elearning.core.service.CourseService;
-import fr.iut.csid.empower.elearning.core.service.CourseSessionService;
-import fr.iut.csid.empower.elearning.core.service.CrudService;
-import fr.iut.csid.empower.elearning.core.service.OwnedEntityCrudService;
-import fr.iut.csid.empower.elearning.core.service.ResourceService;
 import fr.iut.csid.empower.elearning.web.controller.entity.AbstractOwnedEntityController;
 import fr.iut.csid.empower.elearning.web.controller.entity.course.CourseController;
+import fr.iut.csid.empower.elearning.web.dto.impl.ResourceDTO;
 import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilderFactory;
-import fr.iut.csid.empower.elearning.web.link.assembler.CourseSessionResourceAssembler;
+import fr.iut.csid.empower.elearning.web.link.assembler.ResourceResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.breadcrumb.BreadcrumbLink;
 import fr.iut.csid.empower.elearning.web.reference.PathFragment;
 import fr.iut.csid.empower.elearning.web.reference.Relation;
+import fr.iut.csid.empower.elearning.web.service.CourseService;
+import fr.iut.csid.empower.elearning.web.service.CourseSessionService;
+import fr.iut.csid.empower.elearning.web.service.CrudService;
+import fr.iut.csid.empower.elearning.web.service.OwnedEntityCrudService;
+import fr.iut.csid.empower.elearning.web.service.ResourceService;
 
 @Controller
-@RequestMapping("/sessions/{ownerEntityId}/resources")
-public class ResourceController extends AbstractOwnedEntityController<CourseSession, Long, CourseSessionDTO> {
+@RequestMapping("/courses/{courseId}/sessions/{ownerEntityId}/resources")
+public class ResourceController extends
+		AbstractOwnedEntityController<fr.iut.csid.empower.elearning.core.domain.course.session.resource.Resource, Long, ResourceDTO> {
 
 	private String mainView = "display/resources :: display-resources";
 	private String detailsView = "display/resources :: display-details";
@@ -48,14 +48,14 @@ public class ResourceController extends AbstractOwnedEntityController<CourseSess
 	private ResourceService resourceService;
 
 	@Inject
-	private CourseSessionResourceAssembler resourceResourceAssembler;
+	private ResourceResourceAssembler resourceResourceAssembler;
 
 	@ModelAttribute("ownerSessionLabel")
 	public String getCourseLabel(@PathVariable Long ownerEntityId) {
 		return courseSessionService.find(ownerEntityId).getLabel();
 	}
 
-	protected BatchResourceAssembler<CourseSession, Resource<CourseSession>> getResourceAssembler() {
+	protected BatchResourceAssembler<fr.iut.csid.empower.elearning.core.domain.course.session.resource.Resource, Resource<fr.iut.csid.empower.elearning.core.domain.course.session.resource.Resource>> getResourceAssembler() {
 		return resourceResourceAssembler;
 	}
 
@@ -95,8 +95,8 @@ public class ResourceController extends AbstractOwnedEntityController<CourseSess
 	}
 
 	@Override
-	protected OwnedEntityCrudService<CourseSession, Long, CourseSessionDTO> getCrudService() {
-		return courseSessionService;
+	protected OwnedEntityCrudService<fr.iut.csid.empower.elearning.core.domain.course.session.resource.Resource, Long, ResourceDTO> getCrudService() {
+		return resourceService;
 	}
 
 	@Override

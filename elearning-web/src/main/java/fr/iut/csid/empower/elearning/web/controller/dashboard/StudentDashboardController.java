@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
-import fr.iut.csid.empower.elearning.core.service.StudentService;
 import fr.iut.csid.empower.elearning.web.link.assembler.CourseResourceAssembler;
 import fr.iut.csid.empower.elearning.web.reference.PathFragment;
 import fr.iut.csid.empower.elearning.web.reference.Relation;
+import fr.iut.csid.empower.elearning.web.service.StudentService;
 
 @Controller
 @RequestMapping("/studentdashboard")

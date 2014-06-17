@@ -40,8 +40,10 @@
 						<table class="table table-striped table-hover">
 							<thead>
 								<th>Intitulé du chapitre</th>
-								<th sec:authorize="hasRole('ROLE_TEACHER')">Rang du chapitre</th>
+								<th sec:authorize="hasRole('ROLE_TEACHER')">Rang du
+									chapitre</th>
 								<th>Détails</th>
+								<th sec:authorize="hasRole('ROLE_TEACHER')">Ressources</th>
 								<th sec:authorize="hasRole('ROLE_TEACHER')">Editer</th>
 								<th sec:authorize="hasRole('ROLE_TEACHER')">Supprimer</th>
 							</thead>
@@ -53,6 +55,10 @@
 									<td class="span2"><a class="displayLinkNotModal"
 										href="./view.html"
 										th:href="${courseSession.getLink('self').href}"><i
+											class="glyphicon glyphicon-list-alt"></i></a></td>
+									<td class="span2"><a class="displayLinkNotModal"
+										href="./resources.html"
+										th:href="${courseSession.getLink('resources').href}"><i
 											class="glyphicon glyphicon-list-alt"></i></a></td>
 									<td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a
 										class="editLink" href="./view.html"

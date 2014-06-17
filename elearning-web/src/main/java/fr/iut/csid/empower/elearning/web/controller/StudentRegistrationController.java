@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
-import fr.iut.csid.empower.elearning.core.service.StudentService;
 import fr.iut.csid.empower.elearning.web.controller.entity.user.validator.StudentValidator;
 import fr.iut.csid.empower.elearning.web.reference.PathFragment;
+import fr.iut.csid.empower.elearning.web.service.StudentService;
 
 @Controller
 public class StudentRegistrationController {
