@@ -13,7 +13,7 @@ public interface ResourceStorageService {
 	/**
 	 * Retourne la ressource correspondnate
 	 * 
-	 * @param resourceName
+	 * @param name
 	 * @return
 	 */
 	public GridFSDBFile getByResourceName(String resourceName);

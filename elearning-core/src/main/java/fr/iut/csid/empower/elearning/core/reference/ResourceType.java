@@ -7,12 +7,12 @@ package fr.iut.csid.empower.elearning.core.reference;
  */
 public enum ResourceType {
 
-	EVALUATION(1, "contrôle"), COURSE_SUPPORT(2, "support de cours");
+	EXAM("E", "examen"), TEXT_MATERIAL("TM", "support de cours"), PICTURE_MATERIAL("PM", "support de cours"), VIDEO_MATERIAL("VM", "support de cours");
 
 	/**
 	 * Identifiant du type
 	 */
-	private int id;
+	private String id;
 	/**
 	 * Intitulé du type
 	 */
@@ -26,12 +26,12 @@ public enum ResourceType {
 	 * @param label
 	 *            : intitulé du statut
 	 */
-	private ResourceType(int id, String label) {
+	private ResourceType(String id, String label) {
 		this.id = id;
 		this.label = label;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 

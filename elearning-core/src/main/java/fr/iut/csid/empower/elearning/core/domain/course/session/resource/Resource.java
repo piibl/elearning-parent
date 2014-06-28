@@ -1,10 +1,14 @@
 package fr.iut.csid.empower.elearning.core.domain.course.session.resource;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -15,13 +19,14 @@ import javax.persistence.Transient;
 import com.mongodb.gridfs.GridFSDBFile;
 
 import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
+import fr.iut.csid.empower.elearning.core.reference.ResourceType;
 
 /**
  * Ressource, objet contenant les pointeurs vers les fichiers stockés physiquement en base Mongodb
- * 
- * @author A547891
  */
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING, length = 20)
 @Table(name = "SESSION_RESOURCE")
 public class Resource {
 
@@ -36,27 +41,24 @@ public class Resource {
 	 */
 	@ManyToOne
 	@JoinColumn(name = "COURSE_SESSION_ID")
-	private CourseSession ownerSession;
-
-	/**
-	 * Type de la ressource TODO enum
-	 */
-	@Column(name = "TYPE")
-	private String type;
+	protected CourseSession ownerSession;
 
 	/**
 	 * Nom de la ressource physique<br/>
 	 * Sert à retrouver la ressource dans la base mongodb;
 	 */
 	@Column(name = "NAME")
-	private String resourceName;
+	protected String name;
+
+	@Column(name = "TYPE")
+	protected ResourceType type;
 
 	/**
 	 * Description de la ressource
 	 */
 	@Lob
 	@Column(name = "SUMMARY")
-	private String summary;
+	protected String summary;
 
 	/**
 	 * Resource physique <br/>
@@ -74,11 +76,11 @@ public class Resource {
 	 * @param type
 	 * @param path
 	 */
-	public Resource(CourseSession ownerSession, String resourceType, String resourceName, String summary) {
+	protected Resource(CourseSession ownerSession, String resourceName, String summary, ResourceType type) {
 		this.ownerSession = ownerSession;
-		this.type = resourceType;
-		this.resourceName = resourceName;
+		this.name = resourceName;
 		this.summary = summary;
+		this.type = type;
 	}
 
 	// Mutateurs
@@ -98,22 +100,6 @@ public class Resource {
 		this.ownerSession = ownerSession;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public String getResourceName() {
-		return resourceName;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public void setResourceName(String resourceName) {
-		this.resourceName = resourceName;
-	}
-
 	public String getSummary() {
 		return summary;
 	}
@@ -128,6 +114,22 @@ public class Resource {
 
 	public void setResource(GridFSDBFile resource) {
 		this.resource = resource;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public ResourceType getType() {
+		return type;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setType(ResourceType type) {
+		this.type = type;
 	}
 
 }
