@@ -15,6 +15,7 @@ import javax.persistence.Table;
 
 import org.joda.time.DateTime;
 
+import fr.iut.csid.empower.elearning.core.reference.UserRole;
 import fr.iut.csid.empower.elearning.core.util.converter.time.DateTimeConverter;
 
 /**
@@ -23,7 +24,7 @@ import fr.iut.csid.empower.elearning.core.util.converter.time.DateTimeConverter;
 @Entity
 @Table(name = "USER")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING, length = 20)
+@DiscriminatorColumn(name = "ROLE", discriminatorType = DiscriminatorType.STRING, length = 20)
 public class User {
 
 	// TODO utilité ?
@@ -59,6 +60,9 @@ public class User {
 	@Column(name = "EMAIL")
 	protected String email;
 
+	@Column(name = "ROLE")
+	protected UserRole role;
+
 	/**
 	 * Date de subscription
 	 */
@@ -86,13 +90,14 @@ public class User {
 	 * @param email
 	 *            : email de l'utilisateur
 	 */
-	public User(String firstName, String lastName, String login, String password, String email) {
+	public User(String firstName, String lastName, String login, String password, String email, UserRole role) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.login = login;
 		this.password = password;
 		this.email = email;
+		this.role = role;
 		this.subscriptionDate = new DateTime();
 	}
 
