@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -51,6 +52,13 @@ public class Resource {
 	private String resourceName;
 
 	/**
+	 * Description de la ressource
+	 */
+	@Lob
+	@Column(name = "SUMMARY")
+	private String summary;
+
+	/**
 	 * Resource physique <br/>
 	 * Aucun référencement persistant, c'est au service {@link ResourceService} de manager et de charger les resources physiques
 	 */
@@ -66,10 +74,11 @@ public class Resource {
 	 * @param type
 	 * @param path
 	 */
-	public Resource(CourseSession ownerSession, String resourceType, String resourceName) {
+	public Resource(CourseSession ownerSession, String resourceType, String resourceName, String summary) {
 		this.ownerSession = ownerSession;
 		this.type = resourceType;
 		this.resourceName = resourceName;
+		this.summary = summary;
 	}
 
 	// Mutateurs
@@ -103,6 +112,22 @@ public class Resource {
 
 	public void setResourceName(String resourceName) {
 		this.resourceName = resourceName;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public GridFSDBFile getResource() {
+		return resource;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public void setResource(GridFSDBFile resource) {
+		this.resource = resource;
 	}
 
 }

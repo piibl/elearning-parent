@@ -7,7 +7,7 @@ package fr.iut.csid.empower.elearning.core.reference;
  */
 public enum ResourceType {
 
-	;
+	EVALUATION(1, "contrôle"), COURSE_SUPPORT(2, "support de cours");
 
 	/**
 	 * Identifiant du type

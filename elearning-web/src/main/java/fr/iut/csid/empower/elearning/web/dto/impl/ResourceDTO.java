@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import fr.iut.csid.empower.elearning.core.reference.ResourceType;
 import fr.iut.csid.empower.elearning.web.dto.OwnedDTO;
 
 /**
@@ -14,7 +15,7 @@ public class ResourceDTO implements Serializable, OwnedDTO<Long> {
 	/**
 	 * Type de la ressource
 	 */
-	private String resourcetype;
+	private ResourceType resourceType;
 	/**
 	 * Nom de la ressource
 	 */
@@ -37,8 +38,8 @@ public class ResourceDTO implements Serializable, OwnedDTO<Long> {
 		this.ownerId = ownerCourseId;
 	}
 
-	public String getResourcetype() {
-		return resourcetype;
+	public ResourceType getResourcetype() {
+		return resourceType;
 	}
 
 	public String getResourceName() {
@@ -49,8 +50,8 @@ public class ResourceDTO implements Serializable, OwnedDTO<Long> {
 		return file;
 	}
 
-	public void setResourcetype(String resourcetype) {
-		this.resourcetype = resourcetype;
+	public void setResourcetype(ResourceType resourceType) {
+		this.resourceType = resourceType;
 	}
 
 	public void setResourceName(String resourceName) {

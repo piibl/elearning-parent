@@ -48,6 +48,10 @@ body {
 	padding-bottom: 5 px;
 }
 
+#upload{
+	opacity: 0; 
+	filter:alpha(opacity: 0);
+}
 
 /* footer {
 	background-color: #F5F5F5;
@@ -57,8 +61,7 @@ body {
 	width: 100%;
 } */
 
-#footerText {
-	text-align: center;
+#footerContainer {
 	position: fixed;
-	bottom: 0;
+	bottom : 0;
 }

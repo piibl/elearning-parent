@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
+import fr.iut.csid.empower.elearning.core.reference.ResourceType;
 import fr.iut.csid.empower.elearning.web.controller.entity.AbstractOwnedEntityController;
 import fr.iut.csid.empower.elearning.web.controller.entity.course.CourseController;
 import fr.iut.csid.empower.elearning.web.dto.impl.ResourceDTO;
@@ -26,7 +28,7 @@ import fr.iut.csid.empower.elearning.web.service.OwnedEntityCrudService;
 import fr.iut.csid.empower.elearning.web.service.ResourceService;
 
 @Controller
-@RequestMapping("/courses/{courseId}/sessions/{ownerEntityId}/resources")
+@RequestMapping("courses/{courseId}/sessions/{ownerEntityId}/resources")
 public class ResourceController extends
 		AbstractOwnedEntityController<fr.iut.csid.empower.elearning.core.domain.course.session.resource.Resource, Long, ResourceDTO> {
 
@@ -90,8 +92,9 @@ public class ResourceController extends
 
 	@Override
 	protected String getAddOwnedEntityLink(Long ownerId) {
-		return linkBuilderFactory.linkTo(CourseController.class).slash(ownerId).slash(Relation.SESSIONS.getName()).slash(Relation.NEW.getName())
-				.withRel("new").getHref();
+		CourseSession session = courseSessionService.find(ownerId);
+		return linkBuilderFactory.linkTo(CourseController.class).slash(session.getOwnerCourse().getId()).slash(PathFragment.SESSIONS.getPath())
+				.slash(ownerId).slash(PathFragment.RESOURCES.getPath()).slash(PathFragment.NEW.getPath()).withRel("new").getHref();
 	}
 
 	@Override
@@ -121,5 +124,11 @@ public class ResourceController extends
 	public String getEntity(@PathVariable Long ownerEntityId, @PathVariable Long entityId, Model model) {
 		// Aucun appel sur une ressource en tant que tel autorisé pour l'instant, fonction de download à postériori
 		return null;
+	}
+
+	@Override
+	public String getAddForm(Model model, @PathVariable Long ownerEntityId) {
+		model.addAttribute("allResourcesTypes", ResourceType.values());
+		return super.getAddForm(model, ownerEntityId);
 	}
 }

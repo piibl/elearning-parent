@@ -119,7 +119,6 @@
 		</property>
 	</bean>
 
-
 	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine" />
 		<property name="characterEncoding" value="UTF-8" />
@@ -137,7 +136,4 @@
 
 	<!-- Transaction annotation config -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
-
-
-
 </beans>

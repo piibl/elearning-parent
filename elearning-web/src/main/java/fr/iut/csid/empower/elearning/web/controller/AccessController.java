@@ -11,7 +11,7 @@ import fr.iut.csid.empower.elearning.web.reference.PathFragment;
 public class AccessController {
 
 	@RequestMapping(value = { "/denied" }, method = RequestMethod.GET)
-	public String getMainPage(Model model) {
+	public String getDeniedPage(Model model) {
 		// Retourne la page d'accès refusé
 		return PathFragment.DENIED.getPath();
 	}

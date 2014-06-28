@@ -20,9 +20,10 @@ import fr.iut.csid.empower.elearning.web.reference.PathFragment;
 import fr.iut.csid.empower.elearning.web.service.StudentService;
 
 @Controller
-public class StudentRegistrationController {
+@RequestMapping("/registration")
+public class RegistrationController {
 
-	private static final Logger logger = LoggerFactory.getLogger(StudentRegistrationController.class);
+	private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
 	private static final String registrationPath = "fragment/registration :: registration-form";
 
@@ -44,13 +45,13 @@ public class StudentRegistrationController {
 		binder.setValidator(studentValidator);
 	}
 
-	@RequestMapping(value = { "/registration" })
+	@RequestMapping(method = RequestMethod.GET)
 	public String getRegistrationPage(Model model) {
 		// Retourne le formulaire d'inscription
 		return registrationPath;
 	}
 
-	@RequestMapping(value = { "/registration" }, method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String registerStudent(@Valid Student student, BindingResult result, Model model) {
 		logger.info("POST Request on registration form");
 		if (result.hasErrors()) {

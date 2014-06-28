@@ -18,7 +18,7 @@ import org.joda.time.DateTime;
 import fr.iut.csid.empower.elearning.core.util.converter.time.DateTimeConverter;
 
 /**
- * Classe abstraite des entités utilisateur
+ * Utilisateurs
  */
 @Entity
 @Table(name = "USER")
@@ -86,8 +86,7 @@ public class User {
 	 * @param email
 	 *            : email de l'utilisateur
 	 */
-	public User(String firstName, String lastName, String login,
-			String password, String email) {
+	public User(String firstName, String lastName, String login, String password, String email) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
