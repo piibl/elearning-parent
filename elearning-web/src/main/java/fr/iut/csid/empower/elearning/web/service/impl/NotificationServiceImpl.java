@@ -6,19 +6,19 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import fr.iut.csid.empower.elearning.core.domain.notification.Notification;
-import fr.iut.csid.empower.elearning.core.domain.user.User;
-import fr.iut.csid.empower.elearning.core.service.dao.notification.NotificationDAO;
+import fr.iut.csid.empower.elearning.core.domain.user.EndUser;
+import fr.iut.csid.empower.elearning.core.service.dao.notification.NotificationRepository;
 import fr.iut.csid.empower.elearning.web.service.NotificationService;
 
 @Named
 public class NotificationServiceImpl implements NotificationService {
 
 	@Inject
-	private NotificationDAO notificationDAO;
+	private NotificationRepository notificationRepository;
 
 	@Override
-	public List<Notification> findByUser(User user) {
+	public List<Notification> findByUser(EndUser endUser) {
 		
-		return notificationDAO.findByReceiver(user);
+		return notificationRepository.findByReceiver(endUser);
 	}
 }

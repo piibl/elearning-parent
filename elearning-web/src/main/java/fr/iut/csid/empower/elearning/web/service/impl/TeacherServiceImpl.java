@@ -11,7 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.iut.csid.empower.elearning.core.domain.user.Teacher;
 import fr.iut.csid.empower.elearning.core.exception.UserNotExistsException;
-import fr.iut.csid.empower.elearning.core.service.dao.user.TeacherDAO;
+import fr.iut.csid.empower.elearning.core.service.AbstractCrudService;
+import fr.iut.csid.empower.elearning.core.service.dao.user.TeacherRepository;
 import fr.iut.csid.empower.elearning.web.dto.impl.UserDTO;
 import fr.iut.csid.empower.elearning.web.service.TeacherService;
 
@@ -24,16 +25,16 @@ public class TeacherServiceImpl extends AbstractCrudService<Teacher, Long> imple
 	private Logger logger = LoggerFactory.getLogger(TeacherServiceImpl.class);
 
 	@Inject
-	private TeacherDAO teacherDAO;
+	private TeacherRepository teacherRepository;
 
 	@Override
-	protected JpaRepository<Teacher, Long> getDAO() {
-		return teacherDAO;
+	protected JpaRepository<Teacher, Long> getRepository() {
+		return teacherRepository;
 	}
 
 	@Override
 	public Teacher findByLogin(String login) {
-		return teacherDAO.findByLogin(login);
+		return teacherRepository.findByLogin(login);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -42,12 +43,12 @@ public class TeacherServiceImpl extends AbstractCrudService<Teacher, Long> imple
 				+ entityDTO.getLogin() + "][" + entityDTO.getPassword() + "][" + entityDTO.getEmail() + "]");
 		Teacher teacher = new Teacher(entityDTO.getFirstName(), entityDTO.getLastName(), entityDTO.getLogin(), entityDTO.getPassword(),
 				entityDTO.getEmail());
-		return teacherDAO.save(teacher);
+		return teacherRepository.save(teacher);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Teacher saveFromDTO(UserDTO entityDTO, Long id) {
-		Teacher teacher = teacherDAO.findOne(id);
+		Teacher teacher = teacherRepository.findOne(id);
 		if (teacher != null) {
 			// Pas de questions, on reporte tous les changements
 			teacher.setFirstName(entityDTO.getFirstName());
@@ -56,7 +57,7 @@ public class TeacherServiceImpl extends AbstractCrudService<Teacher, Long> imple
 			teacher.setEmail(entityDTO.getEmail());
 			// TODO ??? sécurité ???
 			teacher.setPassword(entityDTO.getPassword());
-			return teacherDAO.save(teacher);
+			return teacherRepository.save(teacher);
 		} else
 			throw new UserNotExistsException();
 

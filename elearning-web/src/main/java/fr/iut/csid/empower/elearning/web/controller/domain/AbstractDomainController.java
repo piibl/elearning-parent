@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import fr.iut.csid.empower.elearning.web.dto.IDTO;
 import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilderFactory;
-import fr.iut.csid.empower.elearning.web.service.CrudService;
+import fr.iut.csid.empower.elearning.web.service.DTOSupport;
 
 public abstract class AbstractDomainController<T, X extends Serializable, Y extends IDTO> {
 
@@ -32,9 +32,9 @@ public abstract class AbstractDomainController<T, X extends Serializable, Y exte
 	protected ControllerLinkBuilderFactory linkBuilderFactory;
 
 	/**
-	 * Retourne le service CRUD du type de l'entité cible
+	 * Retourne le service CRUD + support DTO du type de l'entité cible
 	 */
-	protected abstract CrudService<T, X, Y> getCrudService();
+	protected abstract DTOSupport<T, X, Y> getDTOSupport();
 
 	/**
 	 * Retourne l'assembleur de ressources associé au type de l'entité cible
@@ -91,7 +91,7 @@ public abstract class AbstractDomainController<T, X extends Serializable, Y exte
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String getAll(Model model) {
-		List<T> entities = getCrudService().findAll();
+		List<T> entities = getDTOSupport().findAll();
 		// Construction des liens d'action et mise en container
 		// Le container contient à la fois l'objet cible et les liens des ressources afférentes
 		List<Resource<T>> entitiesResources = getResourceAssembler().toResource(entities);
@@ -119,7 +119,7 @@ public abstract class AbstractDomainController<T, X extends Serializable, Y exte
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public String insertNewJSON(@RequestBody Y entityDTO, Model model) {
-		getCrudService().createFromDTO(entityDTO);
+		getDTOSupport().createFromDTO(entityDTO);
 		// Alimenter le modèle avec la liste mise à jour
 		return getAll(model);
 	}
@@ -134,7 +134,7 @@ public abstract class AbstractDomainController<T, X extends Serializable, Y exte
 	@RequestMapping(value = "/{entityId}", method = RequestMethod.GET)
 	public String getEntity(@PathVariable("entityId") X id, Model model) {
 		// TODO Quick'n'dirty, j'aime !
-		Resource<T> resource = getResourceAssembler().toResource(getCrudService().find(id));
+		Resource<T> resource = getResourceAssembler().toResource(getDTOSupport().find(id));
 		model.addAttribute(getSingleEntityAtributeName(), resource);
 		logger.info("getDetails calls : [" + getDetailsView() + "]");
 		return getDetailsView();
@@ -149,7 +149,7 @@ public abstract class AbstractDomainController<T, X extends Serializable, Y exte
 	 */
 	@RequestMapping(value = "/{entityId}/edit", method = RequestMethod.GET)
 	public String editEntity(@PathVariable("entityId") X id, Model model) {
-		Resource<T> resource = getResourceAssembler().toResource(getCrudService().find(id));
+		Resource<T> resource = getResourceAssembler().toResource(getDTOSupport().find(id));
 		// TODO externalisation / personnalisation selon entités
 		// Message de suppression
 		// Construction des liens d'action et mise en container
@@ -166,7 +166,7 @@ public abstract class AbstractDomainController<T, X extends Serializable, Y exte
 	 */
 	@RequestMapping(value = "/{entityId}/edit", method = RequestMethod.POST)
 	public String updateJSON(@RequestBody Y entityDTO, @PathVariable("entityId") X id, Model model) {
-		getCrudService().saveFromDTO(entityDTO, id);
+		getDTOSupport().saveFromDTO(entityDTO, id);
 		// Alimenter le modèle avec la liste mise à jour
 		return getAll(model);
 	}
@@ -180,11 +180,11 @@ public abstract class AbstractDomainController<T, X extends Serializable, Y exte
 	 */
 	@RequestMapping(value = "/{entityId}/delete", method = RequestMethod.GET)
 	public String deleteEntity(@PathVariable("entityId") X id, Model model) {
-		T entityTodelete = getCrudService().find(id);
-		getCrudService().delete(entityTodelete);
+		T entityTodelete = getDTOSupport().find(id);
+		getDTOSupport().delete(entityTodelete);
 		// TODO externalisation / personnalisation selon entités
 		// Message de suppression
-		List<T> entities = getCrudService().findAll();
+		List<T> entities = getDTOSupport().findAll();
 		// Construction des liens d'action et mise en container
 		// Le container contient à la fois l'objet cible et les liens des ressources afférentes
 		List<Resource<T>> entitiesResources = getResourceAssembler().toResource(entities);

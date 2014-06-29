@@ -1,4 +1,4 @@
-package fr.iut.csid.empower.elearning.web.service.impl;
+package fr.iut.csid.empower.elearning.core.service;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,7 +22,7 @@ public abstract class AbstractCrudService<T, X extends Serializable> {
 	 * 
 	 * @return
 	 */
-	protected abstract JpaRepository<T, X> getDAO();
+	protected abstract JpaRepository<T, X> getRepository();
 
 	/**
 	 * Sauvegarde une entité en utilisant la transaction courante
@@ -33,7 +33,7 @@ public abstract class AbstractCrudService<T, X extends Serializable> {
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
 	public T save(T entityToSave) {
-		return getDAO().save(entityToSave);
+		return getRepository().save(entityToSave);
 
 	}
 
@@ -45,7 +45,7 @@ public abstract class AbstractCrudService<T, X extends Serializable> {
 	 */
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public T immediateSave(T entityToSave) {
-		return getDAO().save(entityToSave);
+		return getRepository().save(entityToSave);
 
 	}
 
@@ -57,7 +57,7 @@ public abstract class AbstractCrudService<T, X extends Serializable> {
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void delete(T entityToDelete) {
-		getDAO().delete(entityToDelete);
+		getRepository().delete(entityToDelete);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public abstract class AbstractCrudService<T, X extends Serializable> {
 	 */
 	@Transactional(readOnly = true)
 	public boolean exists(X id) {
-		return getDAO().exists(id);
+		return getRepository().exists(id);
 	}
 
 	/**
@@ -81,7 +81,7 @@ public abstract class AbstractCrudService<T, X extends Serializable> {
 	 */
 	@Transactional(readOnly = true)
 	public T find(X id) {
-		return getDAO().findOne(id);
+		return getRepository().findOne(id);
 	}
 
 	/**
@@ -91,7 +91,7 @@ public abstract class AbstractCrudService<T, X extends Serializable> {
 	 */
 	@Transactional(readOnly = true)
 	public List<T> findAll() {
-		return getDAO().findAll();
+		return getRepository().findAll();
 	}
 
 }

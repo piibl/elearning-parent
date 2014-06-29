@@ -9,11 +9,11 @@ import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
 
 /**
- * DAO COURS
+ * Repository COURS
  * 
  * @author Pierre_pers
  */
-public interface CourseDAO extends JpaRepository<Course, Long> {
+public interface CourseRepository extends JpaRepository<Course, Long> {
 
 	@Query("SELECT c FROM Course c WHERE c NOT IN (SELECT cs.course FROM CourseSubscription cs WHERE cs.student = ?1)")
 	public List<Course> findUnsubscribedCourses(Student student);

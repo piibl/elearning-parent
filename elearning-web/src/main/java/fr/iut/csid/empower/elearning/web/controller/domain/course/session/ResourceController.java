@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
 import fr.iut.csid.empower.elearning.core.reference.ResourceType;
+import fr.iut.csid.empower.elearning.core.service.CrudService;
 import fr.iut.csid.empower.elearning.web.controller.domain.AbstractOwnedDomainController;
 import fr.iut.csid.empower.elearning.web.controller.domain.course.CourseController;
 import fr.iut.csid.empower.elearning.web.dto.impl.ResourceDTO;
@@ -23,8 +24,7 @@ import fr.iut.csid.empower.elearning.web.reference.PathFragment;
 import fr.iut.csid.empower.elearning.web.reference.Relation;
 import fr.iut.csid.empower.elearning.web.service.CourseService;
 import fr.iut.csid.empower.elearning.web.service.CourseSessionService;
-import fr.iut.csid.empower.elearning.web.service.CrudService;
-import fr.iut.csid.empower.elearning.web.service.OwnedEntityCrudService;
+import fr.iut.csid.empower.elearning.web.service.OwnedEntityManagerService;
 import fr.iut.csid.empower.elearning.web.service.ResourceService;
 
 @Controller
@@ -98,7 +98,7 @@ public class ResourceController extends
 	}
 
 	@Override
-	protected OwnedEntityCrudService<fr.iut.csid.empower.elearning.core.domain.course.session.resource.Resource, Long, ResourceDTO> getCrudService() {
+	protected OwnedEntityManagerService<fr.iut.csid.empower.elearning.core.domain.course.session.resource.Resource, Long, ResourceDTO> getCrudService() {
 		return resourceService;
 	}
 

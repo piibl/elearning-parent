@@ -1,8 +1,8 @@
-package fr.iut.csid.empower.elearning.web.service;
+package fr.iut.csid.empower.elearning.core.service;
 
 import fr.iut.csid.empower.elearning.core.domain.user.EndUser;
 
-public interface UserService {
+public interface UserResearchService {
 
 	/**
 	 * Retourne l'instance correspondante à ce login

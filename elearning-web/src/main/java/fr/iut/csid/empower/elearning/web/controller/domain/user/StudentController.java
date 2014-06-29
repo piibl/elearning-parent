@@ -7,11 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
+import fr.iut.csid.empower.elearning.core.service.CrudService;
 import fr.iut.csid.empower.elearning.web.controller.domain.AbstractDomainController;
 import fr.iut.csid.empower.elearning.web.dto.impl.UserDTO;
 import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.assembler.StudentResourceAssembler;
-import fr.iut.csid.empower.elearning.web.service.CrudService;
+import fr.iut.csid.empower.elearning.web.service.DTOSupport;
 import fr.iut.csid.empower.elearning.web.service.StudentService;
 
 @Controller
@@ -32,7 +33,7 @@ public class StudentController extends AbstractDomainController<Student, Long, U
 	private StudentResourceAssembler studentResourceAssembler;
 
 	@Override
-	protected CrudService<Student, Long, UserDTO> getCrudService() {
+	protected DTOSupport<Student, Long, UserDTO> getDTOSupport() {
 		return studentService;
 	}
 

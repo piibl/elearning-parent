@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import fr.iut.csid.empower.elearning.core.service.CrudService;
 import fr.iut.csid.empower.elearning.web.dto.OwnedDTO;
 import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilderFactory;
-import fr.iut.csid.empower.elearning.web.service.CrudService;
-import fr.iut.csid.empower.elearning.web.service.OwnedEntityCrudService;
+import fr.iut.csid.empower.elearning.web.service.OwnedEntityManagerService;
 
 public abstract class AbstractOwnedDomainController<T, X extends Serializable, Y extends OwnedDTO<X>> {
 
@@ -31,7 +31,7 @@ public abstract class AbstractOwnedDomainController<T, X extends Serializable, Y
 	/**
 	 * Retourne le service CRUD du type de l'entité cible
 	 */
-	protected abstract OwnedEntityCrudService<T, X, Y> getCrudService();
+	protected abstract OwnedEntityManagerService<T, X, Y> getCrudService();
 
 	/**
 	 * Retourne le service CRUD du type de l'entité propriétaire de l'entité cible

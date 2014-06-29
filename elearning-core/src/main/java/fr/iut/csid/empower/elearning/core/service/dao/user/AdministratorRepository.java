@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import fr.iut.csid.empower.elearning.core.domain.user.Administrator;
 
 /**
- * DAO administrateur
+ * Repository administrateur
  */
-public interface AdministratorDAO extends JpaRepository<Administrator, Long> {
+public interface AdministratorRepository extends JpaRepository<Administrator, Long> {
 
 	/**
 	 * Retourne l'administrateur correspondant au login passé en paramètre

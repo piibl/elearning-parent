@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.iut.csid.empower.elearning.core.domain.user.Administrator;
 import fr.iut.csid.empower.elearning.core.exception.UserNotExistsException;
-import fr.iut.csid.empower.elearning.core.service.dao.user.AdministratorDAO;
+import fr.iut.csid.empower.elearning.core.service.AbstractCrudService;
+import fr.iut.csid.empower.elearning.core.service.dao.user.AdministratorRepository;
 import fr.iut.csid.empower.elearning.web.dto.impl.UserDTO;
 import fr.iut.csid.empower.elearning.web.service.AdministratorService;
 
@@ -20,23 +21,23 @@ import fr.iut.csid.empower.elearning.web.service.AdministratorService;
 public class AdministratorServiceImpl extends AbstractCrudService<Administrator, Long> implements AdministratorService {
 
 	@Inject
-	private AdministratorDAO administratorDAO;
+	private AdministratorRepository administratorRepository;
 
 	@Override
-	protected JpaRepository<Administrator, Long> getDAO() {
-		return administratorDAO;
+	protected JpaRepository<Administrator, Long> getRepository() {
+		return administratorRepository;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Administrator createFromDTO(UserDTO entityDTO) {
 		Administrator admin = new Administrator(entityDTO.getFirstName(), entityDTO.getLastName(), entityDTO.getLogin(), entityDTO.getPassword(),
 				entityDTO.getEmail());
-		return administratorDAO.save(admin);
+		return administratorRepository.save(admin);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Administrator saveFromDTO(UserDTO entityDTO, Long id) {
-		Administrator admin = administratorDAO.findOne(id);
+		Administrator admin = administratorRepository.findOne(id);
 		if (admin != null) {
 			// Pas de questions, on reporte tous les changements
 			admin.setFirstName(entityDTO.getFirstName());
@@ -45,7 +46,7 @@ public class AdministratorServiceImpl extends AbstractCrudService<Administrator,
 			admin.setEmail(entityDTO.getEmail());
 			// TODO ??? sécurité ???
 			admin.setPassword(entityDTO.getPassword());
-			return administratorDAO.save(admin);
+			return administratorRepository.save(admin);
 		} else
 			throw new UserNotExistsException();
 

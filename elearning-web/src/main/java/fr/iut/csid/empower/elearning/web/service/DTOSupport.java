@@ -2,9 +2,10 @@ package fr.iut.csid.empower.elearning.web.service;
 
 import java.io.Serializable;
 
+import fr.iut.csid.empower.elearning.core.service.CrudService;
 import fr.iut.csid.empower.elearning.web.dto.IDTO;
 
-public interface DTOSupport<T, X extends Serializable, Y extends IDTO> {
+public interface DTOSupport<T, X extends Serializable, Y extends IDTO> extends CrudService<T, X> {
 
 	/**
 	 * Crée et sauvegarde une entité à partir de son DTO

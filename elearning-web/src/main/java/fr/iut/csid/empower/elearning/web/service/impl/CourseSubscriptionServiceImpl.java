@@ -8,24 +8,24 @@ import fr.iut.csid.empower.elearning.core.domain.course.CourseSubscription;
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
 import fr.iut.csid.empower.elearning.core.exception.CourseNotExistsException;
 import fr.iut.csid.empower.elearning.core.reference.CourseSubscriptionType;
-import fr.iut.csid.empower.elearning.core.service.dao.course.CourseDAO;
-import fr.iut.csid.empower.elearning.core.service.dao.course.CourseSubscriptionDAO;
+import fr.iut.csid.empower.elearning.core.service.dao.course.CourseRepository;
+import fr.iut.csid.empower.elearning.core.service.dao.course.CourseSubscriptionRepository;
 import fr.iut.csid.empower.elearning.web.service.CourseSubscriptionService;
 
 @Named
 public class CourseSubscriptionServiceImpl implements CourseSubscriptionService {
 
 	@Inject
-	private CourseDAO courseDAO;
+	private CourseRepository courseRepository;
 	@Inject
-	private CourseSubscriptionDAO courseSubscriptionDAO;
+	private CourseSubscriptionRepository courseSubscriptionRepository;
 
 	@Override
 	public CourseSubscription subscribe(Student student, Long courseId) {
-		Course course = courseDAO.findOne(courseId);
+		Course course = courseRepository.findOne(courseId);
 		if (course != null) {
 			// TODO A refactorer quand les deux types d'inscriptions seront implémentés
-			return courseSubscriptionDAO.save(new CourseSubscription(student, course, CourseSubscriptionType.PARTICIPATIVE));
+			return courseSubscriptionRepository.save(new CourseSubscription(student, course, CourseSubscriptionType.PARTICIPATIVE));
 		}
 		throw new CourseNotExistsException();
 

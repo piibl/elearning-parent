@@ -25,7 +25,7 @@ import fr.iut.csid.empower.elearning.core.util.converter.time.DateTimeConverter;
 @Table(name = "USER")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "ROLE", discriminatorType = DiscriminatorType.STRING, length = 20)
-public class User {
+public class EndUser {
 
 	// TODO utilité ?
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UserSeq")
@@ -70,7 +70,7 @@ public class User {
 	@Convert(converter = DateTimeConverter.class)
 	protected DateTime subscriptionDate;
 
-	public User() {
+	public EndUser() {
 
 	}
 
@@ -90,7 +90,7 @@ public class User {
 	 * @param email
 	 *            : email de l'utilisateur
 	 */
-	public User(String firstName, String lastName, String login, String password, String email, UserRole role) {
+	public EndUser(String firstName, String lastName, String login, String password, String email, UserRole role) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;

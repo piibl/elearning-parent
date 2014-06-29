@@ -9,11 +9,11 @@ import fr.iut.csid.empower.elearning.core.domain.course.CourseTeaching;
 import fr.iut.csid.empower.elearning.core.domain.user.Teacher;
 
 /**
- * DAO COURSETEACHING
+ * Repository COURSETEACHING
  * 
  * @author Pierre_pers
  */
-public interface CourseTeachingDAO extends JpaRepository<CourseTeaching, Long> {
+public interface CourseTeachingRepository extends JpaRepository<CourseTeaching, Long> {
 
 	/**
 	 * Retourne les affiliations de cours pour un enseignant donné

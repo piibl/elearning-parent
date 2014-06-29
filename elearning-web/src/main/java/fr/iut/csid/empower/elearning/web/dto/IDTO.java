@@ -1,6 +1,6 @@
 package fr.iut.csid.empower.elearning.web.dto;
 
-import fr.iut.csid.empower.elearning.web.service.CrudService;
+import fr.iut.csid.empower.elearning.core.service.CrudService;
 
 /**
  * Interface pour les DTO <br/>

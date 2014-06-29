@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import fr.iut.csid.empower.elearning.core.domain.user.User;
+import fr.iut.csid.empower.elearning.core.domain.user.EndUser;
 
 
 /**
@@ -32,7 +32,7 @@ public class Notification{
 	
 	@ManyToOne
 	@JoinColumn(name="USER_ID")
-	private User receiver;
+	private EndUser receiver;
 	
 	@Column(name = "BODY")
 	private String body;
@@ -44,7 +44,7 @@ public class Notification{
 	}
 	
 	
-	public Notification(String notificationSubject, User notificationReceiver,
+	public Notification(String notificationSubject, EndUser notificationReceiver,
 			String notificationBody) {
 		super();
 		this.subject = notificationSubject;
@@ -55,14 +55,14 @@ public class Notification{
 
 
 
-	public User getReceiver() {
+	public EndUser getReceiver() {
 		return receiver;
 	}
 
 
 
 
-	public void setReceiver(User notificationReceiver) {
+	public void setReceiver(EndUser notificationReceiver) {
 		this.receiver = notificationReceiver;
 	}
 

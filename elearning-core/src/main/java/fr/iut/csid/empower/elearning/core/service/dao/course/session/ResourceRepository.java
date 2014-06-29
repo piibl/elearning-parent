@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
 import fr.iut.csid.empower.elearning.core.domain.course.session.resource.Resource;
 
-public interface ResourceDAO extends JpaRepository<Resource, Long> {
+public interface ResourceRepository extends JpaRepository<Resource, Long> {
 
 	/**
 	 * Retourne les resources enregistrées pour un chapitre de cours

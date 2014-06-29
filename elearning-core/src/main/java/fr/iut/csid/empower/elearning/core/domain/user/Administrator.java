@@ -7,7 +7,7 @@ import fr.iut.csid.empower.elearning.core.reference.UserRole;
 
 @Entity
 @DiscriminatorValue("ADMINISTRATOR")
-public class Administrator extends User {
+public class Administrator extends EndUser {
 
 	public Administrator() {
 

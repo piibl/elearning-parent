@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import fr.iut.csid.empower.elearning.core.domain.campus.ClassRoom;
 
 /**
- * Salle DAO
+ * Salle Repository
  */
-public interface ClassRoomDAO extends JpaRepository<ClassRoom, Long> {
+public interface ClassRoomRepository extends JpaRepository<ClassRoom, Long> {
 
 	/**
 	 * Retourne toutes les salles non rattachées à un ou plusieurs cours

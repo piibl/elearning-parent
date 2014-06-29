@@ -15,9 +15,10 @@ import fr.iut.csid.empower.elearning.core.domain.course.CourseSubscription;
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
 import fr.iut.csid.empower.elearning.core.exception.CourseNotExistsException;
 import fr.iut.csid.empower.elearning.core.exception.UserNotExistsException;
-import fr.iut.csid.empower.elearning.core.service.dao.course.CourseDAO;
-import fr.iut.csid.empower.elearning.core.service.dao.course.CourseSubscriptionDAO;
-import fr.iut.csid.empower.elearning.core.service.dao.user.StudentDAO;
+import fr.iut.csid.empower.elearning.core.service.AbstractCrudService;
+import fr.iut.csid.empower.elearning.core.service.dao.course.CourseRepository;
+import fr.iut.csid.empower.elearning.core.service.dao.course.CourseSubscriptionRepository;
+import fr.iut.csid.empower.elearning.core.service.dao.user.StudentRepository;
 import fr.iut.csid.empower.elearning.web.dto.impl.UserDTO;
 import fr.iut.csid.empower.elearning.web.service.StudentService;
 
@@ -28,34 +29,34 @@ import fr.iut.csid.empower.elearning.web.service.StudentService;
 public class StudentServiceImpl extends AbstractCrudService<Student, Long> implements StudentService {
 
 	@Inject
-	private CourseDAO courseDAO;
+	private CourseRepository courseRepository;
 
 	@Inject
-	private StudentDAO studentDAO;
+	private StudentRepository studentRepository;
 
 	@Inject
-	private CourseSubscriptionDAO courseSubscriptionDAO;
+	private CourseSubscriptionRepository courseSubscriptionRepository;
 
 	@Override
-	protected JpaRepository<Student, Long> getDAO() {
-		return studentDAO;
+	protected JpaRepository<Student, Long> getRepository() {
+		return studentRepository;
 	}
 
 	@Override
 	public Student findByLogin(String login) {
-		return studentDAO.findByLogin(login);
+		return studentRepository.findByLogin(login);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Student createFromDTO(UserDTO entityDTO) {
 		Student student = new Student(entityDTO.getFirstName(), entityDTO.getLastName(), entityDTO.getLogin(), entityDTO.getPassword(),
 				entityDTO.getEmail());
-		return studentDAO.save(student);
+		return studentRepository.save(student);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Student saveFromDTO(UserDTO entityDTO, Long id) {
-		Student student = studentDAO.findOne(id);
+		Student student = studentRepository.findOne(id);
 		if (student != null) {
 			// Pas de questions, on reporte tous les changements
 			student.setFirstName(entityDTO.getFirstName());
@@ -64,7 +65,7 @@ public class StudentServiceImpl extends AbstractCrudService<Student, Long> imple
 			student.setEmail(entityDTO.getEmail());
 			// TODO ??? sécurité ???
 			student.setPassword(entityDTO.getPassword());
-			return studentDAO.save(student);
+			return studentRepository.save(student);
 		} else
 			throw new UserNotExistsException();
 
@@ -75,12 +76,12 @@ public class StudentServiceImpl extends AbstractCrudService<Student, Long> imple
 	public List<Course> findSubscribedCourses(Long studentId) {
 		List<Course> courses = new ArrayList<Course>();
 		// Récupération de l'étudiant
-		Student student = studentDAO.findOne(studentId);
+		Student student = studentRepository.findOne(studentId);
 		if (student != null) {
 			// recherche de toutes les souscriptions de l'étudiant
-			for (CourseSubscription courseSubscription : courseSubscriptionDAO.findByStudent(student)) {
-				if (courseDAO.exists(courseSubscription.getCourse().getId())) {
-					courses.add(courseDAO.findOne(courseSubscription.getCourse().getId()));
+			for (CourseSubscription courseSubscription : courseSubscriptionRepository.findByStudent(student)) {
+				if (courseRepository.exists(courseSubscription.getCourse().getId())) {
+					courses.add(courseRepository.findOne(courseSubscription.getCourse().getId()));
 				} else {
 					// TODO ignorer les orphelins ?
 					throw new CourseNotExistsException();
@@ -98,9 +99,9 @@ public class StudentServiceImpl extends AbstractCrudService<Student, Long> imple
 	public List<Course> findUnsubscribedCourses(Long studentId) {
 
 		// Récupération de l'étudiant
-		Student student = studentDAO.findOne(studentId);
+		Student student = studentRepository.findOne(studentId);
 		if (student != null) {
-			return courseDAO.findUnsubscribedCourses(student);
+			return courseRepository.findUnsubscribedCourses(student);
 		} else {
 			// Pas d'étudiant associé à cet id
 			throw new UserNotExistsException();

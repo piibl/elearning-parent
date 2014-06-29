@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
 
-public interface CourseSessionDAO extends JpaRepository<CourseSession, Long> {
+public interface CourseSessionRepository extends JpaRepository<CourseSession, Long> {
 
 	/**
 	 * Retourne une liste ordonnée des sessions enregistrées pour un cours

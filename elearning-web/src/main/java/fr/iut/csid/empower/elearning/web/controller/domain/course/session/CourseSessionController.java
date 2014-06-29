@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
+import fr.iut.csid.empower.elearning.core.service.CrudService;
 import fr.iut.csid.empower.elearning.web.controller.domain.AbstractOwnedDomainController;
 import fr.iut.csid.empower.elearning.web.controller.domain.course.CourseController;
 import fr.iut.csid.empower.elearning.web.dto.impl.CourseSessionDTO;
@@ -21,8 +22,7 @@ import fr.iut.csid.empower.elearning.web.link.breadcrumb.BreadcrumbLink;
 import fr.iut.csid.empower.elearning.web.reference.Relation;
 import fr.iut.csid.empower.elearning.web.service.CourseService;
 import fr.iut.csid.empower.elearning.web.service.CourseSessionService;
-import fr.iut.csid.empower.elearning.web.service.CrudService;
-import fr.iut.csid.empower.elearning.web.service.OwnedEntityCrudService;
+import fr.iut.csid.empower.elearning.web.service.OwnedEntityManagerService;
 
 @Controller
 @RequestMapping("/courses/{ownerEntityId}/sessions")
@@ -91,7 +91,7 @@ public class CourseSessionController extends AbstractOwnedDomainController<Cours
 	}
 
 	@Override
-	protected OwnedEntityCrudService<CourseSession, Long, CourseSessionDTO> getCrudService() {
+	protected OwnedEntityManagerService<CourseSession, Long, CourseSessionDTO> getCrudService() {
 		return courseSessionService;
 	}
 

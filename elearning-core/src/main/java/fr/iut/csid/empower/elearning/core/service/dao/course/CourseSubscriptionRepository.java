@@ -9,11 +9,11 @@ import fr.iut.csid.empower.elearning.core.domain.course.CourseSubscription;
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
 
 /**
- * DAO CourseSubscription
+ * Repository CourseSubscription
  * 
  * @author Pierre_pers
  */
-public interface CourseSubscriptionDAO extends JpaRepository<CourseSubscription, Long> {
+public interface CourseSubscriptionRepository extends JpaRepository<CourseSubscription, Long> {
 
 	/**
 	 * Retourne la liste des souscriptions de l'étudiant

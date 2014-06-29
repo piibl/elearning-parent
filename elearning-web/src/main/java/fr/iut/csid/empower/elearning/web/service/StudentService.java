@@ -6,7 +6,7 @@ import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
 import fr.iut.csid.empower.elearning.web.dto.impl.UserDTO;
 
-public interface StudentService extends CrudService<Student, Long, UserDTO> {
+public interface StudentService extends DTOSupport<Student, Long, UserDTO> {
 
 	/**
 	 * Retourne l'utilisateur par login

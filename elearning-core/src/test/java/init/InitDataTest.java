@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import config.CoreTest;
 import fr.iut.csid.empower.elearning.core.domain.user.Administrator;
 import fr.iut.csid.empower.elearning.core.domain.user.Teacher;
-import fr.iut.csid.empower.elearning.core.service.dao.user.AdministratorDAO;
-import fr.iut.csid.empower.elearning.core.service.dao.user.TeacherDAO;
+import fr.iut.csid.empower.elearning.core.service.dao.user.AdministratorRepository;
+import fr.iut.csid.empower.elearning.core.service.dao.user.TeacherRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { CoreTest.SPRING_CONFIG_INIT_DATA })
@@ -21,22 +21,22 @@ import fr.iut.csid.empower.elearning.core.service.dao.user.TeacherDAO;
 public class InitDataTest {
 
 	@Inject
-	private AdministratorDAO administratorDAO;
+	private AdministratorRepository administratorRepository;
 	@Inject
-	private TeacherDAO teacherDAO;
+	private TeacherRepository teacherRepository;
 
 	@Test
 	@Rollback(false)
 	public void initTeacher() {
 		// Insertion en base d'un administrateur
-		teacherDAO.save(new Teacher("Diego", "De La Vega", "diego", "tornado", "diego.delavega@tornado.huuu"));
+		teacherRepository.save(new Teacher("Diego", "De La Vega", "diego", "tornado", "diego.delavega@tornado.huuu"));
 	}
 
 	@Test
 	@Rollback(false)
 	public void initAdmin() {
 		// Insertion en base d'un administrateur
-		administratorDAO.save(new Administrator("admin", "admin", "admin", "admin", "admin.admin@admin.admin"));
+		administratorRepository.save(new Administrator("admin", "admin", "admin", "admin", "admin.admin@admin.admin"));
 
 	}
 

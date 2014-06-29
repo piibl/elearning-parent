@@ -10,8 +10,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
 import fr.iut.csid.empower.elearning.core.exception.CourseNotExistsException;
-import fr.iut.csid.empower.elearning.core.service.dao.course.CourseDAO;
-import fr.iut.csid.empower.elearning.core.service.dao.course.session.CourseSessionDAO;
+import fr.iut.csid.empower.elearning.core.service.AbstractCrudService;
+import fr.iut.csid.empower.elearning.core.service.dao.course.CourseRepository;
+import fr.iut.csid.empower.elearning.core.service.dao.course.session.CourseSessionRepository;
 import fr.iut.csid.empower.elearning.web.dto.impl.CourseSessionDTO;
 import fr.iut.csid.empower.elearning.web.service.CourseSessionService;
 
@@ -22,15 +23,15 @@ import fr.iut.csid.empower.elearning.web.service.CourseSessionService;
 public class CourseSessionServiceImpl extends AbstractCrudService<CourseSession, Long> implements CourseSessionService {
 
 	@Inject
-	private CourseSessionDAO courseSessionDAO;
+	private CourseSessionRepository courseSessionRepository;
 	@Inject
-	private CourseDAO courseDAO;
+	private CourseRepository courseRepository;
 
 	@Override
 	public CourseSession createFromDTO(CourseSessionDTO entityDTO) {
-		Course ownerCourse = courseDAO.findOne(Long.valueOf(entityDTO.getOwnerId()));
+		Course ownerCourse = courseRepository.findOne(Long.valueOf(entityDTO.getOwnerId()));
 		if (ownerCourse != null) {
-			return courseSessionDAO.save(new CourseSession(entityDTO.getLabel(), ownerCourse, courseSessionDAO.countByOwnerCourse(ownerCourse) + 1,
+			return courseSessionRepository.save(new CourseSession(entityDTO.getLabel(), ownerCourse, courseSessionRepository.countByOwnerCourse(ownerCourse) + 1,
 					null, null, entityDTO.getSummary()));
 			// entityDTO.getStartDate(), entityDTO.getEndDate()));
 		}
@@ -39,28 +40,28 @@ public class CourseSessionServiceImpl extends AbstractCrudService<CourseSession,
 
 	@Override
 	public CourseSession saveFromDTO(CourseSessionDTO entityDTO, Long id) {
-		CourseSession courseSession = courseSessionDAO.findOne(id);
+		CourseSession courseSession = courseSessionRepository.findOne(id);
 		if (courseSession != null) {
 			// TODO update autres champs ?
 			courseSession.setLabel(entityDTO.getLabel());
 			// courseSession.setStartDate(entityDTO.getStartDate());
 			// courseSession.setEndDate(entityDTO.getEndDate());
-			return courseSessionDAO.save(courseSession);
+			return courseSessionRepository.save(courseSession);
 		}
 		// TODO erreur globale
 		throw new CourseNotExistsException();
 	}
 
 	@Override
-	protected JpaRepository<CourseSession, Long> getDAO() {
-		return courseSessionDAO;
+	protected JpaRepository<CourseSession, Long> getRepository() {
+		return courseSessionRepository;
 	}
 
 	@Override
 	public List<CourseSession> findByOwner(Long ownerEntityId) {
-		Course course = courseDAO.findOne(ownerEntityId);
+		Course course = courseRepository.findOne(ownerEntityId);
 		if (course != null) {
-			return courseSessionDAO.findByOwnerCourseOrderBySessionRankAsc(course);
+			return courseSessionRepository.findByOwnerCourseOrderBySessionRankAsc(course);
 		}
 		throw new CourseNotExistsException();
 	}

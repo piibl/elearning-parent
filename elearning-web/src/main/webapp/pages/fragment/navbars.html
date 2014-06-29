@@ -33,9 +33,9 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="#" th:href="${dashboardLink.href}">Dashboard</a></li>
-					<li><a class="displayLink" href="#" th:href="${notificationsLink != null ? notificationsLink.href : '#'}">Notifications</a></li>
-					<li><a class="displayLink" href="#" th:href="${newsLink != null ? newsLink.href : '#'}">News</a></li>
+					<li><a href="#" th:href="@{/dashboard}">Dashboard</a></li>
+					<li><a class="displayLink" href="#" th:href="@{/dashboard/notifications}">Notifications</a></li>
+					<li><a class="displayLink" href="#" th:href="@{/dashboard/news}">News</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"

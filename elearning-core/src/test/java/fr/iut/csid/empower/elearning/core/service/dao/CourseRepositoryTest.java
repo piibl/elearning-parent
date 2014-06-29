@@ -11,21 +11,21 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import config.CoreTest;
-import fr.iut.csid.empower.elearning.core.service.dao.course.CourseDAO;
-import fr.iut.csid.empower.elearning.core.service.dao.course.CourseSubscriptionDAO;
-import fr.iut.csid.empower.elearning.core.service.dao.user.StudentDAO;
+import fr.iut.csid.empower.elearning.core.service.dao.course.CourseRepository;
+import fr.iut.csid.empower.elearning.core.service.dao.course.CourseSubscriptionRepository;
+import fr.iut.csid.empower.elearning.core.service.dao.user.StudentRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { CoreTest.SPRING_CONFIG_HSQL })
 @Transactional(value = CoreTest.TRANSACTION_MANAGER)
-public class CourseDAOTest {
+public class CourseRepositoryTest {
 	
 	@Inject
-	private CourseDAO courseDAO;
+	private CourseRepository courseRepository;
 	@Inject
-	private StudentDAO studentDAO;
+	private StudentRepository studentRepository;
 	@Inject
-	private CourseSubscriptionDAO courseSubscriptionDAO;
+	private CourseSubscriptionRepository courseSubscriptionRepository;
 
 	@Test
 	public void test() {

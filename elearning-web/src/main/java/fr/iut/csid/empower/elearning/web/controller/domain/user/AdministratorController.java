@@ -7,12 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import fr.iut.csid.empower.elearning.core.domain.user.Administrator;
+import fr.iut.csid.empower.elearning.core.service.CrudService;
 import fr.iut.csid.empower.elearning.web.controller.domain.AbstractDomainController;
 import fr.iut.csid.empower.elearning.web.dto.impl.UserDTO;
 import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.assembler.AdministratorResourceAssembler;
 import fr.iut.csid.empower.elearning.web.service.AdministratorService;
-import fr.iut.csid.empower.elearning.web.service.CrudService;
+import fr.iut.csid.empower.elearning.web.service.DTOSupport;
 
 @Controller
 @RequestMapping("/administrators")
@@ -32,7 +33,7 @@ public class AdministratorController extends AbstractDomainController<Administra
 	private AdministratorResourceAssembler administratorResourceAssembler;
 
 	@Override
-	protected CrudService<Administrator, Long, UserDTO> getCrudService() {
+	protected DTOSupport<Administrator, Long, UserDTO> getDTOSupport() {
 		return administratorService;
 	}
 

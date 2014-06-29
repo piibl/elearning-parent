@@ -14,7 +14,7 @@ public enum Relation {
 	// Utilisateurs
 	STUDENTS("students"), ADMINISTRATORS("administrators"), TEACHERS("teachers"),
 	// Cours
-	COURSES("courses"), SESSIONS("sessions"), SUBSCRIBE("subscribe"), NOTSUBSCRIBED("notSubscribed"), RESOURCES("resources");
+	COURSES("courses"), SESSIONS("sessions"), SUBSCRIBE("subscribe"), SUBSCRIBED("subscribed"), NOTSUBSCRIBED("notSubscribed"), RESOURCES("resources");
 
 	private String name;
 

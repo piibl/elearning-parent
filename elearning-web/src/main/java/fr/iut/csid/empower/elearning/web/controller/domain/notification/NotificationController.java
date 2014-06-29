@@ -40,7 +40,7 @@ public class NotificationController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String getNotifications(Model model, @AuthenticationPrincipal User user) {
-		fr.iut.csid.empower.elearning.core.domain.user.User loggedUser = userService.findByLogin(user.getUsername());
+		fr.iut.csid.empower.elearning.core.domain.user.EndUser loggedUser = userService.findByLogin(user.getUsername());
 		model.addAttribute(getEntitiesAtributeName(), notificationService.findByUser(loggedUser));
 		return getBaseView();
 	}

@@ -2,12 +2,12 @@ package fr.iut.csid.empower.elearning.core.service.dao.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import fr.iut.csid.empower.elearning.core.domain.user.Teacher;
+import fr.iut.csid.empower.elearning.core.domain.user.EndUser;
 
 /**
- * DAO administrateur
+ * Repository administrateur
  */
-public interface TeacherDAO extends JpaRepository<Teacher, Long> {
+public interface UserRepository extends JpaRepository<EndUser, Long> {
 
 	/**
 	 * Retourne l'enseignant correspondant au login passé en paramètre
@@ -15,6 +15,6 @@ public interface TeacherDAO extends JpaRepository<Teacher, Long> {
 	 * @param login
 	 * @return
 	 */
-	public Teacher findByLogin(String login);
+	public EndUser findByLogin(String login);
 
 }

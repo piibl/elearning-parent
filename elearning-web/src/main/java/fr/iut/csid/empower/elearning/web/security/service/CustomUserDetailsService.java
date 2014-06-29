@@ -20,9 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import fr.iut.csid.empower.elearning.core.domain.user.Administrator;
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
 import fr.iut.csid.empower.elearning.core.domain.user.Teacher;
-import fr.iut.csid.empower.elearning.core.service.dao.user.AdministratorDAO;
-import fr.iut.csid.empower.elearning.core.service.dao.user.StudentDAO;
-import fr.iut.csid.empower.elearning.core.service.dao.user.TeacherDAO;
+import fr.iut.csid.empower.elearning.core.service.dao.user.AdministratorRepository;
+import fr.iut.csid.empower.elearning.core.service.dao.user.StudentRepository;
+import fr.iut.csid.empower.elearning.core.service.dao.user.TeacherRepository;
 
 /**
  * {@link UserDetailsService} customisé, l'information sur les utilisateurs sont issues des repositories
@@ -34,56 +34,56 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private static Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
 
 	@Inject
-	private StudentDAO studentDAO;
+	private StudentRepository studentRepository;
 	@Inject
-	private TeacherDAO teacherDAO;
+	private TeacherRepository teacherRepository;
 	@Inject
-	private AdministratorDAO administratorDAO;
+	private AdministratorRepository administratorRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		// Recherche de l'utilisateur dans les repos
-		fr.iut.csid.empower.elearning.core.domain.user.User user = getUser(username);
-		if (user == null) {
+		fr.iut.csid.empower.elearning.core.domain.user.EndUser endUser = getUser(username);
+		if (endUser == null) {
 			logger.debug("No user registred for [" + username + "]");
 			// Aucun utilisateur enregistré pour ce login
-			throw new UsernameNotFoundException("User with login " + username + " doesn't exist.");
+			throw new UsernameNotFoundException("EndUser with login " + username + " doesn't exist.");
 		}
 		boolean enabled = true;
 		boolean accountNonExpired = true;
 		boolean credentialsNonExpired = true;
 		boolean accountNonLocked = true;
-		Collection<? extends GrantedAuthority> authorities = getAuthorities(user);
+		Collection<? extends GrantedAuthority> authorities = getAuthorities(endUser);
 		if (authorities.isEmpty()) {
 			// TODO erreur, roles non définis pour ce type d'utilisateurs
 		}
-		return new User(user.getLogin(), user.getPassword().toLowerCase(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked,
+		return new User(endUser.getLogin(), endUser.getPassword().toLowerCase(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked,
 				authorities);
 
 	}
 
-	private fr.iut.csid.empower.elearning.core.domain.user.User getUser(String login) {
+	private fr.iut.csid.empower.elearning.core.domain.user.EndUser getUser(String login) {
 		/**
 		 * TODO refactor, code immonde
 		 */
-		fr.iut.csid.empower.elearning.core.domain.user.User user = studentDAO.findByLogin(login);
-		if (user == null) {
-			user = teacherDAO.findByLogin(login);
+		fr.iut.csid.empower.elearning.core.domain.user.EndUser endUser = studentRepository.findByLogin(login);
+		if (endUser == null) {
+			endUser = teacherRepository.findByLogin(login);
 		}
-		if (user == null) {
-			user = administratorDAO.findByLogin(login);
+		if (endUser == null) {
+			endUser = administratorRepository.findByLogin(login);
 		}
-		return user;
+		return endUser;
 
 	}
 
 	/**
-	 * @param user
+	 * @param endUser
 	 * @return
 	 */
-	public Collection<? extends GrantedAuthority> getAuthorities(fr.iut.csid.empower.elearning.core.domain.user.User user) {
-		List<GrantedAuthority> authList = getGrantedAuthorities(getRoles(user));
+	public Collection<? extends GrantedAuthority> getAuthorities(fr.iut.csid.empower.elearning.core.domain.user.EndUser endUser) {
+		List<GrantedAuthority> authList = getGrantedAuthorities(getRoles(endUser));
 		for (GrantedAuthority grantedAuthority : authList) {
 			logger.debug("Authority : [" + grantedAuthority.getAuthority() + "]");
 		}
@@ -93,22 +93,22 @@ public class CustomUserDetailsService implements UserDetailsService {
 	/**
 	 * Retourne les rôles associés à un type d'utilisateur
 	 * 
-	 * @param user
+	 * @param endUser
 	 * @return
 	 */
-	public List<String> getRoles(fr.iut.csid.empower.elearning.core.domain.user.User user) {
+	public List<String> getRoles(fr.iut.csid.empower.elearning.core.domain.user.EndUser endUser) {
 		List<String> roles = new ArrayList<String>();
 		// Si admin
-		if (user instanceof Administrator) {
-			logger.debug("User [" + user.getLogin() + "] is administrator");
+		if (endUser instanceof Administrator) {
+			logger.debug("EndUser [" + endUser.getLogin() + "] is administrator");
 			// Tous les droits sur tout !
 			roles.add("ROLE_ADMIN");
 
-		} else if (user instanceof Teacher) {
-			logger.debug("User [" + user.getLogin() + "] is teacher");
+		} else if (endUser instanceof Teacher) {
+			logger.debug("EndUser [" + endUser.getLogin() + "] is teacher");
 			roles.add("ROLE_TEACHER");
-		} else if (user instanceof Student) {
-			logger.debug("User [" + user.getLogin() + "] is student");
+		} else if (endUser instanceof Student) {
+			logger.debug("EndUser [" + endUser.getLogin() + "] is student");
 			roles.add("ROLE_STUDENT");
 		}
 		return roles;

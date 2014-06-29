@@ -7,7 +7,7 @@ import fr.iut.csid.empower.elearning.core.reference.UserRole;
 
 @Entity
 @DiscriminatorValue("TEACHER")
-public class Teacher extends User {
+public class Teacher extends EndUser {
 
 	public Teacher() {
 

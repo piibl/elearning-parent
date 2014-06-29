@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
 
 /**
- * DAO étudiant
+ * Repository étudiant
  */
-public interface StudentDAO extends JpaRepository<Student, Long> {
+public interface StudentRepository extends JpaRepository<Student, Long> {
 
 	/**
 	 * Retourne l'étudiant correspondant au login passé en paramètre
