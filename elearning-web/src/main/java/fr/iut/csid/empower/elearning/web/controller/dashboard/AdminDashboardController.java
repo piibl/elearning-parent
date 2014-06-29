@@ -11,7 +11,7 @@ import fr.iut.csid.empower.elearning.web.controller.entity.user.TeacherControlle
 import fr.iut.csid.empower.elearning.web.reference.PathFragment;
 
 @Controller
-@RequestMapping("/admindashboard")
+@RequestMapping("/dashboard/admin")
 public class AdminDashboardController extends AbstractDashboardController {
 
 	@ModelAttribute("administratorsLink")

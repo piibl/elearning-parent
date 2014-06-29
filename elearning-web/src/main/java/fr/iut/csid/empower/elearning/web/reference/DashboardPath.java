@@ -8,15 +8,15 @@ public enum DashboardPath {
 	/**
 	 * Tableau de bord admin
 	 */
-	ADMIN_DASHBOARD("dashboards/admindashboard"),
+	ADMIN_DASHBOARD("dashboards/admin"),
 	/**
 	 * Tableau de bord étudiant
 	 */
-	STUDENT_DASHBOARD("dashboards/studentdashboard"),
+	STUDENT_DASHBOARD("dashboards/student"),
 	/**
 	 * Tableau de bord enseignant
 	 */
-	TEACHER_DASHBOARD("dashboards/teacherdashboard"), ;
+	TEACHER_DASHBOARD("dashboards/teacher"), ;
 
 	private String path;
 

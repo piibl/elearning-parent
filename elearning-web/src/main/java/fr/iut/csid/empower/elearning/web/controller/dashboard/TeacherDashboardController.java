@@ -25,7 +25,7 @@ import fr.iut.csid.empower.elearning.web.service.CourseService;
 import fr.iut.csid.empower.elearning.web.service.TeacherService;
 
 @Controller
-@RequestMapping("/teacherdashboard")
+@RequestMapping("/dashboard/teacher")
 public class TeacherDashboardController extends AbstractDashboardController {
 
 	/**

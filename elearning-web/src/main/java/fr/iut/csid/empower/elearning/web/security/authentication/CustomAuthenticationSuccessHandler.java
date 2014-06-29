@@ -63,11 +63,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		 * TODO externaliser les paths
 		 */
 		if (isStudent) {
-			return "/studentdashboard";
+			return "/dashboard/student";
 		} else if (isTeacher) {
-			return "/teacherdashboard";
+			return "/dashboard/teacher";
 		} else if (isAdmin) {
-			return "/admindashboard";
+			return "/dashboard/admin";
 		} else {
 			throw new IllegalStateException();
 		}

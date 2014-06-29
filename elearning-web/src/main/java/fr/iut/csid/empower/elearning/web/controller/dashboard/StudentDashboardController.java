@@ -23,7 +23,7 @@ import fr.iut.csid.empower.elearning.web.reference.Relation;
 import fr.iut.csid.empower.elearning.web.service.StudentService;
 
 @Controller
-@RequestMapping("/studentdashboard")
+@RequestMapping("/dashboard/student")
 public class StudentDashboardController extends AbstractDashboardController {
 
 	/**
