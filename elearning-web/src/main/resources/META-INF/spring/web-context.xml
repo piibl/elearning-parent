@@ -115,6 +115,8 @@
 			<set>
 				<bean
 					class="org.thymeleaf.extras.springsecurity3.dialect.SpringSecurityDialect" />
+					<!-- Dialecte maison pour parsage des dates dans les templates thymeleafs -->
+					<bean class="fr.iut.csid.empower.elearning.web.util.jodatime.thymeleaf.JodaTimeDialect"></bean>
 			</set>
 		</property>
 	</bean>
@@ -123,9 +125,6 @@
 		<property name="templateEngine" ref="templateEngine" />
 		<property name="characterEncoding" value="UTF-8" />
 	</bean>
-
-	<!-- FORMATTER DE DATE -->
-	<bean id="dateFormatter" class="fr.iut.csid.empower.elearning.web.util.DateFormatter" />
 
 	<!-- Fournisseur d'authentification pour Spring Security -->
 	<bean id="customUserDetailsService"
