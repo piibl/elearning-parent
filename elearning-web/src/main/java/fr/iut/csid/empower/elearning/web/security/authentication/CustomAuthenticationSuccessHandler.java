@@ -3,6 +3,7 @@ package fr.iut.csid.empower.elearning.web.security.authentication;
 import java.io.IOException;
 import java.util.Collection;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,10 +18,16 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import fr.iut.csid.empower.elearning.web.controller.dashboard.DashboardController;
+import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilderFactory;
+
 @Named
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 	protected Logger logger = LoggerFactory.getLogger(CustomAuthenticationSuccessHandler.class);
+
+	@Inject
+	private ControllerLinkBuilderFactory linkBuilderFactory;
 
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
@@ -60,14 +67,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			}
 		}
 		/**
-		 * TODO externaliser les paths
+		 * TODO supprimmer cette classe inutile...
 		 */
-		if (isStudent) {
-			return "/dashboard/student";
-		} else if (isTeacher) {
-			return "/dashboard/teacher";
-		} else if (isAdmin) {
-			return "/dashboard/admin";
+		if (isStudent || isAdmin || isTeacher) {
+			return "/dashboard";
 		} else {
 			throw new IllegalStateException();
 		}

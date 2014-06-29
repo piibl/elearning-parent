@@ -153,4 +153,12 @@ public class EndUser {
 		this.subscriptionDate = subscriptionDate;
 	}
 
+	public UserRole getRole() {
+		return role;
+	}
+
+	public void setRole(UserRole role) {
+		this.role = role;
+	}
+
 }
