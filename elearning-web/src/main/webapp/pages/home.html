@@ -3,17 +3,6 @@
 <head th:include="fragment/common :: headerFragment">
 </head>
 <body>
-
-	<!-- Modal -->
-	<div class="modal fade" id="modalRegistrationForm" tabindex="-1"
-		role="dialog" aria-labelledby="modalRegistrationFormLabel"
-		aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content" id="modalRegistrationFormContent"></div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
 	<div th:include="fragment/navbars :: unsigned-navbar"
 		class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 
@@ -21,6 +10,7 @@
 
 
 	<div class="container top-20">
+		<div id="ajaxMessage"></div>
 		<div class="alert alert-danger alert-dismissable"
 			th:if="${(param.error != null) and (param.error[0] == 'true')}">
 			<button class="close" aria-hidden="true" data-dismiss="alert"
@@ -34,16 +24,7 @@
 				type="button">×</button>
 			<strong>Vous avez été déconnecté du service.</strong>
 		</div>
-		<div class="alert alert-success alert-dismissable"
-			th:if="${loginNewUser}">
-			<button class="close" aria-hidden="true" data-dismiss="alert"
-				type="button">×</button>
-			<p>
-				Bienvenue <strong th:text="${loginNewUser}">login</strong>!<br />
-				Vous pouvez dès à présent utiliser vos identifiants pour vous
-				connecter au service.<br />Bon apprentissage !
-			</p>
-		</div>
+
 		<!-- <div th:include="fragment/registration :: registration-form"> -->
 		<div class="jumbotron">
 
@@ -58,11 +39,12 @@
 			<p>
 				<a href="/registration" th:href="@{/registration}"
 					class="btn btn-primary btn-lg" role="button" data-toggle="modal"
-					data-target="#modalRegistrationForm">S'inscire</a>
+					data-target="#modal">S'inscire</a>
 			</p>
 		</div>
 	</div>
-
+	<!-- Modal, si besoin -->
+	<div th:replace="fragment/common :: simple-modal"></div>
 	<footer th:include="fragment/common :: [//footer]"></footer>
 </body>
 </html>

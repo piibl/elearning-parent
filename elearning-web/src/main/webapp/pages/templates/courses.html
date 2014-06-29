@@ -5,9 +5,13 @@
 </head>
 
 <body>
+<!-- navbar -->
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation"
+		th:include="fragment/navbars :: signed-navbar"></div>
 	<div class="container top-20">
 		<div class="row row-offcanvas row-offcanvas-left">
-			<!-- Le cadre de rendu est délégué au template appelant -->
+			<!-- Sidebar -->
+			<div th:replace="fragment/sidebars :: sidebar">
 			<div>
 				<!-- Boutons d'action -->
 				<ul class="nav nav-pills">

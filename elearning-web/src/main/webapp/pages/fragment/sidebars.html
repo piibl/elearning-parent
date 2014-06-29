@@ -3,36 +3,50 @@
 <head th:include="fragment/common :: headerFragment">
 </head>
 <body>
-	<!-- admin -->
-	<div class="col-md-3 sidebar-offcanvas top-20" id="sidebar"
-		role="navigation">
-		<ul class="nav">
-			<li><a class="btn" href="/administrators"
-				th:href="@{/administrators}" role="button"><i class="glyphicon glyphicon-search"></i>
-					Administrateurs</a></li>
-			<li><a class="btn" href="/teachers"
-				th:href="@{/teachers}" role="button"><i
-					class="glyphicon glyphicon-search"></i> Enseignants</a></li>
-			<li><a class="btn" href="/students"
-				th:href="@{/students}" role="button"><i
-					class="glyphicon glyphicon-search"></i> Etudiants</a></li>
+
+	<!-- Sidebars -->
+	<div class="col-md-3 sidebar-offcanvas" id="sidebar" role="navigation"
+		th:fragment="sidebar">
+		<!-- Sidebar administrateur -->
+		<ul sec:authorize="hasRole('ROLE_ADMIN')" class="nav">
+			<li><a class="displayLink" href="/administrators"
+				th:href="${administratorsLink.href}" role="button"><i
+					class="glyphicon glyphicon-chevron-right"></i> Gérer les
+					administrateurs </a></li>
+			<li><a class="displayLink" href="/teachers"
+				th:href="${teachersLink.href}" role="button"><i
+					class="glyphicon glyphicon-chevron-right"></i> Gérer les
+					enseignants </a></li>
+			<li><a class="displayLink" href="/students"
+				th:href="${studentsLink.href}" role="button"><i
+					class="glyphicon glyphicon-chevron-right"></i> Gérer les étudiants
+			</a></li>
+			<!-- <li><a class="displayLink" href="/courses"
+						th:href="${coursesLink.href}" role="button"><i
+							class="glyphicon glyphicon-chevron-right"></i>  Gérer les cours </a></li> -->
+		</ul>
+		<!-- Sidebar enseignant -->
+		<ul sec:authorize="hasRole('ROLE_TEACHER')" class="nav">
+			<li><a class="displayLink" href="/courses"
+				th:href="${ownedCoursesLink.href}" role="button"><i
+					class="glyphicon glyphicon-chevron-right"></i> Gérer vos cours </a></li>
+			<li><a href="#" role="button"><i
+					class="glyphicon glyphicon-chevron-right"></i> Emploi du temps </a></li>
+		</ul>
+		<!-- Sidebar étudiant -->
+		<ul sec:authorize="hasRole('ROLE_STUDENT')" class="nav">
+			<li><a class="displayLink" href="/courses"
+				th:href="${subscribedCoursesLink.href}" role="button"><i
+					class="glyphicon glyphicon-chevron-right"></i> Vos cours </a></li>
+			<li><a class="displayLink" href="/courses"
+				th:href="${othersAvailablesCoursesLink.href}" role="button"><i
+					class="glyphicon glyphicon-chevron-right"></i> S'inscrire à un
+					cours </a></li>
+			<li><a href="#" role="button"><i
+					class="glyphicon glyphicon-chevron-right"></i> Emploi du temps </a></li>
 		</ul>
 	</div>
-	<!-- teacher -->
-	<div class="container top-20" th:fragment="sidebar-teacher">
-		<div class="row row-offcanvas row-offcanvas-left">
-			<!-- sidebar -->
-			<div class="col-xs-4 col-sm-2 sidebar-offcanvas top-20" id="sidebar"
-				role="navigation">
-				<ul class="nav">
-					<li><a href="#">Link 1</a></li>
-					<li><a href="#">Link 2</a></li>
-					<li><a href="#">Link 3</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	
+
 </body>
 
 </html>

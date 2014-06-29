@@ -11,20 +11,7 @@
 	<div class="container top-20">
 		<div class="row row-offcanvas row-offcanvas-left">
 			<!-- sidebar -->
-			<!-- teacher -->
-			<div class="col-md-3 sidebar-offcanvas" id="sidebar"
-				role="navigation">
-				<ul class="nav nav-pills nav-stacked">
-					<li><a class="displayLink" href="/courses"
-						th:href="${ownedCoursesLink.href}" role="button"><i
-							class="glyphicon glyphicon-chevron-right"></i>  Gérer vos cours
-					</a></li>
-					<li><a href="#"
-						 role="button"><i
-							class="glyphicon glyphicon-chevron-right"></i> Emploi du temps
-					</a></li>
-				</ul>
-			</div>
+			<div th:replace="fragment/sidebars :: sidebar"></div>
 			<!-- Corps -->
 			<div class="col-md-9" th:include="fragment/common :: ajax-content">
 

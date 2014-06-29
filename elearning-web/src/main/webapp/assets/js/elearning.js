@@ -58,7 +58,8 @@ $(document)
 		    }
 		    ;
 		    // Fonction de redirection
-		    function redirectToUrl(redirectUrl, successMessage) {
+		    function redirectToUrl(redirectUrl, successMessage,
+			    targetRender) {
 			$
 				.ajax({
 				    type : 'GET',
@@ -77,14 +78,14 @@ $(document)
 				    },
 				    success : function(data) {
 					$('#ajaxMessage').empty();
-					$('#ajaxPanel').empty();
+					$(targetRender).empty();
 					// Requete
 					// ok
 					if (!(typeof successMessage == "undefined" || successMessage == null)) {
 					    $('#ajaxMessage').html(
 						    successMessage);
 					}
-					$('#ajaxPanel').append(data);
+					$(targetRender).append(data);
 				    },
 				    error : function() {
 					// Requête
@@ -116,23 +117,18 @@ $(document)
 					});
 			    });
 		    // Affichage de listes dans le panneau central
-		    $('.displayLink')
-			    .on(
-				    'click',
-				    function(event) {
-					// Appel de la fonction de rendu
-					display($(this), event);
-				    });
+//		    $('.displayLink').on('click', function(event) {
+//			// Appel de la fonction de rendu
+//			display($(this), event);
+//		    });
 		    // Liens display dans le cadre de rendu
-		    $("#ajaxPanel")
-		    .on(
-			    'click',"a.displayLink",
-			    function(event) {
-				// Appel de la fonction de rendu
-				display($(this), event);
-			    });
-		    // Suppression d'objets
-		    $("#ajaxPanel")
+//		    $("#ajaxPanel").on('click', "a.displayLink",
+//			    function(event) {
+//				// Appel de la fonction de rendu
+//				display($(this), event);
+//			    });
+		    // Suppression d'objets via ajax render
+		    $(".ajax-enabled")
 			    .on(
 				    'click',
 				    "a.deleteLink",
@@ -142,9 +138,12 @@ $(document)
 					event.preventDefault();
 					var redirectUrl = $(this).data(
 						'redirect_url');
+					var targetRender = $(this).data(
+						'target_render');
 					if ((typeof redirectUrl == "undefined" || redirectUrl == null)) {
 					    redirectUrl = 'none';
 					}
+
 					$
 						.ajax({
 						    type : 'GET',
@@ -161,13 +160,13 @@ $(document)
 							// Requete ok, la liste
 							// est rechargée
 							var successMessage = '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button> L\'entrée selectionnée a bien été supprimée.</div>';
-							$('#ajaxPanel').empty();
 							if (redirectUrl != 'none') {
 							    redirectToUrl(
 								    redirectUrl,
-								    successMessage);
+								    successMessage,
+								    targetRender);
 							} else {
-							    $("#ajaxPanel")
+							    $(targetRender)
 								    .append(
 									    data);
 							    $('#ajaxMessage')
@@ -184,7 +183,7 @@ $(document)
 						});
 				    });
 		    // Détails d'une entité, rendu dans un modal
-		    $("#ajaxPanel")
+		    $(".ajax-enabled")
 			    .on(
 				    'click',
 				    'a.detailsLink',
@@ -223,18 +222,52 @@ $(document)
 						});
 				    });
 		    // Détails d'une entité, rendu dans un modal
-		    $("#ajaxPanel")
+		    $("a.detailsLink")
 			    .on(
 				    'click',
-				    'a.displayLinkNotModal',
 				    function(event) {
-					display($(this), event);
+					event.preventDefault();
+					$("#modalContent").empty();
+					$("#ajaxMessage").empty();
+					$
+						.ajax({
+						    type : 'GET',
+						    // URL déterminée par
+						    // l'attribut href
+						    url : $(this).attr('href'),
+						    beforeSend : function() {
+							// En attente
+							$('#ajaxMessage')
+								.html(
+									'<div class="alert alert-info alert-dismissable"><p>Loading...</p></div>');
+						    },
+						    success : function(data) {
+							$('#ajaxMessage')
+								.empty();
+							// Requete ok
+							$("#modalContent")
+								.append(data);
+							$("#modal").modal({
+							    show : true
+							});
+						    },
+						    error : function() {
+							// Requête ko
+							$('#ajaxMessage')
+								.html(
+									'<div class="alert alert-danger alert-dismissable"><button class="close"aria-hidden="true" data-dismiss="alert"type="button">×</button> <strong>Ooops !</strong> Petit plantage, veuillez  ressayer dans quelques instants, merci !</div>');
+						    }
+						});
 				    });
+		    // Détails d'une entité, rendu dans un modal
+		    $(".ajax-enabled").on('click', 'a.displayLinkNotModal',
+			    function(event) {
+				display($(this), event);
+			    });
 		    // Formulaire d'ajout dans panneau AJAX
-		    $("#ajaxPanel")
+		    $("a.addForm")
 			    .on(
 				    'click',
-				    "a.addForm",
 				    function(event) {
 					event.preventDefault;
 					$("#modalContent").empty();
@@ -286,6 +319,9 @@ $(document)
 					event.preventDefault();
 					var redirectUrl = $(this).data(
 						'redirect_url');
+					var targetRender = $(this).data(
+						'target_render');
+					
 					if ((typeof redirectUrl == "undefined" || redirectUrl == null)) {
 					    redirectUrl = 'none';
 					}
@@ -321,20 +357,19 @@ $(document)
 							// redirection est
 							// spécifiée, nouveau
 							// get en AJAX
+
+							$('#ajaxPanel').empty();
 							if (redirectUrl != 'none') {
-							    redirectToUrl(redirectUrl);
+							    redirectToUrl(
+								    redirectUrl,
+								    '',
+								    targetRender);
 							} else {
-							    // sinon, mise à
-							    // jour du
-							    // panel avec les
-							    // données
-							    // retournées par le
-							    // premier appel
-							    $('#ajaxPanel')
-								    .empty();
-							    $("#ajaxPanel")
+							    $(targetRender)
 								    .append(
 									    data);
+//							    $('#ajaxMessage')
+//								    .html('');
 							}
 						    },
 						    error : function() {
@@ -356,7 +391,7 @@ $(document)
 
 				    });
 		    // Formulaire d'édition dans panneau AJAX
-		    $("#ajaxPanel")
+		    $(".ajax-enabled")
 			    .on(
 				    'click',
 				    "a.editLink",
@@ -408,6 +443,8 @@ $(document)
 					event.preventDefault();
 					var redirectUrl = $(this).data(
 						'redirect_url');
+					var targetRender = $(this).data(
+						'target_render');
 					if ((typeof redirectUrl == "undefined" || redirectUrl == null)) {
 					    redirectUrl = 'none';
 					}
@@ -440,20 +477,18 @@ $(document)
 								.empty();
 							$('#modal').modal(
 								'hide');
-
-							// sinon, mise à
-							// jour du
-							// panel avec les
-							// données
-							// retournées par le
-							// premier appel
-							$('#ajaxPanel').empty();
+							// Affichage
 							if (redirectUrl != 'none') {
-							    redirectToUrl(redirectUrl);
+							    redirectToUrl(
+								    redirectUrl,
+								    '',
+								    targetRender);
 							} else {
-							    $("#ajaxPanel")
+							    $(targetRender)
 								    .append(
 									    data);
+							    $('#ajaxMessage')
+								    .html('');
 							}
 
 						    },
@@ -474,83 +509,6 @@ $(document)
 
 						});
 
-				    });
-		    // Détails d'une entité
-		    $("#ajaxPanel")
-			    .on(
-				    'click',
-				    'a.sessionsLink',
-				    function(event) {
-					event.preventDefault();
-					$("#ajaxMessage").empty();
-					$
-						.ajax({
-						    type : 'GET',
-						    // URL déterminée par
-						    // l'attribut href
-						    url : $(this).attr('href'),
-						    beforeSend : function() {
-							// En attente
-							$('#ajaxMessage')
-								.html(
-									'<div class="alert alert-info alert-dismissable"><p>Loading...</p></div>');
-						    },
-						    success : function(data) {
-							$('#ajaxMessage')
-								.empty();
-							$('#ajaxPanel').empty();
-							// Requete ok
-							$('#ajaxPanel').append(
-								data);
-						    },
-						    error : function() {
-							// Requête ko
-							$('#ajaxMessage')
-								.html(
-									'<div class="alert alert-danger alert-dismissable"><button class="close"aria-hidden="true" data-dismiss="alert"type="button">×</button> <strong>Ooops !</strong> Petit plantage, veuillez  ressayer dans quelques instants, merci !</div>');
-						    }
-						});
-				    });
-		    // Souscription à un cours
-		    $("#ajaxPanel")
-			    .on(
-				    'click',
-				    "a.subscribeLink",
-				    function(event) {
-					$("#ajaxMessage").empty();
-					// Désactivation du lien
-					event.preventDefault();
-					var redirectUrl = $(this).data(
-						'redirect_url');
-					if ((typeof redirectUrl == "undefined" || redirectUrl == null)) {
-					    redirectUrl = 'none';
-					}
-					$
-						.ajax({
-						    type : 'GET',
-						    // URL déterminée par
-						    // l'attribut href
-						    url : $(this).attr('href'),
-						    beforeSend : function() {
-							// Enrichissement
-							$('#ajaxMessage')
-								.html(
-									'<div class="alert alert-info alert-dismissable"><p>Loading...</p></div>');
-						    },
-						    success : function(data) {
-							// Requete ok,
-							// redirection
-							redirectToUrl(
-								redirectUrl,
-								data);
-						    },
-						    error : function() {
-							// Requête ko
-							$('#ajaxMessage')
-								.html(
-									'<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button> <strong>Ooops !</strong> Petit plantage, veuillez  ressayer dans quelques instants, merci !</div>');
-						    }
-						});
 				    });
 
 		});

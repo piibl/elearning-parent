@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+	<div class="alert alert-success alert-dismissable"
+		th:if="${loginNewUser}" th:fragment="new-user-welcome">
+		<button class="close" aria-hidden="true" data-dismiss="alert"
+			type="button">x</button>
+		<p>
+			Bienvenue <strong th:text="${loginNewUser}">login</strong>!<br />
+			Vous pouvez dès à présent utiliser vos identifiants pour vous
+			connecter au service.<br />Bon apprentissage !
+		</p>
+	</div>
+</body>
+</html>

@@ -8,7 +8,7 @@
 	<div class="container top-20">
 		<div class="row row-offcanvas row-offcanvas-left">
 			<!-- Le cadre de rendu est délégué au template appelant -->
-			<div th:fragment="display-courses">
+			<div th:fragment="display-courses-all">
 				<!-- Boutons d'action -->
 				<ul class="nav nav-pills">
 					<li th:if="${newCourseLink}" sec:authorize="hasRole('ROLE_TEACHER')"><a
@@ -70,6 +70,15 @@
 					</div>
 				</div>
 			</div>
+			<div th:fragment="display-courses-subscribed">
+				
+			</div>
+			<div th:fragment="display-courses-unsubscribed">
+				
+			</div>
+			
+			
+			
 			<!-- Le cadre de rendu est délégué au template appelant -->
 			<div th:fragment="display-details">
 				<div class="modal-header">

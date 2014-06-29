@@ -9,48 +9,10 @@
 				aria-hidden="true">&times;</button>
 				<h3 class="modal-title">Formulaire d'inscription</h3>
 		</div>
-		<form th:action="@{/registration}" th:object="${studentStructure}"
-			method="post" role="form">
-			<div class="modal-body">
-
-				<div class="form-group">
-					<label for="firstName"
-						th:text="#{form.registration.label.firstname}">Prénom</label> <input
-						type="text" th:field="*{firstName}" class="form-control"
-						autofocus="autofocus" required="required" placeholder="Bryan" />
-					<span class="help-block" th:if="${#fields.hasErrors('firstName')}"
-						th:errors="*{firstName}">Prénom incorrect</span>
-				</div>
-				<div class="form-group">
-					<label for="lastName" th:text="#{form.registration.label.lastname}">Nom
-						de famille</label> <input type="text" class="form-control" id="lastName"
-						placeholder="Singer" autofocus="autofocus" required="required"
-						th:field="*{lastName}" /> <span class="help-block"
-						th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Nom
-						incorrect</span>
-				</div>
-				<div class="form-group">
-					<label for="login" th:text="#{form.registration.label.login}">Login</label>
-					<input type="text" th:field="*{login}" class="form-control"
-						id="login" placeholder="BryanSinger123" autofocus="autofocus"
-						required="required" /> <span class="help-block"
-						th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Prénom
-						incorrect</span>
-				</div>
-				<div class="form-group">
-					<label for="email" th:text="#{form.registration.label.email}">Adresse
-						email</label> <input type="email" th:field="*{email}" class="form-control"
-						id="email" placeholder="bryan.singer123@trololo.com"
-						autofocus="autofocus" required="required" /> <span
-						class="help-block" th:if="${#fields.hasErrors('firstName')}"
-						th:errors="*{firstName}">Prénom incorrect</span>
-				</div>
-				<div class="form-group">
-					<label for="pwd" th:text="#{form.registration.label.password}">Password</label>
-					<input type="password" th:field="*{password}" class="form-control"
-						id="pwd" placeholder="Mot de passe"
-						autofocus="autofocus" required="required" />
-				</div>
+		<form class="addForm" th:action="@{/registration}"
+			method="post" role="form" data-redirect_url="none"
+			data-target_render="#ajaxMessage">
+			<div class="modal-body" th:include="forms/user-form :: user-form">
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-primary btn-lg" role="button">Valider</button>

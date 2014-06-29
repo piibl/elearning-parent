@@ -11,36 +11,15 @@
 	<div class="container top-20">
 		<div class="row row-offcanvas row-offcanvas-left">
 			<!-- sidebar -->
-			<!-- admin -->
-			<div class="col-md-3 sidebar-offcanvas" id="sidebar"
-				role="navigation">
-				<ul class="nav nav-pills nav-stacked">
-					<li><a class="displayLink" href="/administrators"
-						th:href="${administratorsLink.href}" role="button"><i
-							class="glyphicon glyphicon-chevron-right"></i>  Gérer les administrateurs
-					</a></li>
-					<li><a class="displayLink" href="/teachers"
-						th:href="${teachersLink.href}" role="button"><i
-							class="glyphicon glyphicon-chevron-right"></i>  Gérer les enseignants </a></li>
-					<li><a class="displayLink" href="/students"
-						th:href="${studentsLink.href}" role="button"><i
-							class="glyphicon glyphicon-chevron-right"></i>  Gérer les étudiants </a></li>
-					<!-- <li><a class="displayLink" href="/courses"
-						th:href="${coursesLink.href}" role="button"><i
-							class="glyphicon glyphicon-chevron-right"></i>  Gérer les cours </a></li> -->
-				</ul>
-			</div>
+			<div th:replace="fragment/sidebars :: sidebar"></div>
 			<!-- Corps -->
 			<div class="col-md-9">
-
 				<!-- Message Ajax -->
 				<div id="ajaxMessage"></div>
 				<!-- Contenu de la page -->
 				<div id="ajaxPanel">
 					<p>Bienvenue sur la plateforme E-Learning</p>
 				</div>
-
-
 			</div>
 		</div>
 	</div>
