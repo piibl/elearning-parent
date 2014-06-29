@@ -1,4 +1,4 @@
-package fr.iut.csid.empower.elearning.web.controller.entity.course;
+package fr.iut.csid.empower.elearning.web.controller.domain.course;
 
 import javax.inject.Inject;
 
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
-import fr.iut.csid.empower.elearning.web.controller.entity.AbstractEntityController;
+import fr.iut.csid.empower.elearning.web.controller.domain.AbstractDomainController;
 import fr.iut.csid.empower.elearning.web.dto.impl.CourseDTO;
 import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.assembler.CourseResourceAssembler;
@@ -24,7 +24,7 @@ import fr.iut.csid.empower.elearning.web.service.StudentService;
 
 @Controller
 @RequestMapping("/courses")
-public class CourseController extends AbstractEntityController<Course, Long, CourseDTO> {
+public class CourseController extends AbstractDomainController<Course, Long, CourseDTO> {
 
 	private String mainView = "display/courses :: display-courses";
 	private String detailsView = "display/courses :: display-details";

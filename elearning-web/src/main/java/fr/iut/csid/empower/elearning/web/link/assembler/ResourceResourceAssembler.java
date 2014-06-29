@@ -8,7 +8,7 @@ import org.springframework.hateoas.Resource;
 import org.springframework.util.Assert;
 
 import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
-import fr.iut.csid.empower.elearning.web.controller.entity.course.CourseController;
+import fr.iut.csid.empower.elearning.web.controller.domain.course.CourseController;
 import fr.iut.csid.empower.elearning.web.link.AbstractResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilder;

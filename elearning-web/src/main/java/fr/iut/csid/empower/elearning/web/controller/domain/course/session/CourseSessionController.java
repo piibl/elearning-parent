@@ -1,4 +1,4 @@
-package fr.iut.csid.empower.elearning.web.controller.entity.course.session;
+package fr.iut.csid.empower.elearning.web.controller.domain.course.session;
 
 import javax.inject.Inject;
 
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
-import fr.iut.csid.empower.elearning.web.controller.entity.AbstractOwnedEntityController;
-import fr.iut.csid.empower.elearning.web.controller.entity.course.CourseController;
+import fr.iut.csid.empower.elearning.web.controller.domain.AbstractOwnedDomainController;
+import fr.iut.csid.empower.elearning.web.controller.domain.course.CourseController;
 import fr.iut.csid.empower.elearning.web.dto.impl.CourseSessionDTO;
 import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilderFactory;
@@ -26,7 +26,7 @@ import fr.iut.csid.empower.elearning.web.service.OwnedEntityCrudService;
 
 @Controller
 @RequestMapping("/courses/{ownerEntityId}/sessions")
-public class CourseSessionController extends AbstractOwnedEntityController<CourseSession, Long, CourseSessionDTO> {
+public class CourseSessionController extends AbstractOwnedDomainController<CourseSession, Long, CourseSessionDTO> {
 
 	private String mainView = "display/sessions :: display-sessions";
 	private String detailsView = "display/sessions :: display-details";

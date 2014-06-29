@@ -1,4 +1,4 @@
-package fr.iut.csid.empower.elearning.web.controller.entity.course.session;
+package fr.iut.csid.empower.elearning.web.controller.domain.course.session;
 
 import javax.inject.Inject;
 
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
 import fr.iut.csid.empower.elearning.core.reference.ResourceType;
-import fr.iut.csid.empower.elearning.web.controller.entity.AbstractOwnedEntityController;
-import fr.iut.csid.empower.elearning.web.controller.entity.course.CourseController;
+import fr.iut.csid.empower.elearning.web.controller.domain.AbstractOwnedDomainController;
+import fr.iut.csid.empower.elearning.web.controller.domain.course.CourseController;
 import fr.iut.csid.empower.elearning.web.dto.impl.ResourceDTO;
 import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilderFactory;
@@ -30,7 +30,7 @@ import fr.iut.csid.empower.elearning.web.service.ResourceService;
 @Controller
 @RequestMapping("courses/{courseId}/sessions/{ownerEntityId}/resources")
 public class ResourceController extends
-		AbstractOwnedEntityController<fr.iut.csid.empower.elearning.core.domain.course.session.resource.Resource, Long, ResourceDTO> {
+		AbstractOwnedDomainController<fr.iut.csid.empower.elearning.core.domain.course.session.resource.Resource, Long, ResourceDTO> {
 
 	private String mainView = "display/resources :: display-resources";
 	private String detailsView = "display/resources :: display-details";

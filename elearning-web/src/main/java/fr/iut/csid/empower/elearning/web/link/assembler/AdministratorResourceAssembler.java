@@ -8,7 +8,7 @@ import org.springframework.hateoas.Resource;
 import org.springframework.util.Assert;
 
 import fr.iut.csid.empower.elearning.core.domain.user.Administrator;
-import fr.iut.csid.empower.elearning.web.controller.entity.user.AdministratorController;
+import fr.iut.csid.empower.elearning.web.controller.domain.user.AdministratorController;
 import fr.iut.csid.empower.elearning.web.link.AbstractResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilderFactory;
 import fr.iut.csid.empower.elearning.web.reference.PathFragment;

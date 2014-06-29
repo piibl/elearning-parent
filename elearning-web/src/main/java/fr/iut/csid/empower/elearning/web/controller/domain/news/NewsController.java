@@ -1,4 +1,4 @@
-package fr.iut.csid.empower.elearning.web.controller.entity.news;
+package fr.iut.csid.empower.elearning.web.controller.domain.news;
 
 import javax.inject.Inject;
 

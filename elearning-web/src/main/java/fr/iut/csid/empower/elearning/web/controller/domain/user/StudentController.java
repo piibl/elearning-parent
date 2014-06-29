@@ -1,4 +1,4 @@
-package fr.iut.csid.empower.elearning.web.controller.entity.user;
+package fr.iut.csid.empower.elearning.web.controller.domain.user;
 
 import javax.inject.Inject;
 
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
-import fr.iut.csid.empower.elearning.web.controller.entity.AbstractEntityController;
+import fr.iut.csid.empower.elearning.web.controller.domain.AbstractDomainController;
 import fr.iut.csid.empower.elearning.web.dto.impl.UserDTO;
 import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.assembler.StudentResourceAssembler;
@@ -16,7 +16,7 @@ import fr.iut.csid.empower.elearning.web.service.StudentService;
 
 @Controller
 @RequestMapping("/students")
-public class StudentController extends AbstractEntityController<Student, Long, UserDTO> {
+public class StudentController extends AbstractDomainController<Student, Long, UserDTO> {
 
 	private String mainView = "display/students :: display-students";
 	private String detailsView = "display/students :: display-details";

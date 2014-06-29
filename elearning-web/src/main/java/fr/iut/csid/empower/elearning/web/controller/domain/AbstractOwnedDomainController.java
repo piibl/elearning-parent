@@ -1,29 +1,26 @@
-package fr.iut.csid.empower.elearning.web.controller.entity;
+package fr.iut.csid.empower.elearning.web.controller.domain;
 
 import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.Resource;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import fr.iut.csid.empower.elearning.web.dto.IDTO;
+import fr.iut.csid.empower.elearning.web.dto.OwnedDTO;
 import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilderFactory;
 import fr.iut.csid.empower.elearning.web.service.CrudService;
+import fr.iut.csid.empower.elearning.web.service.OwnedEntityCrudService;
 
-public abstract class AbstractEntityController<T, X extends Serializable, Y extends IDTO> {
+public abstract class AbstractOwnedDomainController<T, X extends Serializable, Y extends OwnedDTO<X>> {
 
-	private static final Logger logger = LoggerFactory.getLogger(AbstractEntityController.class);
+	// private static final Logger logger = LoggerFactory.getLogger(AbstractOwnedDomainController.class);
 
 	/**
 	 * Constructeur de liens
@@ -34,7 +31,12 @@ public abstract class AbstractEntityController<T, X extends Serializable, Y exte
 	/**
 	 * Retourne le service CRUD du type de l'entité cible
 	 */
-	protected abstract CrudService<T, X, Y> getCrudService();
+	protected abstract OwnedEntityCrudService<T, X, Y> getCrudService();
+
+	/**
+	 * Retourne le service CRUD du type de l'entité propriétaire de l'entité cible
+	 */
+	protected abstract CrudService getOwnerCrudService();
 
 	/**
 	 * Retourne l'assembleur de ressources associé au type de l'entité cible
@@ -84,18 +86,25 @@ public abstract class AbstractEntityController<T, X extends Serializable, Y exte
 	protected abstract String getEditFormPath();
 
 	/**
-	 * Vue globale, affiche tous les éléments du type de l'entité
+	 * Retourne le lien permettant la création d'une nouvelle entité liée à l'entité propriétaire
+	 */
+	protected abstract String getAddOwnedEntityLink(X ownerId);
+
+	/**
+	 * Vue globale, affiche tous les éléments du type de l'entité pour un parent donné
 	 * 
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String getAll(Model model) {
-		List<T> entities = getCrudService().findAll();
+	public String getAll(Model model, @PathVariable X ownerEntityId) {
+		List<T> entities = getCrudService().findByOwner(ownerEntityId);
 		// Construction des liens d'action et mise en container
 		// Le container contient à la fois l'objet cible et les liens des ressources afférentes
 		List<Resource<T>> entitiesResources = getResourceAssembler().toResource(entities);
+		System.out.println(getEntitiesAtributeName() + " " + entities.size());
 		model.addAttribute(getEntitiesAtributeName(), entitiesResources);
+		model.addAttribute("addOwnedEntityLink", getAddOwnedEntityLink(ownerEntityId));
 		return getBaseView();
 	}
 
@@ -107,7 +116,8 @@ public abstract class AbstractEntityController<T, X extends Serializable, Y exte
 	 * @return
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String getAddForm(Model model, @AuthenticationPrincipal User user) {
+	public String getAddForm(Model model, @PathVariable X ownerEntityId) {
+		model.addAttribute("ownerEntity", getOwnerCrudService().find(ownerEntityId));
 		return getAddFormPath();
 	}
 
@@ -121,7 +131,7 @@ public abstract class AbstractEntityController<T, X extends Serializable, Y exte
 	public String insertNewJSON(@RequestBody Y entityDTO, Model model) {
 		getCrudService().createFromDTO(entityDTO);
 		// Alimenter le modèle avec la liste mise à jour
-		return getAll(model);
+		return getAll(model, entityDTO.getOwnerId());
 	}
 
 	/**
@@ -132,11 +142,10 @@ public abstract class AbstractEntityController<T, X extends Serializable, Y exte
 	 * @return
 	 */
 	@RequestMapping(value = "/{entityId}", method = RequestMethod.GET)
-	public String getEntity(@PathVariable("entityId") X id, Model model) {
+	public String getEntity(@PathVariable X ownerEntityId, @PathVariable("entityId") X id, Model model) {
 		// TODO Quick'n'dirty, j'aime !
 		Resource<T> resource = getResourceAssembler().toResource(getCrudService().find(id));
 		model.addAttribute(getSingleEntityAtributeName(), resource);
-		logger.info("getDetails calls : [" + getDetailsView() + "]");
 		return getDetailsView();
 	}
 
@@ -148,13 +157,14 @@ public abstract class AbstractEntityController<T, X extends Serializable, Y exte
 	 * @return
 	 */
 	@RequestMapping(value = "/{entityId}/edit", method = RequestMethod.GET)
-	public String editEntity(@PathVariable("entityId") X id, Model model) {
+	public String editEntity(@PathVariable X ownerEntityId, @PathVariable("entityId") X id, Model model) {
 		Resource<T> resource = getResourceAssembler().toResource(getCrudService().find(id));
 		// TODO externalisation / personnalisation selon entités
 		// Message de suppression
 		// Construction des liens d'action et mise en container
 		// Le container contient à la fois l'objet cible et les liens des ressources afférentes
 		model.addAttribute(getSingleEntityAtributeName(), resource);
+		model.addAttribute("ownerEntity", getOwnerCrudService().find(ownerEntityId));
 		return getEditFormPath();
 	}
 
@@ -168,7 +178,7 @@ public abstract class AbstractEntityController<T, X extends Serializable, Y exte
 	public String updateJSON(@RequestBody Y entityDTO, @PathVariable("entityId") X id, Model model) {
 		getCrudService().saveFromDTO(entityDTO, id);
 		// Alimenter le modèle avec la liste mise à jour
-		return getAll(model);
+		return getAll(model, entityDTO.getOwnerId());
 	}
 
 	/**
@@ -179,7 +189,7 @@ public abstract class AbstractEntityController<T, X extends Serializable, Y exte
 	 * @return
 	 */
 	@RequestMapping(value = "/{entityId}/delete", method = RequestMethod.GET)
-	public String deleteEntity(@PathVariable("entityId") X id, Model model) {
+	public String deleteEntity(@PathVariable X ownerEntityId, @PathVariable("entityId") X id, Model model) {
 		T entityTodelete = getCrudService().find(id);
 		getCrudService().delete(entityTodelete);
 		// TODO externalisation / personnalisation selon entités
@@ -189,7 +199,6 @@ public abstract class AbstractEntityController<T, X extends Serializable, Y exte
 		// Le container contient à la fois l'objet cible et les liens des ressources afférentes
 		List<Resource<T>> entitiesResources = getResourceAssembler().toResource(entities);
 		model.addAttribute(getEntitiesAtributeName(), entitiesResources);
-		return getAll(model);
+		return getAll(model, ownerEntityId);
 	}
-
 }

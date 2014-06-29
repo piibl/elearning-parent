@@ -1,4 +1,4 @@
-package fr.iut.csid.empower.elearning.web.controller.entity.notification;
+package fr.iut.csid.empower.elearning.web.controller.domain.notification;
 
 import javax.inject.Inject;
 
