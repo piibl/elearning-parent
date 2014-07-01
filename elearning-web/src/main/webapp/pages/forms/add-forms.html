@@ -20,7 +20,6 @@
 		</form>
 	</div>
 	<!-- Formulaire d'ajout administrateur -->
-	<!-- TODO virer thymeleaf, on passe seulement par des requetes ajax -->
 	<div th:fragment="add-administrator-form">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal"
@@ -63,7 +62,7 @@
 		<form class="addForm" th:action="${submitLink.href}"
 			data-redirect_url="none"
 			th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"
-			method="post" role="form">
+			method="post" role="form" data-target_render="#ajaxPanel">
 			<div class="modal-body">
 
 				<div class="form-group">
@@ -72,13 +71,29 @@
 						placeholder="Maths, Anglais, etc..." />
 				</div>
 				<div class="form-group">
+					<label for="summary">Descriptif</label>
+					<textarea id="editor" name="summary" class="form-control"
+						autofocus="autofocus" required="required" />
+				</div>
+				<div class="form-group">
 					<input name="ownerId" type="hidden" th:value="${teacher.id}" />
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="submit" class="btn btn-primary btn-lg" role="button">Suivant</button>
+				<button type="submit" class="btn btn-primary btn-lg" role="button">Valider</button>
 			</div>
 		</form>
+		<!-- wysiwyg API + hotkeys -->
+		<script src="../assets/js/wysihtml5-0.3.0.min.js"
+			th:src="@{/assets/js/wysihtml5-0.3.0.min.js}"></script>
+		<script src="../assets/js/bootstrap3-wysihtml5.js"
+			th:src="@{/assets/js/bootstrap3-wysihtml5.js}"></script>
+		<!-- Initialisation des API -->
+		<script class="script"
+			src="../assets/js/locales/bootstrap-wysihtml5.fr-FR.js"
+			th:src="@{/assets/js/locales/bootstrap-wysihtml5.fr-FR.js}"></script>
+		<script class="script" src="../assets/js/elearning-wysiwyg.js"
+			th:src="@{/assets/js/elearning-wysiwyg.js}"></script>
 	</div>
 	<!-- Formulaire d'ajout d'une session -->
 	<div th:fragment="add-session-form">
@@ -91,8 +106,9 @@
 			</h3>
 		</div>
 		<form class="addForm"
-			th:action="@{'courses/'+${ownerEntity.id}+'/sessions'}" method="post"
-			role="form">
+			th:action="@{'courses/'+${ownerEntity.id}+'/sessions'}" method="post" data-redirect_url="none"
+			th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"
+			role="form" data-target_render="#ajaxPanel">
 			<div class="modal-body">
 
 				<div class="form-group">
@@ -139,8 +155,7 @@
 					</select>
 				</div>
 				<div class="form-group">
-					<span id='filename'></span>
-					 <a href='#' id='attach'>Attacher un
+					<span id='filename'></span> <a href='#' id='attach'>Attacher un
 						fichier...</a><input id="upload" type="file" name="file"
 						data-url="${'sessions/'+${ownerEntity.id}+'/resources'}"
 						multiple="" />

@@ -18,6 +18,8 @@ import fr.iut.csid.empower.elearning.core.exception.UserNotExistsException;
 import fr.iut.csid.empower.elearning.core.service.AbstractCrudService;
 import fr.iut.csid.empower.elearning.core.service.dao.course.CourseRepository;
 import fr.iut.csid.empower.elearning.core.service.dao.course.CourseSubscriptionRepository;
+import fr.iut.csid.empower.elearning.core.service.dao.course.CourseTeachingRepository;
+import fr.iut.csid.empower.elearning.core.service.dao.course.session.CourseSessionRepository;
 import fr.iut.csid.empower.elearning.core.service.dao.user.StudentRepository;
 import fr.iut.csid.empower.elearning.web.dto.impl.UserDTO;
 import fr.iut.csid.empower.elearning.web.service.StudentService;
@@ -36,6 +38,12 @@ public class StudentServiceImpl extends AbstractCrudService<Student, Long> imple
 
 	@Inject
 	private CourseSubscriptionRepository courseSubscriptionRepository;
+
+	@Inject
+	private CourseTeachingRepository courseTeachingRepository;
+
+	@Inject
+	private CourseSessionRepository courseSessionRepository;
 
 	@Override
 	protected JpaRepository<Student, Long> getRepository() {
@@ -101,7 +109,13 @@ public class StudentServiceImpl extends AbstractCrudService<Student, Long> imple
 		// Récupération de l'étudiant
 		Student student = studentRepository.findOne(studentId);
 		if (student != null) {
-			return courseRepository.findUnsubscribedCourses(student);
+			List<Course> courses = courseRepository.findUnsubscribedCourses(student);
+			for (Course course : courses) {
+				course.setSubscriptions(courseSubscriptionRepository.findByCourse(course));
+				course.setCoursesTeaching(courseTeachingRepository.findByCourse(course));
+				course.setSessions(courseSessionRepository.findByOwnerCourseOrderBySessionRankAsc(course));
+			}
+			return courses;
 		} else {
 			// Pas d'étudiant associé à cet id
 			throw new UserNotExistsException();

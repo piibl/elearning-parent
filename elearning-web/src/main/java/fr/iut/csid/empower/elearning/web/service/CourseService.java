@@ -15,4 +15,13 @@ public interface CourseService extends DTOSupport<Course, Long, CourseDTO> {
 	 */
 	public List<Course> findByTeacher(Long teacherId);
 
+	/**
+	 * Retourne les versions enrichies des cours d'un enseignant <br/>
+	 * Sont disponibles : chapitres, souscriptions et affiliations.
+	 * 
+	 * @param teacherId
+	 * @return
+	 */
+	public List<Course> findEnrichedCoursesByTeacher(Long teacherId);
+
 }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import fr.iut.csid.empower.elearning.core.domain.user.EndUser;
 import fr.iut.csid.empower.elearning.core.reference.UserRole;
 import fr.iut.csid.empower.elearning.core.service.UserResearchService;
-import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilderFactory;
 import fr.iut.csid.empower.elearning.web.reference.PathFragment;
 
 /**
@@ -21,9 +20,6 @@ import fr.iut.csid.empower.elearning.web.reference.PathFragment;
 @Controller
 @RequestMapping("/dashboard")
 public class DashboardController {
-
-	@Inject
-	private ControllerLinkBuilderFactory linkBuilderFactory;
 
 	@Inject
 	private UserResearchService userResearchService;

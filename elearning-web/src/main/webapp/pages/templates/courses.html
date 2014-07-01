@@ -10,115 +10,115 @@
 		th:include="fragment/navbars :: signed-navbar"></div>
 	<div class="container top-20">
 		<div class="row row-offcanvas row-offcanvas-left">
-			<!-- Sidebar -->
-			<div th:replace="fragment/sidebars :: sidebar">
-				<div>
-					<!-- Boutons d'action -->
-					<ul class="nav nav-pills">
-						<li th:if="${newCourseLink}"
-							sec:authorize="hasRole('ROLE_TEACHER')"><a
-							class="btn addForm" href="/course/new"
-							th:href="${newCourseLink.href}" role="button" data-toggle="modal"
-							data-target="#modal"><i class="glyphicon glyphicon-plus"></i>
-								Créer un cours</a></li>
-						<li><a class="btn" href="#" role="button"><i
-								class="glyphicon glyphicon-search"></i> Rechercher un cours</a></li>
-						<li class="dropdown"><a class="dropdown-toggle"
-							data-toggle="dropdown" href="#"> Filtre <span class="caret"></span>
-						</a>
-							<ul class="dropdown-menu">
-								<li><a tabindex="-1" href="#">Non implémenté</a></li>
-								<li><a tabindex="-1" href="#">Non implémenté</a></li>
-							</ul></li>
-					</ul>
-					<!-- Corps -->
-					<h3 sec:authorize="hasRole('ROLE_STUDENT')">Liste des cours
-						disponibles</h3>
-					<h3 sec:authorize="hasRole('ROLE_TEACHER')">Vos cours</h3>
-					<h3 sec:authorize="hasRole('ROLE_ADMIN')">Liste des cours</h3>
-					<div>
-						<p sec:authorize="hasRole('ROLE_STUDENT')"
-							th:if="${#lists.isEmpty(courses)}">Aucun cours n'est
-							actuellement disponible à l'inscription.</p>
-						<p sec:authorize="hasRole('ROLE_TEACHER')"
-							th:if="${#lists.isEmpty(courses)}">Vous n'avez pas de cours.</p>
-						<p sec:authorize="hasRole('ROLE_ADMIN')"
-							th:if="${#lists.isEmpty(courses)}">Aucun cours n'est
-							enregistré sur la plateforme.</p>
-						<div th:unless="${#lists.isEmpty(courses)}">
-							<table class="table table-striped table-hover">
-								<thead>
-									<th>Intitulé</th>
-									<th>Détails</th>
-									<th>Chapitres</th>
-									<th sec:authorize="hasRole('ROLE_TEACHER')">Editer</th>
-									<th sec:authorize="hasRole('ROLE_TEACHER')">Supprimer</th>
-									<th sec:authorize="hasRole('ROLE_STUDENT')">S'inscrire</th>
-								</thead>
-								<tbody>
-									<tr th:each="course : ${courses}">
-										<td class="span4" th:text="${course.content.label}">Bryan123</td>
-										<td class="span2"><a class="detailsLink"
-											href="./view.html" th:href="${course.getLink('self').href}"><i
-												class="glyphicon glyphicon-list-alt"></i></a></td>
-										<td class="span2"><a class="sessionsLink"
-											href="./sessions.html"
-											th:href="${course.getLink('sessions').href}"><i
-												class="glyphicon glyphicon-tags"></i></a></td>
-										<td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a
-											class="editLink" href="./edit.html"
-											th:href="${course.getLink('edit').href}"><i
-												class="glyphicon glyphicon-pencil"></i></a></td>
-										<td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a
-											class="deleteLink" href="./delete.html"
-											th:href="${course.getLink('delete').href}"
-											data-redirect_url="none"
-											th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"><i
-												class="glyphicon glyphicon-remove"></i></a></td>
-										<td class="span2" sec:authorize="hasRole('ROLE_STUDENT')"><a
-											class="subscribeLink" href="./subscribe.html"
-											th:href="${course.getLink('subscribe').href}"
-											data-redirect_url="none"
-											th:attr="data-redirect_url=${othersAvailablesCoursesLink != null ? othersAvailablesCoursesLink.href : 'none'}"><i
-												class="glyphicon glyphicon-plus-sign"></i></a></td>
-									</tr>
-								</tbody>
-							</table>
+			<!-- Cours, page principale -->
+			<div th:if="${isMainView}">
+				<div class="col-md-6">
+					<h2>Evènements à venir</h2>
+					<p>Donec id elit non mi porta gravida at eget metus. Fusce
+						dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
+						ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
+						magna mollis euismod. Donec sed odio dui.</p>
+					<p>
+						<a class="btn btn-default" role="button"
+							th:href="${subscribedCoursesLink.href}">Accéder à vos cours »</a>
+					</p>
+				</div>
+				<div class="col-md-6">
+					<h2>Derniers cours ajoutés sur la plateforme</h2>
+					<p>Donec id elit non mi porta gravida at eget metus. Fusce
+						dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
+						ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
+						magna mollis euismod. Donec sed odio dui.</p>
+					<p>
+						<a class="btn btn-default" role="button"
+							th:href="${othersAvailablesCoursesLink.href}">Voir les cours
+							disponibles »</a>
+					</p>
+				</div>
+			</div>
+			<!-- Cours, page cours souscrits -->
+			<div th:if="${isSubscribedView}">
+				<div class="col-md-12">
+					<div th:if="${!#lists.isEmpty(courses)}">
+						<div class="bordered-bottom">
+							<h1>Vos cours</h1>
+						</div>
+						<div class="container top-20">
+							<a class="displayLink" th:each="course : ${courses}"
+								th:text="${course.content.label}" href="./view.html"
+								th:href="${course.getLink('self').href + ' >>'}">Bryan123</a>
+						</div>
+					</div>
+					<!-- Si events dispo -->
+					<div th:if="${!#lists.isEmpty(events)}">
+						<div class="bordered-bottom">
+							<h1>Evenements à venir</h1>
+						</div>
+						<div th:each="event : ${events}">
+							<!-- BLABLABLA -->
 						</div>
 					</div>
 				</div>
-				<!-- Le cadre de rendu est délégué au template appelant -->
-				<div th:fragment="display-details">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">&times;</button>
-						<h4 class="modal-title">Détails du cours</h4>
-					</div>
+				<!-- Cours, page cours non souscrits -->
+				<div th:if="${isNotSubscribedView}">
+					<div class="col-md-12">
+						<!-- Si cours dispo -->
 
-					<div class="modal-body">
-						<table class="table table-striped table-hover">
-							<thead>
-								<th>Intitulé</th>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="span4" th:text="${course.content.label}">Bryan123</td>
-								</tr>
-							</tbody>
-						</table>
+						<div th:if="${!#lists.isEmpty(courses)}">
+							<div class="bordered-bottom">
+								<h1>
+									Cours disponibles <small>Inscription libre</small>
+								</h1>
+							</div>
+							<div th:each="course : ${courses}">
+								<h2>
+									<span th:text="${course.content.label}">Titre du cours</span>
+								</h2>
+								<p>
+									<a class="displayLink btn btn-success" href="./subscribe.html"
+										th:href="${course.getLink('subscribe').href}"
+										data-redirect_url="none"
+										th:attr="data-redirect_url=${othersAvailablesCoursesLink != null ? othersAvailablesCoursesLink.href : 'none'}"
+										data-target_render=".col-md-12">S'inscrire <i
+										class="glyphicon glyphicon-plus-sign"></i>
+									</a>
+								</p>
+								<p>
+									Enseignant responsable : <strong
+										th:text="${course.content.coursesTeaching[0].teacher.lastName}">Nom
+										de l'enseignant</strong><br /> Nombre de chapitres : <span
+										th:text="${#lists.size(course.content.sessions)}">Nombre
+										de chapitres</span> <br /> Nombre d'inscrits : <span
+										th:text="${#lists.size(course.content.subscriptions)}">Nombre
+										d'inscrits</span>
+								</p>
+								<p class="h3">Descriptif du cours</p>
+								<div th:utext="${course.content.summary}"></div>
+							</div>
+						</div>
+						<!-- Si pas de cours disponibles -->
+						<div th:if="${#lists.isEmpty(courses)}">
 
-					</div>
+							<h1 class="bordered-bottom">Aucun cours n'est actuellement
+								disponible à l'inscription...</h1>
 
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+							<p>
+								Vous seriez intéressé par un nouveau cours en particulier ?<br />Vous
+								avez des suggestions à nous faire ?
+							</p>
+							<p>
+								<a class="btn btn-success" role="button" href="#">Contactez-nous
+									! »</a>
+							</p>
+						</div>
 					</div>
 				</div>
+
+
 			</div>
+
 		</div>
+		<footer th:include="fragment/common :: [//footer]"></footer>
 	</div>
-
-
-
-	<footer th:include="fragment/common :: [//footer]"></footer>
 </body>
 </html>

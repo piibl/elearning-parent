@@ -15,35 +15,34 @@
 
 
 	<http auto-config="true" use-expressions="true">
-	
+
 		<!-- global -->
 		<intercept-url pattern="/registration" access="permitAll" />
 		<intercept-url pattern="/logout" access="permitAll" />
 		<intercept-url pattern="/denied" access="permitAll" />
 		<!-- tableaux de bord -->
-		<intercept-url pattern="/studentdashboard" access="hasRole('ROLE_STUDENT')" />
-		<intercept-url pattern="/teacherdashboard" access="hasRole('ROLE_TEACHER')" />
-		<intercept-url pattern="/admindashboard" access="hasRole('ROLE_ADMIN')" />
-		<!-- tableau de bord étudiant -->
-	
-	
-	
-		<!-- interfaces CRUD -->
-		<intercept-url pattern="/students" access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')" />
-		<intercept-url pattern="/teachers" access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/administrators" access="hasRole('ROLE_ADMIN')" />
-		
+		<intercept-url pattern="/dashboard/**" access="hasAnyRole('ROLE_STUDENT, ROLE_TEACHER, ROLE_ADMIN')" />
+
+
+
+		<!-- interfaces CRUD TODO à refactorer -->
+		<!-- <intercept-url pattern="/students" access="hasAnyRole('ROLE_ADMIN', 
+			'ROLE_TEACHER')" /> <intercept-url pattern="/teachers" access="hasRole('ROLE_ADMIN')" 
+			/> <intercept-url pattern="/administrators" access="hasRole('ROLE_ADMIN')" 
+			/> -->
+
 		<!-- Login strategie -->
 		<form-login login-processing-url="/authentication"
 			login-page="/home" authentication-failure-url="/home?error=true"
-			default-target-url="/dashboard" always-use-default-target="false" 
-			authentication-success-handler-ref="customAuthenticationSuccessHandler"/>
+			default-target-url="/dashboard" always-use-default-target="false"
+			authentication-success-handler-ref="customAuthenticationSuccessHandler" />
 		<remember-me user-service-ref="customUserDetailsService" />
 		<access-denied-handler error-page="/denied" />
-		<logout invalidate-session="true" logout-url="/logout" logout-success-url="/home?logout=successful" />
+		<logout invalidate-session="true" logout-url="/logout"
+			logout-success-url="/home?logout=successful" />
 	</http>
-	
-	
+
+
 	<authentication-manager>
 		<authentication-provider user-service-ref="customUserDetailsService">
 		</authentication-provider>

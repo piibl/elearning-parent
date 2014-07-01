@@ -24,6 +24,7 @@ $(document)
 		    };
 		    // Fonction de rendu dans le cadre AJAX
 		    function display(target, event) {
+		
 			$("#ajaxMessage").empty();
 			$("#ajaxPanel").empty();
 			// Désactivation du lien
@@ -117,18 +118,18 @@ $(document)
 					});
 			    });
 		    // Affichage de listes dans le panneau central
-//		    $('.displayLink').on('click', function(event) {
-//			// Appel de la fonction de rendu
-//			display($(this), event);
-//		    });
-		    // Liens display dans le cadre de rendu
-//		    $("#ajaxPanel").on('click', "a.displayLink",
-//			    function(event) {
-//				// Appel de la fonction de rendu
-//				display($(this), event);
-//			    });
+		    $('.displayLink').on('click', function(event) {
+			// Appel de la fonction de rendu
+			display($(this), event);
+		    });
+//		    // Liens display dans le cadre de rendu
+		    $("#ajaxPanel").on('click', "a.displayLink",
+			    function(event) {
+				// Appel de la fonction de rendu
+				display($(this), event);
+			    });
 		    // Suppression d'objets via ajax render
-		    $(".ajax-enabled")
+		    $("#ajaxPanel")
 			    .on(
 				    'click',
 				    "a.deleteLink",
@@ -183,7 +184,7 @@ $(document)
 						});
 				    });
 		    // Détails d'une entité, rendu dans un modal
-		    $(".ajax-enabled")
+		    $("#ajaxPanel")
 			    .on(
 				    'click',
 				    'a.detailsLink',
@@ -259,19 +260,17 @@ $(document)
 						    }
 						});
 				    });
-		    // Détails d'une entité, rendu dans un modal
-		    $(".ajax-enabled").on('click', 'a.displayLinkNotModal',
+		    // Détails d'une entité, rendu pas dans un modal
+		    $("#ajaxPanel").on('click', 'a.displayLinkNotModal',
 			    function(event) {
 				display($(this), event);
 			    });
 		    // Formulaire d'ajout dans panneau AJAX
-		    $("a.addForm")
-			    .on(
-				    'click',
+		    $("#ajaxPanel")
+			    .on('click', 'a.addForm',
 				    function(event) {
 					event.preventDefault;
 					$("#modalContent").empty();
-
 					$
 						.ajax({
 						    type : 'GET',
@@ -298,6 +297,14 @@ $(document)
 							$("#modal").modal({
 							    show : true
 							});
+							
+							
+//							$j.ajax({
+//							         type: "GET",
+//							         url: "http://" + disqus_shortname + ".disqus.com/embed.js",
+//							         dataType: "script",
+//							         cache: true
+//							     });
 						    },
 						    error : function() {
 							// Requête ko
@@ -391,7 +398,7 @@ $(document)
 
 				    });
 		    // Formulaire d'édition dans panneau AJAX
-		    $(".ajax-enabled")
+		    $("#ajaxPanel")
 			    .on(
 				    'click',
 				    "a.editLink",

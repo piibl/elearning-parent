@@ -34,12 +34,15 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li><a href="#" th:href="@{/dashboard}">Dashboard</a></li>
-					<li><a class="displayLink" href="#" th:href="@{/dashboard/notifications}">Notifications</a></li>
-					<li><a class="displayLink" href="#" th:href="@{/dashboard/news}">News</a></li>
+					<li><a href="#" th:href="@{/dashboard/notifications}">Notifications</a></li>
+					<!-- <li><a href="#" th:href="@{/dashboard/news}">News</a></li> -->
+					<li><a href="#" sec:authorize="hasRole('ROLE_STUDENT')" th:href="${coursesLink.href}">Cours</a></li>
+					<li><a href="#">Emploi du temps</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"><strong th:text="${login}">login</strong> <b class="caret"></b></a>
+						data-toggle="dropdown"><strong th:text="${login}">login</strong>
+							<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="/logout" th:href="@{/logout}">Déconnexion</a></li>
 						</ul></li>

@@ -53,7 +53,7 @@ public class CourseServiceImpl extends AbstractCrudService<Course, Long> impleme
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { UserNotExistsException.class, NumberFormatException.class })
 	public Course createFromDTO(CourseDTO courseDTO) {
 		// Création d'un cours et save pour obtenir un id
-		Course course = new Course(courseDTO.getLabel());
+		Course course = new Course(courseDTO.getLabel(), courseDTO.getSummary());
 		course = courseRepository.save(course);
 		// Conversion de l'id du créateur en type Long
 		Long ownerId = Long.valueOf(courseDTO.getOwnerId());
@@ -75,6 +75,7 @@ public class CourseServiceImpl extends AbstractCrudService<Course, Long> impleme
 		if (course != null) {
 			// Pas de questions, on reporte tous les changements
 			course.setLabel(entityDTO.getLabel());
+			course.setSummary(entityDTO.getSummary());
 			return courseRepository.save(course);
 		} else
 			throw new CourseNotExistsException();
@@ -111,6 +112,7 @@ public class CourseServiceImpl extends AbstractCrudService<Course, Long> impleme
 			for (CourseTeaching courseTeaching : courseTeachingRepository.findByTeacher(teacher)) {
 				if (courseRepository.exists(courseTeaching.getCourse().getId())) {
 					courses.add(courseRepository.getOne(courseTeaching.getCourse().getId()));
+
 				} else {
 					// TODO ignorer les orphelins ?
 					throw new CourseNotExistsException();
@@ -122,5 +124,12 @@ public class CourseServiceImpl extends AbstractCrudService<Course, Long> impleme
 			throw new UserNotExistsException();
 		}
 
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Course> findEnrichedCoursesByTeacher(Long teacherId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

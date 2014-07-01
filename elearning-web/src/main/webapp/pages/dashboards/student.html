@@ -10,17 +10,36 @@
 		th:include="fragment/navbars :: signed-navbar"></div>
 	<div class="container top-20">
 		<div class="row row-offcanvas row-offcanvas-left">
-			<!-- sidebar -->
-			<div th:replace="fragment/sidebars :: sidebar"></div>
 			<!-- Corps -->
-			<div class="col-md-9" th:include="fragment/common :: ajax-content">
-
+			<div class="col-md-12"></div>
+			<div class="col-md-6">
+				<h2>Quoi de neuf sur la plateforme ?</h2>
+				<p>Donec id elit non mi porta gravida at eget metus. Fusce
+					dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
+					ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
+					magna mollis euismod. Donec sed odio dui.</p>
+				<p>
+					<a class="btn btn-default" role="button" href="#">News
+						»</a>
+				</p>
+			</div>
+			<div class="col-md-6">
+				<h2>Dernières activités sur la plateforme</h2>
+				<p>Donec id elit non mi porta gravida at eget metus. Fusce
+					dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
+					ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
+					magna mollis euismod. Donec sed odio dui.</p>
+				<p>
+					<a class="btn btn-default" role="button" href="#">En savoir plus
+						»</a>
+				</p>
 			</div>
 		</div>
+		<footer th:include="fragment/common :: [//footer]"></footer>
 	</div>
 	<!-- Modal, si besoin -->
 	<div th:replace="fragment/common :: simple-modal"></div>
 
-	<footer th:include="fragment/common :: [//footer]"></footer>
+	
 </body>
 </html>

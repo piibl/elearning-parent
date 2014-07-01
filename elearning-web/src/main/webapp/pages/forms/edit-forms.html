@@ -129,15 +129,27 @@
 						type="text" class="form-control" autofocus="autofocus"
 						required="required" th:placeholder="${course.content.label}" />
 				</div>
-				<!-- 				<div class="form-group"> -->
-				<!-- 					<input name="ownerId" type="hidden" th:value="${currentTeacher.id}" /> -->
-				<!-- 				</div> -->
+				<div class="form-group">
+					<label for="summary">Descriptif</label>
+					<textarea id="editor" name="summary" class="form-control"
+						autofocus="autofocus" required="required" />
+				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="submit" class="btn btn-primary btn-lg" role="button">Valider
-					les modifications</button>
+				<button type="submit" class="btn btn-primary btn-lg" role="button">Suivant</button>
 			</div>
 		</form>
+		<!-- wysiwyg API + hotkeys -->
+		<script src="../assets/js/wysihtml5-0.3.0.min.js"
+			th:src="@{/assets/js/wysihtml5-0.3.0.min.js}"></script>
+		<script src="../assets/js/bootstrap3-wysihtml5.js"
+			th:src="@{/assets/js/bootstrap3-wysihtml5.js}"></script>
+		<!-- Initialisation des API -->
+		<script class="script"
+			src="../assets/js/locales/bootstrap-wysihtml5.fr-FR.js"
+			th:src="@{/assets/js/locales/bootstrap-wysihtml5.fr-FR.js}"></script>
+		<script class="script" src="../assets/js/elearning-wysiwyg.js"
+			th:src="@{/assets/js/elearning-wysiwyg.js}"></script>
 	</div>
 	<!-- Formulaire d'édition session -->
 	<div th:fragment="edit-session-form">

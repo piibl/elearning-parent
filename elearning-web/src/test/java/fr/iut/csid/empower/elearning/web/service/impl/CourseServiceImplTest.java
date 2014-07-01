@@ -91,7 +91,7 @@ public class CourseServiceImplTest {
 	@Test
 	public void testDeleteCourse() {
 		// Init
-		Course course = courseRepository.save(new Course("Un cours"));
+		Course course = courseRepository.save(new Course("Un cours", ""));
 		Teacher teacher = teacherRepository.save(new Teacher("Bryan", "Bryan", "bryan", "bryan", "bryan"));
 		CourseTeaching courseTeaching = courseTeachingRepository.save(new CourseTeaching(teacher, course));
 
@@ -106,7 +106,7 @@ public class CourseServiceImplTest {
 	@Test
 	public void testCoursesByTeacher() {
 		// Init
-		Course course = courseRepository.save(new Course("Un cours"));
+		Course course = courseRepository.save(new Course("Un cours", ""));
 		Teacher teacher = teacherRepository.save(new Teacher("Bryan", "Bryan", "bryan", "bryan", "bryan"));
 		courseTeachingRepository.save(new CourseTeaching(teacher, course));
 
