@@ -14,14 +14,6 @@ public interface CrudService<T, X extends Serializable> {
 	public T save(T entityToSave);
 
 	/**
-	 * Sauvegarde une entité en utilisant une transaction indépendante
-	 * 
-	 * @param journal
-	 * @return
-	 */
-	public T immediateSave(T entityToSave);
-
-	/**
 	 * Supprime une entité
 	 * 
 	 * @param entityToDelete

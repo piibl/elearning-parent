@@ -1,14 +1,15 @@
 package fr.iut.csid.empower.elearning.web.controller.domain.course.session;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.io.IOUtils;
 import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,41 +21,45 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
+import com.mongodb.gridfs.GridFSDBFile;
+
 import fr.iut.csid.empower.elearning.core.domain.course.session.resource.SessionResource;
-import fr.iut.csid.empower.elearning.core.domain.course.session.resource.TextMaterial;
-import fr.iut.csid.empower.elearning.core.service.CrudService;
 import fr.iut.csid.empower.elearning.web.controller.domain.AbstractOwnedDomainController;
 import fr.iut.csid.empower.elearning.web.controller.domain.course.CourseController;
-import fr.iut.csid.empower.elearning.web.dto.impl.ResourceDTO;
-import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.ControllerLinkBuilderFactory;
-import fr.iut.csid.empower.elearning.web.link.assembler.ResourceResourceAssembler;
+import fr.iut.csid.empower.elearning.web.link.assembler.SessionResourceAssembler;
 import fr.iut.csid.empower.elearning.web.link.breadcrumb.BreadcrumbLink;
 import fr.iut.csid.empower.elearning.web.reference.PathFragment;
 import fr.iut.csid.empower.elearning.web.reference.Relation;
 import fr.iut.csid.empower.elearning.web.service.CourseService;
 import fr.iut.csid.empower.elearning.web.service.CourseSessionService;
-import fr.iut.csid.empower.elearning.web.service.OwnedEntityManagerService;
 import fr.iut.csid.empower.elearning.web.service.ResourceService;
-import fr.iut.csid.empower.elearning.web.service.ResourceStorageService;
 
+/**
+ * Controller de ressources <br/>
+ * Particulier car il n'étend pas {@link AbstractOwnedDomainController}
+ * 
+ * @author a547891
+ */
 @Controller
 @RequestMapping("/courses/{courseId}/sessions/{ownerEntityId}/resources")
-public class ResourceController extends
-		AbstractOwnedDomainController<fr.iut.csid.empower.elearning.core.domain.course.session.resource.SessionResource, Long, ResourceDTO> {
+public class ResourceController {
 
-	private static Logger logger = LoggerFactory.getLogger(ResourceController.class);
+	// private static Logger logger = LoggerFactory.getLogger(ResourceController.class);
 
+	/**
+	 * Paths <br/>
+	 * Pas de formulaire d'édition, pas de vue détaillée
+	 */
 	private String mainView = "display/resources :: display-resources";
-	private String detailsView = "display/resources :: display-details";
+	// private String detailsView = "display/resources :: display-details";
 	private String entitiesAttributeName = "resources";
-	private String singleEntityAttributeName = "resource";
+	// private String singleEntityAttributeName = "resource";
 	private String addForm = "forms/add-forms :: add-resource-form";
-	private String editForm = "forms/edit-forms :: edit-resource-form";
+	// private String editForm = "forms/edit-forms :: edit-resource-form";
 
 	@Inject
-	protected ControllerLinkBuilderFactory linkBuilderFactory;
+	private ControllerLinkBuilderFactory linkBuilderFactory;
 
 	@Inject
 	private CourseService courseService;
@@ -62,66 +67,15 @@ public class ResourceController extends
 	private CourseSessionService courseSessionService;
 	@Inject
 	private ResourceService resourceService;
-	@Inject
-	private ResourceStorageService storageService;
 
 	@Inject
-	private ResourceResourceAssembler resourceResourceAssembler;
-
-	private static LinkedList<SessionResource> files = new LinkedList<SessionResource>();
-	private TextMaterial resource = null;
+	private SessionResourceAssembler sessionResourceAssembler;
 
 	@ModelAttribute("ownerSessionLabel")
 	public String getCourseLabel(@PathVariable Long ownerEntityId) {
 		return courseSessionService.find(ownerEntityId).getLabel();
 	}
 
-	protected BatchResourceAssembler<SessionResource, Resource<SessionResource>> getResourceAssembler() {
-		return resourceResourceAssembler;
-	}
-
-	protected String getBaseView() {
-		return mainView;
-	}
-
-	protected String getEntitiesAtributeName() {
-		return entitiesAttributeName;
-	}
-
-	protected String getSingleEntityAtributeName() {
-		return singleEntityAttributeName;
-	}
-
-	protected String getAddFormPath() {
-		return addForm;
-	}
-
-	protected String getDetailsView() {
-		return detailsView;
-	}
-
-	protected String getEditFormPath() {
-		return editForm;
-	}
-
-	@Override
-	protected CrudService getOwnerCrudService() {
-		return courseSessionService;
-	}
-
-	@Override
-	protected String getAddOwnedEntityLink(Long ownerId) {
-		CourseSession session = courseSessionService.find(ownerId);
-		return linkBuilderFactory.linkTo(CourseController.class).slash(session.getOwnerCourse().getId()).slash(PathFragment.SESSIONS.getPath())
-				.slash(ownerId).slash(PathFragment.RESOURCES.getPath()).slash(PathFragment.NEW.getPath()).withRel("new").getHref();
-	}
-
-	@Override
-	protected OwnedEntityManagerService<fr.iut.csid.empower.elearning.core.domain.course.session.resource.SessionResource, Long, ResourceDTO> getCrudService() {
-		return resourceService;
-	}
-
-	@Override
 	@RequestMapping(method = RequestMethod.GET)
 	public String getAll(Model model, @PathVariable Long ownerEntityId) {
 		// Ajout des données du fil d'arianne
@@ -139,68 +93,124 @@ public class ResourceController extends
 		// ajout du lien de redirection pour chargement après requete ajax
 		model.addAttribute("redirectLink", linkBuilderFactory.linkTo(CourseController.class).slash(courseId).slash(PathFragment.SESSIONS.getPath())
 				.slash(ownerEntityId).slash(PathFragment.RESOURCES.getPath()).withSelfRel());
-		return super.getAll(model, ownerEntityId);
+		List<SessionResource> entities = resourceService.findByOwner(ownerEntityId);
+		// Construction des liens d'action et mise en container
+		// Le container contient à la fois l'objet cible et les liens des ressources afférentes
+		List<Resource<SessionResource>> entitiesResources = sessionResourceAssembler.toResource(entities);
+		model.addAttribute(entitiesAttributeName, entitiesResources);
+		model.addAttribute(
+				"addOwnedEntityLink",
+				linkBuilderFactory.linkTo(CourseController.class).slash(courseId).slash(PathFragment.SESSIONS.getPath()).slash(ownerEntityId)
+						.slash(PathFragment.RESOURCES.getPath()).slash(PathFragment.NEW.getPath()).withRel("new").getHref());
+		// Retourner la vue principale
+		return mainView;
 	}
 
-	@Override
-	public String getEntity(@PathVariable Long ownerEntityId, @PathVariable Long entityId, Model model) {
-		// Aucun appel sur une ressource en tant que tel autorisé pour l'instant, fonction de download à postériori
-		return null;
+	/**
+	 * Permet de downloader une resource donnée
+	 * 
+	 * @param ownerEntityId
+	 * @param resourceId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/{resourceId}", method = RequestMethod.GET)
+	public void getEntity(@PathVariable Long resourceId, HttpServletResponse response) {
+		// Récupération du fichier
+		GridFSDBFile file = resourceService.getPhysicalResource(resourceId);
+		if (file != null) {
+			try {
+				response.setContentType(file.getContentType());
+				response.setContentLength((new Long(file.getLength()).intValue()));
+				response.setHeader("content-Disposition", "attachment; filename=" + resourceService.find(resourceId).getOriginalFilename());
+				// Copie du fichier dans la réponse
+				IOUtils.copyLarge(file.getInputStream(), response.getOutputStream());
+			} catch (IOException ex) {
+				throw new RuntimeException("IOError writing file to output stream");
+			}
+		}
 	}
 
-	@Override
+	/**
+	 * Demande de formulaire d'ajout d'une ressource
+	 * 
+	 * @param model
+	 * @param ownerEntityId
+	 * @return
+	 */
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String getAddForm(Model model, @PathVariable Long ownerEntityId) {
+	public String getAddForm(Model model, @PathVariable Long courseId, @PathVariable Long ownerEntityId) {
+		// Lien de redirection après soumission du formulaire
 		model.addAttribute(
 				"redirectLink",
 				linkBuilderFactory.linkTo(CourseController.class).slash(courseSessionService.find(ownerEntityId).getOwnerCourse().getId())
 						.slash(PathFragment.SESSIONS.getPath()).slash(ownerEntityId).slash(PathFragment.RESOURCES.getPath()).withSelfRel());
-		return super.getAddForm(model, ownerEntityId);
+		model.addAttribute("ownerEntity", courseSessionService.find(ownerEntityId));
+		model.addAttribute("submitLink", linkBuilderFactory.linkTo(CourseController.class).slash(courseId).slash(PathFragment.SESSIONS.getPath())
+				.slash(ownerEntityId).slash(PathFragment.RESOURCES.getPath()).slash(PathFragment.NEW.getPath()).withRel("new"));
+		return addForm;
 	}
 
-	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	/**
+	 * Création d'une nouvelle ressource
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public @ResponseBody
-	LinkedList<SessionResource> upload(MultipartHttpServletRequest request, HttpServletResponse response) {
+	List<SessionResource> upload(MultipartHttpServletRequest request, HttpServletResponse response) throws IOException {
+		List<SessionResource> resources = new ArrayList<SessionResource>();
+		// Normalement, un seul fichier par soumission, mais sait-on jamais donc boucle préventive
+		// Un fichier soumis = une ressource créée
 
-		// 1. build an iterator
+		// Récupérer l'itérateur
 		Iterator<String> itr = request.getFileNames();
+		// Récupérer l'id du chapitre propriétaire
 		String ownerIdAsString = request.getParameter("ownerId");
 		if (ownerIdAsString != null) {
+
 			// Conversion String vers Long
 			Long ownerId = Long.valueOf(ownerIdAsString);
-			MultipartFile mpf = null;
+			MultipartFile file = null;
 
-			// 2. get each file
+			// Pour chaque fichier associé à la requête d'upload
 			while (itr.hasNext()) {
 
-				// 2.1 get next MultipartFile
-				mpf = request.getFile(itr.next());
+				// Récupérer le fichier
+				file = request.getFile(itr.next());
 
-				// 2.2 if files > 10 remove the first from the list
-				if (files.size() >= 10)
-					files.pop();
-
-				// 2.3 create new fileMeta
-				resource = new TextMaterial(courseSessionService.find(ownerId), mpf.getOriginalFilename(), "");
-				resource.setFileSize(mpf.getSize() / 1024 + " Kb");
-				resource.setFileType(mpf.getContentType());
-
-				try {
-					storageService.save(mpf.getInputStream(), resource.getFileType(), resource.getName());
-					resourceService.save(resource);
-
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				// 2.4 add to files
-				files.add(resource);
+				// Créer la ressource
+				// Génération d'un UUID pour référencement "unique" en bdd mongo
+				UUID uniqueFileId = UUID.randomUUID();
+				SessionResource resource = new SessionResource(courseSessionService.find(ownerId), uniqueFileId.toString(),
+						file.getOriginalFilename(), file.getContentType(), file.getSize() / 1024);
+				// Ajouter le flux à la ressource pour une sauvegarde en base mongodb
+				resource.setContentStream(file.getInputStream());
+				resources.add(resourceService.save(resource));
 			}
-			// result will be like this
-			// [{"fileName":"app_engine-85x77.png","fileSize":"8 Kb","fileType":"image/png"},...]
-
 		}
-		return files;
+		/**
+		 * TODO A TRAITER CAS D'ERREURS
+		 */
+		return resources;
 
 	}
+
+	/**
+	 * Supprime l'entité correspondant à l'id passé en paramètre
+	 * 
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/{resourceId}/delete", method = RequestMethod.GET)
+	public String deleteEntity(@PathVariable Long ownerEntityId, @PathVariable Long resourceId, Model model) {
+		SessionResource resourceTodelete = resourceService.find(resourceId);
+		resourceService.delete(resourceTodelete);
+		return getAll(model, ownerEntityId);
+	}
+
 }

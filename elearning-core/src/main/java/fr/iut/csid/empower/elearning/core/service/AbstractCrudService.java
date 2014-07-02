@@ -38,18 +38,6 @@ public abstract class AbstractCrudService<T, X extends Serializable> {
 	}
 
 	/**
-	 * Sauvegarde une entité en utilisant une transaction indépendante
-	 * 
-	 * @param journal
-	 * @return
-	 */
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public T immediateSave(T entityToSave) {
-		return getRepository().save(entityToSave);
-
-	}
-
-	/**
 	 * Supprime une entité
 	 * 
 	 * @param entityToDelete

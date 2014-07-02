@@ -1,32 +1,26 @@
 package fr.iut.csid.empower.elearning.core.domain.course.session.resource;
 
+import java.io.InputStream;
+
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.mongodb.gridfs.GridFSDBFile;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
-import fr.iut.csid.empower.elearning.core.reference.ResourceType;
 
 /**
  * Ressource, objet contenant les pointeurs vers les fichiers stockés physiquement en base Mongodb
  */
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING, length = 20)
 @Table(name = "SESSION_RESOURCE")
 public class SessionResource {
 
@@ -41,36 +35,39 @@ public class SessionResource {
 	 */
 	@ManyToOne
 	@JoinColumn(name = "COURSE_SESSION_ID")
-	protected CourseSession ownerSession;
+	private CourseSession ownerSession;
 
 	/**
 	 * Nom de la ressource physique<br/>
 	 * Sert à retrouver la ressource dans la base mongodb;
 	 */
-	@Column(name = "NAME")
-	protected String name;
-
-	@Column(name = "TYPE")
-	protected ResourceType type;
-
-	@Transient
-	protected String fileType;
-	@Transient
-	protected String fileSize;
+	@Column(name = "STORED_FILENAME")
+	private String storedFilename;
 
 	/**
-	 * Description de la ressource
+	 * Nom du fichier d'origine, affiché dans les pages de rendu html
 	 */
-	@Lob
-	@Column(name = "SUMMARY")
-	protected String summary;
+	@Column(name = "ORIGINAL_FILENAME")
+	private String originalFilename;
 
 	/**
-	 * SessionResource physique <br/>
-	 * Aucun référencement persistant, c'est au service {@link ResourceService} de manager et de charger les resources physiques
+	 * Type du fichier
 	 */
+	@Column(name = "FILETYPE")
+	private String fileType;
+	/**
+	 * Taille du fichier (en kb)
+	 */
+	@Column(name = "FILESIZE")
+	private Long fileSize;
+
+	/**
+	 * Flux contenant le fichie physique <br/>
+	 * !! à manipuler avec précaution, il ne doit être alimenté qu'à la demande par un service !!!
+	 */
+	@JsonIgnore
 	@Transient
-	private GridFSDBFile resource;
+	private InputStream contentStream;
 
 	public SessionResource() {
 
@@ -78,23 +75,41 @@ public class SessionResource {
 
 	/**
 	 * @param ownerSession
-	 * @param type
-	 * @param path
+	 * @param storedFilename
+	 * @param originalFilename
+	 * @param fileType
+	 * @param fileSize
 	 */
-	protected SessionResource(CourseSession ownerSession, String resourceName, String summary, ResourceType type) {
+	public SessionResource(CourseSession ownerSession, String storedFilename, String originalFilename, String fileType, Long fileSize) {
 		this.ownerSession = ownerSession;
-		this.name = resourceName;
-		this.summary = summary;
-		this.type = type;
+		this.storedFilename = storedFilename;
+		this.originalFilename = originalFilename;
+		this.fileType = fileType;
+		this.fileSize = fileSize;
 	}
 
-	// Mutateurs
 	public Long getId() {
 		return id;
 	}
 
 	public CourseSession getOwnerSession() {
 		return ownerSession;
+	}
+
+	public String getStoredFilename() {
+		return storedFilename;
+	}
+
+	public String getOriginalFilename() {
+		return originalFilename;
+	}
+
+	public String getFileType() {
+		return fileType;
+	}
+
+	public Long getFileSize() {
+		return fileSize;
 	}
 
 	public void setId(Long id) {
@@ -105,52 +120,28 @@ public class SessionResource {
 		this.ownerSession = ownerSession;
 	}
 
-	public String getSummary() {
-		return summary;
+	public void setStoredFilename(String storedFilename) {
+		this.storedFilename = storedFilename;
 	}
 
-	public GridFSDBFile getResource() {
-		return resource;
-	}
-
-	public void setSummary(String summary) {
-		this.summary = summary;
-	}
-
-	public void setResource(GridFSDBFile resource) {
-		this.resource = resource;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public ResourceType getType() {
-		return type;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setType(ResourceType type) {
-		this.type = type;
-	}
-
-	public String getFileType() {
-		return fileType;
-	}
-
-	public String getFileSize() {
-		return fileSize;
+	public void setOriginalFilename(String originalFilename) {
+		this.originalFilename = originalFilename;
 	}
 
 	public void setFileType(String fileType) {
 		this.fileType = fileType;
 	}
 
-	public void setFileSize(String fileSize) {
+	public void setFileSize(Long fileSize) {
 		this.fileSize = fileSize;
+	}
+
+	public InputStream getContentStream() {
+		return contentStream;
+	}
+
+	public void setContentStream(InputStream contentStream) {
+		this.contentStream = contentStream;
 	}
 
 }
