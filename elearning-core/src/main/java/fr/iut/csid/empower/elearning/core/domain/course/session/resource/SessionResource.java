@@ -28,7 +28,7 @@ import fr.iut.csid.empower.elearning.core.reference.ResourceType;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING, length = 20)
 @Table(name = "SESSION_RESOURCE")
-public class Resource {
+public class SessionResource {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SessionResourceSeq")
 	@SequenceGenerator(name = "SessionResourceSeq", sequenceName = "SESSION_RESOURCE_SEQ", allocationSize = 1, initialValue = 1)
@@ -53,6 +53,11 @@ public class Resource {
 	@Column(name = "TYPE")
 	protected ResourceType type;
 
+	@Transient
+	protected String fileType;
+	@Transient
+	protected String fileSize;
+
 	/**
 	 * Description de la ressource
 	 */
@@ -61,13 +66,13 @@ public class Resource {
 	protected String summary;
 
 	/**
-	 * Resource physique <br/>
+	 * SessionResource physique <br/>
 	 * Aucun référencement persistant, c'est au service {@link ResourceService} de manager et de charger les resources physiques
 	 */
 	@Transient
 	private GridFSDBFile resource;
 
-	public Resource() {
+	public SessionResource() {
 
 	}
 
@@ -76,7 +81,7 @@ public class Resource {
 	 * @param type
 	 * @param path
 	 */
-	protected Resource(CourseSession ownerSession, String resourceName, String summary, ResourceType type) {
+	protected SessionResource(CourseSession ownerSession, String resourceName, String summary, ResourceType type) {
 		this.ownerSession = ownerSession;
 		this.name = resourceName;
 		this.summary = summary;
@@ -130,6 +135,22 @@ public class Resource {
 
 	public void setType(ResourceType type) {
 		this.type = type;
+	}
+
+	public String getFileType() {
+		return fileType;
+	}
+
+	public String getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
+	public void setFileSize(String fileSize) {
+		this.fileSize = fileSize;
 	}
 
 }

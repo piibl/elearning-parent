@@ -25,7 +25,8 @@
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
 
-
+	 <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	 
 	<bean id="securityInterceptor"
 		class="fr.iut.csid.empower.elearning.web.security.SecurityInterceptor" />
 

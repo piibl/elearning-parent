@@ -106,7 +106,8 @@
 			</h3>
 		</div>
 		<form class="addForm"
-			th:action="@{'courses/'+${ownerEntity.id}+'/sessions'}" method="post" data-redirect_url="none"
+			th:action="@{'/courses/'+${ownerEntity.id}+'/sessions'}"
+			method="post" data-redirect_url="none"
 			th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"
 			role="form" data-target_render="#ajaxPanel">
 			<div class="modal-body">
@@ -121,6 +122,7 @@
 					<textarea name="summary" class="form-control" autofocus="autofocus"
 						required="required" placeholder="Description du chapitre..." />
 				</div>
+
 				<div class="form-group">
 					<input name="ownerId" type="hidden" th:value="${ownerEntity.id}" />
 				</div>
@@ -129,6 +131,7 @@
 				<button type="submit" class="btn btn-primary btn-lg" role="button">Valider</button>
 			</div>
 		</form>
+
 	</div>
 	<!-- Formulaire d'ajout d'une ressource -->
 	<div th:fragment="add-resource-form">
@@ -140,39 +143,42 @@
 					th:text="${ownerEntity.label}">intitulé</strong>
 			</h3>
 		</div>
-		<form class="addForm" enctype="multipart/form-data"
-			th:action="@{'sessions/'+${ownerEntity.id}+'/resources'}"
-			method="post" role="form">
+		<form id="fileupload" class="addForm" enctype="multipart/form-data"
+			th:action="${redirectLink.href + '/upload'}" method="post"
+			role="form" data-redirect_url="none"
+			th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"
+			data-target_render="#ajaxPanel">
 			<div class="modal-body">
 				<div class="form-group">
 					<input name="ownerId" type="hidden" th:value="${ownerEntity.id}" />
 				</div>
 				<div class="form-group">
-					<label for="resourceType">Type de la resource</label> <select
-						name="resourceType" class="form-control">
-						<option th:each="type : ${allResourcesTypes}" th:value="${type}"
-							th:text="${type.label}">Intitulé du type</option>
-					</select>
+					<input type="file" name="files" multiple=""></input>
 				</div>
-				<div class="form-group">
-					<span id='filename'></span> <a href='#' id='attach'>Attacher un
-						fichier...</a><input id="upload" type="file" name="file"
-						data-url="${'sessions/'+${ownerEntity.id}+'/resources'}"
-						multiple="" />
-				</div>
-				<div class="form-group">
-					<label for="summary">Description</label>
-					<textarea name="summary" class="form-control" autofocus="autofocus"
-						required="required" placeholder="Description de la ressource..." />
-				</div>
-				<div class="form-group">
-					<input name="ownerId" type="hidden" th:value="${ownerEntity.id}" />
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="submit" class="btn btn-primary btn-lg" role="button">Valider</button>
+				<div>
+						<table id="uploaded-files" class="table table-striped table-hover">
+							<tr>
+								<th>Nom du fichier</th>
+								<th>Taille</th>
+								<th>Type</th>
+							</tr>
+						</table>
+					</div>
 			</div>
 		</form>
+		<div class="modal-footer">
+			<button data-dismiss="modal" class="btn btn-primary btn-lg close"
+				role="button">Valider</button>
+		</div>
+		<!-- fileupload dépendances -->
+		<script src="../assets/js/jquery-ui.min.js"
+			th:src="@{/assets/js/jquery-ui.min.js}"></script>
+		<script src="../assets/js/jquery.fileupload.js"
+			th:src="@{/assets/js/jquery.fileupload.js}"></script>
+		<script src="../assets/js/jquery.iframe-transport.js"
+			th:src="@{/assets/js/jquery.iframe-transport.js}"></script>
+		<script src="../assets/js/elearning-fileupload.js"
+			th:src="@{/assets/js/elearning-fileupload.js}"></script>
 	</div>
 </body>
 </html>

@@ -24,7 +24,7 @@ public class ResourceDTO implements Serializable, OwnedDTO<Long> {
 	/**
 	 * Fichier uploadé comme ressource
 	 */
-	private MultipartFile file;
+	private MultipartFile[] files;
 	/**
 	 * Identifiant du chapitre propriétaire de la ressource
 	 */
@@ -46,8 +46,8 @@ public class ResourceDTO implements Serializable, OwnedDTO<Long> {
 		return resourceName;
 	}
 
-	public MultipartFile getFile() {
-		return file;
+	public MultipartFile[] getFiles() {
+		return files;
 	}
 
 	public void setResourcetype(ResourceType resourceType) {
@@ -58,8 +58,8 @@ public class ResourceDTO implements Serializable, OwnedDTO<Long> {
 		this.resourceName = resourceName;
 	}
 
-	public void setFile(MultipartFile file) {
-		this.file = file;
+	public void setFiles(MultipartFile[] files) {
+		this.files = files;
 	}
 
 }

@@ -41,26 +41,27 @@
 							<thead>
 								<th>Nom de la ressource</th>
 								<th>Type de la ressource</th>
-								<th sec:authorize="hasRole('ROLE_TEACHER')">Editer</th>
+							<!-- 	<th sec:authorize="hasRole('ROLE_TEACHER')">Editer</th> -->
 								<th sec:authorize="hasRole('ROLE_TEACHER')">Supprimer</th>
 							</thead>
 							<tbody>
 								<tr th:each="resource : ${resources}">
-									<td class="span4" th:text="${resource.content.resourceName}">Bryan123</td>
-									<td class="span4"
-										th:text="${resource.content.type}">Bryan123</td>
+									<td class="span4" th:text="${resource.content.name}">Bryan123</td>
+									<td class="span4" th:text="${resource.content.type}">Bryan123</td>
 									<!-- <td class="span2"><a class="displayLinkNotModal"
 										href="./view.html"
 										th:href="${resource.getLink('self').href}"><i
 											class="glyphicon glyphicon-list-alt"></i></a></td> -->
-									<td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a
+									<!-- <td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a
 										class="editLink" href="./view.html"
 										th:href="${resource.getLink('edit').href}"><i
-											class="glyphicon glyphicon-pencil"></i></a></td>
+											class="glyphicon glyphicon-pencil"></i></a></td> -->
 									<td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a
 										class="deleteLink" href="./delete.html"
-										th:href="${resource.getLink('delete').href}"><i
-											class="glyphicon glyphicon-remove"></i></a></td>
+										th:href="${resource.getLink('delete').href}" th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"
+											data-target_render="#ajaxPanel"><i
+											class="glyphicon glyphicon-remove"
+											></i></a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -81,7 +82,10 @@
 							<li><a tabindex="-1" href="#">Supprimer une ressource</a></li>
 						</ul></li>
 				</ul>
-				<h3>Ressources associées au chapitre <strong th:text="${ownerSessionLabel}"></strong></h3>
+				<h3>
+					Ressources associées au chapitre <strong
+						th:text="${ownerSessionLabel}"></strong>
+				</h3>
 				<div class="bordered-bottom">
 					<p th:text="${resource.content.summary}">Resume</p>
 				</div>
@@ -91,6 +95,6 @@
 
 
 
-	
+
 </body>
 </html>

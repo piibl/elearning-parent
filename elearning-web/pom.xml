@@ -28,13 +28,10 @@
 	</properties>
 
 	<dependencies>
-		
-<!-- 		<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>bootstrap</artifactId>
-		    <version>3.1.1-1</version>
-		</dependency> -->
-		
+
+		<!-- <dependency> <groupId>org.webjars</groupId> <artifactId>bootstrap</artifactId> 
+			<version>3.1.1-1</version> </dependency> -->
+
 		<!-- Core -->
 		<dependency>
 			<groupId>fr.iut.csid.empower</groupId>
@@ -248,6 +245,18 @@
 			<version>5.0.0.Final</version>
 		</dependency>
 		<!-- End validation dependencies -->
+		<!-- Apache commons io et fileupload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<!-- End -->
 	</dependencies>
 
 	<build>
@@ -300,13 +309,8 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-<!-- 	<repositories>
-		Repository Diamis
-		<repository>
-			<id>nexus</id>
-			<name>Repository Diamis</name>
-			<url>http://corail:8080/nexus-2.6.3-01/content/groups/public/</url>
-		</repository>
-	</repositories> -->
+	<!-- <repositories> Repository Diamis <repository> <id>nexus</id> <name>Repository 
+		Diamis</name> <url>http://corail:8080/nexus-2.6.3-01/content/groups/public/</url> 
+		</repository> </repositories> -->
 
 </project>

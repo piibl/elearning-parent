@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
-import fr.iut.csid.empower.elearning.core.domain.course.session.resource.Resource;
+import fr.iut.csid.empower.elearning.core.domain.course.session.resource.SessionResource;
 
-public interface ResourceRepository extends JpaRepository<Resource, Long> {
+public interface ResourceRepository extends JpaRepository<SessionResource, Long> {
 
 	/**
 	 * Retourne les resources enregistrées pour un chapitre de cours
@@ -15,6 +15,6 @@ public interface ResourceRepository extends JpaRepository<Resource, Long> {
 	 * @param course
 	 * @return
 	 */
-	public List<Resource> findByOwnerSession(CourseSession session);
+	public List<SessionResource> findByOwnerSession(CourseSession session);
 
 }

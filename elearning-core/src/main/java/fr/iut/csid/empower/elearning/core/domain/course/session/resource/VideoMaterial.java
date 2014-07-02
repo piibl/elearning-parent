@@ -11,7 +11,7 @@ import fr.iut.csid.empower.elearning.core.reference.ResourceType;
  */
 @Entity
 @DiscriminatorValue("VM")
-public class VideoMaterial extends Resource {
+public class VideoMaterial extends SessionResource {
 
 	public VideoMaterial() {
 

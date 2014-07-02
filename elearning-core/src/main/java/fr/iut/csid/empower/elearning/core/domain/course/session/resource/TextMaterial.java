@@ -11,7 +11,7 @@ import fr.iut.csid.empower.elearning.core.reference.ResourceType;
  */
 @Entity
 @DiscriminatorValue("TM")
-public class TextMaterial extends Resource {
+public class TextMaterial extends SessionResource {
 
 	public TextMaterial() {
 

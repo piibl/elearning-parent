@@ -39,7 +39,7 @@ public class NewsController {
 		return getBaseView();
 	}
 
-	// protected BatchResourceAssembler<Course, Resource<Course>> getResourceAssembler() {
+	// protected BatchResourceAssembler<Course, SessionResource<Course>> getResourceAssembler() {
 	// return courseResourceAssembler;
 	// }
 

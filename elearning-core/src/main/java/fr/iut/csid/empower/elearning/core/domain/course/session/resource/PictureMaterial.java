@@ -11,7 +11,7 @@ import fr.iut.csid.empower.elearning.core.reference.ResourceType;
  */
 @Entity
 @DiscriminatorValue("PM")
-public class PictureMaterial extends Resource {
+public class PictureMaterial extends SessionResource {
 
 	public PictureMaterial() {
 

@@ -1,6 +1,11 @@
 package fr.iut.csid.empower.elearning.web.controller.domain.course.session;
 
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedList;
+
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Controller;
@@ -9,8 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
+import fr.iut.csid.empower.elearning.core.domain.course.session.resource.SessionResource;
 import fr.iut.csid.empower.elearning.core.service.CrudService;
 import fr.iut.csid.empower.elearning.web.controller.domain.AbstractOwnedDomainController;
 import fr.iut.csid.empower.elearning.web.controller.domain.course.CourseController;
@@ -23,6 +32,7 @@ import fr.iut.csid.empower.elearning.web.reference.Relation;
 import fr.iut.csid.empower.elearning.web.service.CourseService;
 import fr.iut.csid.empower.elearning.web.service.CourseSessionService;
 import fr.iut.csid.empower.elearning.web.service.OwnedEntityManagerService;
+import fr.iut.csid.empower.elearning.web.service.ResourceStorageService;
 
 @Controller
 @RequestMapping("/courses/{ownerEntityId}/sessions")
@@ -42,9 +52,60 @@ public class CourseSessionController extends AbstractOwnedDomainController<Cours
 	private CourseSessionService courseSessionService;
 	@Inject
 	private CourseService courseService;
+	@Inject
+	private ResourceStorageService storageService;
 
 	@Inject
 	private CourseSessionResourceAssembler courseSessionResourceAssembler;
+
+	// /***************************************************
+	// * URL: /rest/controller/get/{value} get(): get file as an attachment
+	// *
+	// * @param response
+	// * : passed by the server
+	// * @param value
+	// * : value from the URL
+	// * @return void
+	// ****************************************************/
+	// @RequestMapping(value = "/get/{value}", method = RequestMethod.GET)
+	// public void get(HttpServletResponse response, @PathVariable String value) {
+	// try {
+	// SessionResource getFile = files.get(Integer.parseInt(value));
+	//
+	// response.setContentType(getFile.getFileType());
+	// response.setHeader("Content-disposition", "attachment; filename=\"" + getFile.getName() + "\"");
+	//
+	// InputStream in = storageService.getByResourceName(getFile.getName()).getInputStream();
+	//
+	// ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+	//
+	// int nRead;
+	// byte[] data = new byte[16384];
+	// while ((nRead = in.read(data, 0, data.length)) != -1) {
+	// buffer.write(data, 0, nRead);
+	// }
+	// buffer.flush();
+	// byte[] file = buffer.toByteArray();
+	//
+	// response.setHeader("Accept-ranges", "bytes");
+	// response.setContentType(getFile.getFileType());
+	// response.setContentLength(file.length);
+	// response.setHeader("Expires", "0");
+	// response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+	// response.setHeader("Content-Description", "File Transfer");
+	// response.setHeader("Content-Transfer-Encoding:", "binary");
+	//
+	// OutputStream out = response.getOutputStream();
+	// out.write(file);
+	// out.flush();
+	// out.close();
+	// in.close();
+	// } catch (IOException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	//
+	// }
 
 	@ModelAttribute("ownerCourseLabel")
 	public String getCourseLabel(@PathVariable Long ownerEntityId) {
