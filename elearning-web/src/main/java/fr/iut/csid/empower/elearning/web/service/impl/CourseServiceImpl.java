@@ -25,6 +25,7 @@ import fr.iut.csid.empower.elearning.core.service.dao.course.session.CourseSessi
 import fr.iut.csid.empower.elearning.core.service.dao.user.TeacherRepository;
 import fr.iut.csid.empower.elearning.web.dto.impl.CourseDTO;
 import fr.iut.csid.empower.elearning.web.service.CourseService;
+import fr.iut.csid.empower.elearning.web.service.NotificationService;
 
 /**
  * 
@@ -40,7 +41,9 @@ public class CourseServiceImpl extends AbstractCrudService<Course, Long> impleme
 	private CourseSubscriptionRepository courseSubscriptionRepository;
 	@Inject
 	private CourseSessionRepository courseSessionRepository;
-
+	@Inject
+	private NotificationService notificationService;
+	
 	@Inject
 	private TeacherRepository teacherRepository;
 
@@ -62,6 +65,8 @@ public class CourseServiceImpl extends AbstractCrudService<Course, Long> impleme
 		if (teacher != null) {
 			CourseTeaching courseTeaching = new CourseTeaching(teacher, course);
 			courseTeachingRepository.save(courseTeaching);
+			//Notification de création du cours
+			notificationService.createNotification("Création du cours " + course.getLabel(), teacher, "Le cours " + course.getLabel() + "  a été créé avec succès.");
 			return course;
 		} else {
 			// Pas d'enseignant associé à cet id
@@ -85,6 +90,12 @@ public class CourseServiceImpl extends AbstractCrudService<Course, Long> impleme
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void delete(Course course) {
+		
+		//Notification des enseignants du cours
+		notificationService.createNotificationListTeacher("Suppression du cours", courseTeachingRepository.findByCourse(course), "Le cours " + course.getLabel() + "  a été supprimé avec succès.");
+		//Notification des étudiants du cours
+		notificationService.createNotificationListStudent("Suppression du cours", courseSubscriptionRepository.findByCourse(course), "Le cours " + course.getLabel() + "  a été supprimé avec succès.");
+		
 		// Suppression de toutes les affiliations à ce cours
 		for (CourseTeaching courseTeaching : courseTeachingRepository.findByCourse(course)) {
 			courseTeachingRepository.delete(courseTeaching.getId());

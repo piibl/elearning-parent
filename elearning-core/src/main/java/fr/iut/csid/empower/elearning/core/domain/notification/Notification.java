@@ -54,43 +54,27 @@ public class Notification{
 
 
 
-
+	//ACCESSEURS
 	public EndUser getReceiver() {
 		return receiver;
 	}
-
-
-
 
 	public void setReceiver(EndUser notificationReceiver) {
 		this.receiver = notificationReceiver;
 	}
 
-
-
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
-
 
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
 
-
-
-
 	public void setBody(String body) {
 		this.body = body;
 	}
 
-
-
-
-	//ACCESSEURS
 	public Long getId() {
 		return id;
 	}
