@@ -58,55 +58,6 @@ public class CourseSessionController extends AbstractOwnedDomainController<Cours
 	@Inject
 	private CourseSessionResourceAssembler courseSessionResourceAssembler;
 
-	// /***************************************************
-	// * URL: /rest/controller/get/{value} get(): get file as an attachment
-	// *
-	// * @param response
-	// * : passed by the server
-	// * @param value
-	// * : value from the URL
-	// * @return void
-	// ****************************************************/
-	// @RequestMapping(value = "/get/{value}", method = RequestMethod.GET)
-	// public void get(HttpServletResponse response, @PathVariable String value) {
-	// try {
-	// SessionResource getFile = files.get(Integer.parseInt(value));
-	//
-	// response.setContentType(getFile.getFileType());
-	// response.setHeader("Content-disposition", "attachment; filename=\"" + getFile.getName() + "\"");
-	//
-	// InputStream in = storageService.getByResourceName(getFile.getName()).getInputStream();
-	//
-	// ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-	//
-	// int nRead;
-	// byte[] data = new byte[16384];
-	// while ((nRead = in.read(data, 0, data.length)) != -1) {
-	// buffer.write(data, 0, nRead);
-	// }
-	// buffer.flush();
-	// byte[] file = buffer.toByteArray();
-	//
-	// response.setHeader("Accept-ranges", "bytes");
-	// response.setContentType(getFile.getFileType());
-	// response.setContentLength(file.length);
-	// response.setHeader("Expires", "0");
-	// response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-	// response.setHeader("Content-Description", "File Transfer");
-	// response.setHeader("Content-Transfer-Encoding:", "binary");
-	//
-	// OutputStream out = response.getOutputStream();
-	// out.write(file);
-	// out.flush();
-	// out.close();
-	// in.close();
-	// } catch (IOException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	//
-	// }
-
 	@ModelAttribute("ownerCourseLabel")
 	public String getCourseLabel(@PathVariable Long ownerEntityId) {
 		return courseService.find(ownerEntityId).getLabel();

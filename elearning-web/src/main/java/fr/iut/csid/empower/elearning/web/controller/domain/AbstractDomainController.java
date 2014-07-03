@@ -8,8 +8,6 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.Resource;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -107,7 +105,7 @@ public abstract class AbstractDomainController<T, X extends Serializable, Y exte
 	 * @return
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String getAddForm(Model model, @AuthenticationPrincipal User user) {
+	public String getAddForm(Model model) {
 		return getAddFormPath();
 	}
 
@@ -118,7 +116,7 @@ public abstract class AbstractDomainController<T, X extends Serializable, Y exte
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public String insertNewJSON(@RequestBody Y entityDTO, Model model) {
+	public String createEntity(@RequestBody Y entityDTO, Model model) {
 		getDTOSupport().createFromDTO(entityDTO);
 		// Alimenter le modèle avec la liste mise à jour
 		return getAll(model);
@@ -148,7 +146,7 @@ public abstract class AbstractDomainController<T, X extends Serializable, Y exte
 	 * @return
 	 */
 	@RequestMapping(value = "/{entityId}/edit", method = RequestMethod.GET)
-	public String editEntity(@PathVariable("entityId") X id, Model model) {
+	public String getEditForm(@PathVariable("entityId") X id, Model model) {
 		Resource<T> resource = getResourceAssembler().toResource(getDTOSupport().find(id));
 		// TODO externalisation / personnalisation selon entités
 		// Message de suppression
@@ -165,7 +163,7 @@ public abstract class AbstractDomainController<T, X extends Serializable, Y exte
 	 * @return
 	 */
 	@RequestMapping(value = "/{entityId}/edit", method = RequestMethod.POST)
-	public String updateJSON(@RequestBody Y entityDTO, @PathVariable("entityId") X id, Model model) {
+	public String editEntity(@RequestBody Y entityDTO, @PathVariable("entityId") X id, Model model) {
 		getDTOSupport().saveFromDTO(entityDTO, id);
 		// Alimenter le modèle avec la liste mise à jour
 		return getAll(model);
@@ -182,13 +180,6 @@ public abstract class AbstractDomainController<T, X extends Serializable, Y exte
 	public String deleteEntity(@PathVariable("entityId") X id, Model model) {
 		T entityTodelete = getDTOSupport().find(id);
 		getDTOSupport().delete(entityTodelete);
-		// TODO externalisation / personnalisation selon entités
-		// Message de suppression
-		List<T> entities = getDTOSupport().findAll();
-		// Construction des liens d'action et mise en container
-		// Le container contient à la fois l'objet cible et les liens des ressources afférentes
-		List<Resource<T>> entitiesResources = getResourceAssembler().toResource(entities);
-		model.addAttribute(getEntitiesAtributeName(), entitiesResources);
 		return getAll(model);
 	}
 

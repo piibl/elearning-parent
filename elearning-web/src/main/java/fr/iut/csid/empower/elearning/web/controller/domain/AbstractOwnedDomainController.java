@@ -99,7 +99,7 @@ public abstract class AbstractOwnedDomainController<T, X extends Serializable, Y
 	@RequestMapping(method = RequestMethod.GET)
 	public String getAll(Model model, @PathVariable X ownerEntityId) {
 		List<T> entities = getCrudService().findByOwner(ownerEntityId);
-		// Construction des liens d'action et mise en container
+		// Construction des liens d'action et mise en containerO
 		// Le container contient à la fois l'objet cible et les liens des ressources afférentes
 		List<Resource<T>> entitiesResources = getResourceAssembler().toResource(entities);
 		System.out.println(getEntitiesAtributeName() + " " + entities.size());

@@ -16,25 +16,17 @@ import fr.iut.csid.empower.elearning.web.util.jodatime.thymeleaf.processor.JodaT
 import fr.iut.csid.empower.elearning.web.util.jodatime.thymeleaf.processor.JodaTimeFormatProcessor;
 
 /**
- * The JodaTime ThymeLeaf dialect
+ * Un petit dialecte jodatime pour thymeleaf...
  */
 public class JodaTimeDialect extends AbstractDialect implements IExpressionEnhancingDialect {
 
 	public static final String JODA = "joda";
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.thymeleaf.dialect.IDialect#getPrefix()
-	 */
 	@Override
 	public String getPrefix() {
 		return JODA;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.thymeleaf.dialect.AbstractDialect#getProcessors()
-	 */
 	@Override
 	public Set<IProcessor> getProcessors() {
 		Set<IProcessor> processors = new HashSet<IProcessor>();
@@ -54,10 +46,6 @@ public class JodaTimeDialect extends AbstractDialect implements IExpressionEnhan
 		return processors;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.thymeleaf.dialect.IExpressionEnhancingDialect#getAdditionalExpressionObjects(org.thymeleaf.context.IProcessingContext)
-	 */
 	@Override
 	public Map<String, Object> getAdditionalExpressionObjects(IProcessingContext processingContext) {
 		Map<String, Object> expressionObjects = new HashMap<String, Object>();
