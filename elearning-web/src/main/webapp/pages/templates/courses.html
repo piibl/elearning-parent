@@ -11,6 +11,7 @@
 	<div class="container top-20">
 		<div class="row row-offcanvas row-offcanvas-left">
 			<!-- Cours, page principale -->
+			<div id="ajaxMessage"></div>
 			<div th:if="${isMainView}">
 				<div class="col-md-6">
 					<h2>Evènements à venir</h2>
@@ -39,84 +40,20 @@
 			<!-- Cours, page cours souscrits -->
 			<div th:if="${isSubscribedView}">
 				<div class="col-md-12">
-					<div th:if="${!#lists.isEmpty(courses)}">
-						<div class="bordered-bottom">
-							<h1>Vos cours</h1>
-						</div>
-						<div class="container top-20">
-							<a class="displayLink" th:each="course : ${courses}"
-								th:text="${course.content.label}" href="./view.html"
-								th:href="${course.getLink('self').href + ' >>'}">Bryan123</a>
-						</div>
-					</div>
-					<!-- Si events dispo -->
-					<div th:if="${!#lists.isEmpty(events)}">
-						<div class="bordered-bottom">
-							<h1>Evenements à venir</h1>
-						</div>
-						<div th:each="event : ${events}">
-							<!-- BLABLABLA -->
-						</div>
+					<div id="subscribedPartial"
+						th:include="templates/partial/courses-partial :: subscribed-partial">
 					</div>
 				</div>
-				<!-- Cours, page cours non souscrits -->
-				<div th:if="${isNotSubscribedView}">
-					<div class="col-md-12">
-						<!-- Si cours dispo -->
-
-						<div th:if="${!#lists.isEmpty(courses)}">
-							<div class="bordered-bottom">
-								<h1>
-									Cours disponibles <small>Inscription libre</small>
-								</h1>
-							</div>
-							<div th:each="course : ${courses}">
-								<h2>
-									<span th:text="${course.content.label}">Titre du cours</span>
-								</h2>
-								<p>
-									<a class="displayLink btn btn-success" href="./subscribe.html"
-										th:href="${course.getLink('subscribe').href}"
-										data-redirect_url="none"
-										th:attr="data-redirect_url=${othersAvailablesCoursesLink != null ? othersAvailablesCoursesLink.href : 'none'}"
-										data-target_render=".col-md-12">S'inscrire <i
-										class="glyphicon glyphicon-plus-sign"></i>
-									</a>
-								</p>
-								<p>
-									Enseignant responsable : <strong
-										th:text="${course.content.coursesTeaching[0].teacher.lastName}">Nom
-										de l'enseignant</strong><br /> Nombre de chapitres : <span
-										th:text="${#lists.size(course.content.sessions)}">Nombre
-										de chapitres</span> <br /> Nombre d'inscrits : <span
-										th:text="${#lists.size(course.content.subscriptions)}">Nombre
-										d'inscrits</span>
-								</p>
-								<p class="h3">Descriptif du cours</p>
-								<div th:utext="${course.content.summary}"></div>
-							</div>
-						</div>
-						<!-- Si pas de cours disponibles -->
-						<div th:if="${#lists.isEmpty(courses)}">
-
-							<h1 class="bordered-bottom">Aucun cours n'est actuellement
-								disponible à l'inscription...</h1>
-
-							<p>
-								Vous seriez intéressé par un nouveau cours en particulier ?<br />Vous
-								avez des suggestions à nous faire ?
-							</p>
-							<p>
-								<a class="btn btn-success" role="button" href="#">Contactez-nous
-									! »</a>
-							</p>
-						</div>
-					</div>
-				</div>
-
-
 			</div>
-
+			<!-- Cours, page cours non souscrits -->
+			<div th:if="${isNotSubscribedView}">
+				<div class="col-md-12">
+					<!-- Inclusion du rendu fragmentaire -->
+					<div id="notSubscribedPartial"
+						th:include="templates/partial/courses-partial :: not-subscribed-partial">
+					</div>
+				</div>
+			</div>
 		</div>
 		<footer th:include="fragment/common :: [//footer]"></footer>
 	</div>

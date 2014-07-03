@@ -89,7 +89,11 @@ public class StudentServiceImpl extends AbstractCrudService<Student, Long> imple
 			// recherche de toutes les souscriptions de l'étudiant
 			for (CourseSubscription courseSubscription : courseSubscriptionRepository.findByStudent(student)) {
 				if (courseRepository.exists(courseSubscription.getCourse().getId())) {
-					courses.add(courseRepository.findOne(courseSubscription.getCourse().getId()));
+					Course course = courseRepository.findOne(courseSubscription.getCourse().getId());
+					course.setSubscriptions(courseSubscriptionRepository.findByCourse(course));
+					course.setCoursesTeaching(courseTeachingRepository.findByCourse(course));
+					course.setSessions(courseSessionRepository.findByOwnerCourseOrderBySessionRankAsc(course));
+					courses.add(course);
 				} else {
 					// TODO ignorer les orphelins ?
 					throw new CourseNotExistsException();

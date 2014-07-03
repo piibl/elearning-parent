@@ -118,7 +118,7 @@ $(document)
 					});
 			    });
 		    // Affichage de listes dans le panneau central
-		    $('.displayLink').on('click', function(event) {
+		    $('a.displayLink').on('click', function(event) {
 			// Appel de la fonction de rendu
 			display($(this), event);
 		    });

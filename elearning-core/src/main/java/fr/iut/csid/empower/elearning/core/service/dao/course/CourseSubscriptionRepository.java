@@ -32,4 +32,13 @@ public interface CourseSubscriptionRepository extends JpaRepository<CourseSubscr
 	 * @return
 	 */
 	public List<CourseSubscription> findByCourse(Course course);
+
+	/**
+	 * Retourne l'unique souscirption entre un étudiant et un cours donnés
+	 * 
+	 * @param student
+	 * @param course
+	 * @return
+	 */
+	public CourseSubscription findByStudentAndCourse(Student student, Course course);
 }

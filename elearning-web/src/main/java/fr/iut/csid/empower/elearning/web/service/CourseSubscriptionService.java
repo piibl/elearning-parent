@@ -23,6 +23,17 @@ public interface CourseSubscriptionService {
 	 * @param student
 	 *            : étudiant
 	 * @param courseId
+	 *            : id du cours cible de l'inscription
+	 * @return
+	 */
+	public String unsubscribe(Student student, Long courseId);
+
+	/**
+	 * Supprime une souscription d'un étudiant à un cours donné
+	 * 
+	 * @param student
+	 *            : étudiant
+	 * @param courseId
 	 *            : id du cours cible de la suppression
 	 * @return
 	 */

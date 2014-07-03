@@ -31,4 +31,18 @@ public class CourseSubscriptionServiceImpl implements CourseSubscriptionService 
 
 	}
 
+	@Override
+	public String unsubscribe(Student student, Long courseId) {
+		Course course = courseRepository.findOne(courseId);
+		if (course != null) {
+			// TODO A refactorer quand les deux types d'inscriptions seront implémentés
+			CourseSubscription subscription = courseSubscriptionRepository.findByStudentAndCourse(student, course);
+			String label = subscription.getCourse().getLabel();
+			courseSubscriptionRepository.delete(subscription);
+			return label;
+		}
+		throw new CourseNotExistsException();
+
+	}
+
 }
