@@ -20,7 +20,7 @@
 						ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
 						magna mollis euismod. Donec sed odio dui.</p>
 					<p>
-						<a class="btn btn-default" role="button"
+						<a class="btn btn-success" role="button"
 							th:href="${subscribedCoursesLink.href}">Accéder à vos cours »</a>
 					</p>
 				</div>
@@ -31,7 +31,7 @@
 						ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
 						magna mollis euismod. Donec sed odio dui.</p>
 					<p>
-						<a class="btn btn-default" role="button"
+						<a class="btn btn-primary" role="button"
 							th:href="${othersAvailablesCoursesLink.href}">Voir les cours
 							disponibles »</a>
 					</p>
@@ -41,7 +41,7 @@
 			<div th:if="${isSubscribedView}">
 				<div class="col-md-12">
 					<div id="subscribedPartial"
-						th:include="templates/partial/courses-partial :: subscribed-partial">
+						th:include="templates/partial/courses-partial :: subscribed-partial" class="ajax-enabled">
 					</div>
 				</div>
 			</div>
@@ -50,7 +50,7 @@
 				<div class="col-md-12">
 					<!-- Inclusion du rendu fragmentaire -->
 					<div id="notSubscribedPartial"
-						th:include="templates/partial/courses-partial :: not-subscribed-partial">
+						th:include="templates/partial/courses-partial :: not-subscribed-partial" class="ajax-enabled">
 					</div>
 				</div>
 			</div>

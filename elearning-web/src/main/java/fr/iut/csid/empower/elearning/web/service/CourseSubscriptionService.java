@@ -2,8 +2,9 @@ package fr.iut.csid.empower.elearning.web.service;
 
 import fr.iut.csid.empower.elearning.core.domain.course.CourseSubscription;
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
+import fr.iut.csid.empower.elearning.core.service.CrudService;
 
-public interface CourseSubscriptionService {
+public interface CourseSubscriptionService extends CrudService<CourseSubscription, Long> {
 
 	// TODO uniformiser la nature des paramètres
 	/**
@@ -37,6 +38,5 @@ public interface CourseSubscriptionService {
 	 *            : id du cours cible de la suppression
 	 * @return
 	 */
-	// public void unsubscribe(Student student, Long courseId);
 
 }

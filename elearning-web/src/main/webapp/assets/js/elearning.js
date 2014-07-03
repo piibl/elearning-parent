@@ -24,7 +24,7 @@ $(document)
 		    };
 		    // Fonction de rendu dans le cadre AJAX
 		    function display(target, event) {
-		
+
 			$("#ajaxMessage").empty();
 			$("#ajaxPanel").empty();
 			// Désactivation du lien
@@ -122,7 +122,7 @@ $(document)
 			// Appel de la fonction de rendu
 			display($(this), event);
 		    });
-//		    // Liens display dans le cadre de rendu
+		    // // Liens display dans le cadre de rendu
 		    $("#ajaxPanel").on('click', "a.displayLink",
 			    function(event) {
 				// Appel de la fonction de rendu
@@ -184,6 +184,60 @@ $(document)
 						});
 				    });
 		    $("#modalContent")
+			    .on(
+				    'click',
+				    "a.redirectLink",
+				    function(event) {
+					$("#ajaxMessage").empty();
+					// Désactivation du lien
+					event.preventDefault();
+					var redirectUrl = $(this).data(
+						'redirect_url');
+					var targetRender = $(this).data(
+						'target_render');
+					if ((typeof redirectUrl == "undefined" || redirectUrl == null)) {
+					    redirectUrl = 'none';
+					}
+
+					$
+						.ajax({
+						    type : 'GET',
+						    // URL déterminée par
+						    // l'attribut href
+						    url : $(this).attr('href'),
+						    beforeSend : function() {
+							// Enrichissement
+							$('#ajaxMessage')
+								.html(
+									'<div class="alert alert-info alert-dismissable"><p>Loading...</p></div>');
+						    },
+						    success : function(data) {
+							// Requete ok, la liste
+							// est rechargée
+							//var successMessage = '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button> Les ressources ont bien été ajoutées.</div>';
+							if (redirectUrl != 'none') {
+							    redirectToUrl(
+								    redirectUrl,
+								    "",
+								    targetRender);
+							} else {
+							    $(targetRender)
+								    .append(
+									    data);
+							    $('#ajaxMessage')
+								    .html(
+									    successMessage);
+							}
+						    },
+						    error : function() {
+							// Requête ko
+							$('#ajaxMessage')
+								.html(
+									'<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button> <strong>Ooops !</strong> Petit plantage, veuillez  ressayer dans quelques instants, merci !</div>');
+						    }
+						});
+				    });
+		    $(".ajax-enabled")
 		    .on(
 			    'click',
 			    "a.redirectLink",
@@ -214,11 +268,11 @@ $(document)
 					    success : function(data) {
 						// Requete ok, la liste
 						// est rechargée
-						var successMessage = '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button> Les ressources ont bien été ajoutées.</div>';
+						//var successMessage = '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button> Les ressources ont bien été ajoutées.</div>';
 						if (redirectUrl != 'none') {
 						    redirectToUrl(
 							    redirectUrl,
-							    successMessage,
+							    "",
 							    targetRender);
 						} else {
 						    $(targetRender)
@@ -237,6 +291,7 @@ $(document)
 					    }
 					});
 			    });
+		   
 		    // Détails d'une entité, rendu dans un modal
 		    $("#ajaxPanel")
 			    .on(
@@ -321,7 +376,9 @@ $(document)
 			    });
 		    // Formulaire d'ajout dans panneau AJAX
 		    $("#ajaxPanel")
-			    .on('click', 'a.addForm',
+			    .on(
+				    'click',
+				    'a.addForm',
 				    function(event) {
 					event.preventDefault;
 					$("#modalContent").empty();
@@ -351,14 +408,15 @@ $(document)
 							$("#modal").modal({
 							    show : true
 							});
-							
-							
-//							$j.ajax({
-//							         type: "GET",
-//							         url: "http://" + disqus_shortname + ".disqus.com/embed.js",
-//							         dataType: "script",
-//							         cache: true
-//							     });
+
+							// $j.ajax({
+							// type: "GET",
+							// url: "http://" +
+							// disqus_shortname +
+							// ".disqus.com/embed.js",
+							// dataType: "script",
+							// cache: true
+							// });
 						    },
 						    error : function() {
 							// Requête ko
@@ -382,7 +440,7 @@ $(document)
 						'redirect_url');
 					var targetRender = $(this).data(
 						'target_render');
-					
+
 					if ((typeof redirectUrl == "undefined" || redirectUrl == null)) {
 					    redirectUrl = 'none';
 					}
@@ -429,8 +487,8 @@ $(document)
 							    $(targetRender)
 								    .append(
 									    data);
-//							    $('#ajaxMessage')
-//								    .html('');
+							    // $('#ajaxMessage')
+							    // .html('');
 							}
 						    },
 						    error : function() {
@@ -506,6 +564,7 @@ $(document)
 						'redirect_url');
 					var targetRender = $(this).data(
 						'target_render');
+
 					if ((typeof redirectUrl == "undefined" || redirectUrl == null)) {
 					    redirectUrl = 'none';
 					}
@@ -531,14 +590,18 @@ $(document)
 						    // en retour
 						    dataType : "html",
 						    success : function(data) {
-							// Requete ok
 							// Reset du modal et
 							// disparition
 							$("#modalContent")
-								.empty();
+								.text("");
 							$('#modal').modal(
 								'hide');
-							// Affichage
+							// si une URL de
+							// redirection est
+							// spécifiée, nouveau
+							// get en AJAX
+
+							$('#ajaxPanel').empty();
 							if (redirectUrl != 'none') {
 							    redirectToUrl(
 								    redirectUrl,
@@ -548,10 +611,9 @@ $(document)
 							    $(targetRender)
 								    .append(
 									    data);
-							    $('#ajaxMessage')
-								    .html('');
+							    // $('#ajaxMessage')
+							    // .html('');
 							}
-
 						    },
 						    error : function() {
 							// Requête ko
@@ -571,5 +633,4 @@ $(document)
 						});
 
 				    });
-
 		});

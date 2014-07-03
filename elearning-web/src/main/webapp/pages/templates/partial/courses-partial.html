@@ -14,9 +14,17 @@
 					Cours disponibles <small>Inscription libre</small>
 				</h1>
 			</div>
-			<div class="row">
-				<div class="col-lg-6" th:each="course : ${courses}">
-					<div class="panel panel-default">
+			<div class="row top-20">
+				<div class="col-lg-12">
+					<p class="text-left">
+						<a th:href="${subscribedCoursesLink.href}">Voir les cours
+							auxquels vous êtes déjà inscrit(e) »</a>
+					</p>
+				</div>
+				<div class="col-lg-6">
+					<div class="panel panel-default"
+						th:each="course, status : ${courses}"
+						th:if="${status.index} % 2 == 0">
 						<div class="panel-heading">
 							<h3 class="panel-title" th:text="${course.content.label}">Panel
 								title</h3>
@@ -45,10 +53,53 @@
 						</div>
 						<div class="panel-footer">
 							<p class="text-right">
-								<a class="displayLink btn btn-success" href="./subscribe.html"
-									th:href="${course.getLink('subscribe').href}"
+								<a class="redirectLink btn btn-success" href="./subscribe.html"
+									th:href="${baseLink.href + '/'+ course.content.id + '/subscribe'}"
 									data-redirect_url="none"
-									th:attr="data-redirect_url=${othersAvailablesCoursesLink != null ? othersAvailablesCoursesLink.href : 'none'}"
+									th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"
+									data-target_render="#notSubscribedPartial">S'inscrire <i
+									class="glyphicon glyphicon-plus-sign"></i>
+								</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="panel panel-default"
+						th:each="course, status : ${courses}"
+						th:if="${status.index} % 2 != 0">
+						<div class="panel-heading">
+							<h3 class="panel-title" th:text="${course.content.label}">Panel
+								title</h3>
+						</div>
+						<div class="panel-body">
+							<div class="bordered-bottom" th:utext="${course.content.summary}"></div>
+							<div class="row top-20">
+								<div class="col-md-8">
+									<p>
+										<i class="glyphicon glyphicon-user"></i> Enseignant
+										responsable : <strong
+											th:text="${course.content.coursesTeaching[0].teacher.firstName + ' ' +course.content.coursesTeaching[0].teacher.lastName}">Nom
+											de l'enseignant</strong> <br /> <i
+											class="glyphicon glyphicon-arrow-right"></i> Nombre de
+										chapitres : <span
+											th:text="${#lists.size(course.content.sessions)}">Nombre
+											de chapitres</span><br /> <i
+											class="glyphicon glyphicon-arrow-right"></i> Nombre
+										d'inscrits : <span
+											th:text="${#lists.size(course.content.subscriptions)}">Nombre
+											d'inscrits</span>
+
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="panel-footer">
+							<p class="text-right">
+								<a class="redirectLink btn btn-success" href="./subscribe.html"
+									th:href="${baseLink.href + '/'+ course.content.id + '/subscribe'}"
+									data-redirect_url="none"
+									th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"
 									data-target_render="#notSubscribedPartial">S'inscrire <i
 									class="glyphicon glyphicon-plus-sign"></i>
 								</a>
@@ -62,8 +113,8 @@
 		<!-- Si pas de cours disponibles -->
 		<div th:if="${#lists.isEmpty(courses)}" class="center-block">
 
-			<h1 class="bordered-bottom">Aucun cours n'est actuellement
-				disponible à l'inscription...</h1>
+			<h1 class="bordered-bottom text-center">Aucun cours n'est
+				actuellement disponible à l'inscription...</h1>
 			<div class="col-md-4 col-md-offset-3 top-20">
 				<p>
 					Vous seriez intéressé par un nouveau cours en particulier ?<br />Vous
@@ -72,7 +123,11 @@
 				<br />
 				<p>
 					<a class="btn btn-success" role="button" href="#">Contactez-nous
-						! »</a>
+						!</a>
+				</p>
+				<p>
+					<a th:href="${subscribedCoursesLink.href}">Voir les cours
+						auxquels vous êtes déjà inscrit(e) »</a>
 				</p>
 			</div>
 		</div>
@@ -80,37 +135,62 @@
 
 	<!-- Rendu fragmentaire des cours souscrits -->
 	<div th:fragment="subscribed-partial">
+		<!-- Si pas de cours disponibles -->
+		<div th:if="${#lists.isEmpty(courses)}" class="center-block">
+
+			<h1 class="bordered-bottom text-center">Vous n'êtes inscrit à
+				aucun cours...</h1>
+			<div class="col-md-4 col-md-offset-3 top-20">
+				<p>Pour l'instant !</p>
+				<p>Découvrez notre offre de cours accessibles à tous, choisissez
+					ceux qui vous plaisent et apprenez !</p>
+				<br />
+				<p>
+					<a class="btn btn-success" role="button"
+						th:href="${othersAvailablesCoursesLink.href}">Voir les cours
+						disponibles »</a>
+				</p>
+			</div>
+
+		</div>
 		<div th:if="${!#lists.isEmpty(courses)}">
 			<div class="bordered-bottom">
 				<h1>Vos cours</h1>
 			</div>
-			<div class="container top-20">
-				<div class="row">
-					<div class="col-lg-6" th:each="course : ${courses}">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title" th:text="${course.content.label}">Panel
-									title</h3>
-							</div>
-							<div class="panel-body">
-								<div>
-									<p>
-										<i class="glyphicon glyphicon-user"></i> Enseignant
-										responsable : <strong
-											th:text="${course.content.coursesTeaching[0].teacher.firstName + ' ' +course.content.coursesTeaching[0].teacher.lastName}">Nom
-											de l'enseignant</strong>
-									</p>
-								</div>
+			<div class="row top-20">
+				<div class="col-lg-12">
+					<p class="text-left">
+						<a th:href="${othersAvailablesCoursesLink.href}">Voir les
+							autres cours disponibles »</a>
+					</p>
+				</div>
+				<div class="col-lg-6" th:each="course : ${courses}">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title" th:text="${course.content.label}">Panel
+								title</h3>
+						</div>
+						<div class="panel-body">
+							<div>
 								<p>
-									<a class="displayLink btn btn-success" href="./view.html"
-										th:href="${course.getLink('self').href}"> Accéder au cours</a>
-								</p>
-								<p class="text-right">
-									<small><a class="displayLink" href="./view.html"
-										th:href="${course.getLink('self').href}"> Se désinscrire
-											du cours</a></small>
+									<i class="glyphicon glyphicon-user"></i> Enseignant responsable
+									: <strong
+										th:text="${course.content.coursesTeaching[0].teacher.firstName + ' ' +course.content.coursesTeaching[0].teacher.lastName}">Nom
+										de l'enseignant</strong>
 								</p>
 							</div>
+							<p>
+								<a class="btn btn-success" href="./view.html"
+									th:href="${baseLink.href + '/'+ course.content.id}"> Accéder au cours</a>
+							</p>
+							<p class="text-right">
+								<small><a class="displayLink" href="./view.html"
+									th:href="${baseLink.href + '/'+ course.content.id + '/unsubscribe'}"
+									data-redirect_url="none"
+									th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"
+									data-target_render="#subscribedPartial">> Se désinscrire du
+										cours</a></small>
+							</p>
 						</div>
 					</div>
 				</div>
@@ -126,22 +206,6 @@
 			<!-- BLABLABLA -->
 		</div>
 	</div>
-	<!-- Si pas de cours disponibles -->
-	<div th:if="${#lists.isEmpty(courses)}" class="center-block">
 
-		<h1 class="bordered-bottom">Vous n'êtes inscrit à aucun cours...</h1>
-		<div class="col-md-4 col-md-offset-3 top-20">
-			<p>Pour l'instant !</p>
-			<p>Découvrez notre offre de cours accessibles à tous, choisissez
-				ceux qui vous plaisent et apprenez !</p>
-			<br />
-			<p>
-				<a class="btn btn-success" role="button"
-					th:href="${othersAvailablesCoursesLink.href}">Voir les cours
-					disponibles »</a>
-			</p>
-		</div>
-
-	</div>
 </body>
 </html>

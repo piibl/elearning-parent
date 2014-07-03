@@ -3,17 +3,20 @@ package fr.iut.csid.empower.elearning.web.service.impl;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
 import fr.iut.csid.empower.elearning.core.domain.course.CourseSubscription;
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
 import fr.iut.csid.empower.elearning.core.exception.CourseNotExistsException;
 import fr.iut.csid.empower.elearning.core.reference.CourseSubscriptionType;
+import fr.iut.csid.empower.elearning.core.service.AbstractCrudService;
 import fr.iut.csid.empower.elearning.core.service.dao.course.CourseRepository;
 import fr.iut.csid.empower.elearning.core.service.dao.course.CourseSubscriptionRepository;
 import fr.iut.csid.empower.elearning.web.service.CourseSubscriptionService;
 
 @Named
-public class CourseSubscriptionServiceImpl implements CourseSubscriptionService {
+public class CourseSubscriptionServiceImpl extends AbstractCrudService<CourseSubscription, Long> implements CourseSubscriptionService {
 
 	@Inject
 	private CourseRepository courseRepository;
@@ -43,6 +46,11 @@ public class CourseSubscriptionServiceImpl implements CourseSubscriptionService 
 		}
 		throw new CourseNotExistsException();
 
+	}
+
+	@Override
+	protected JpaRepository<CourseSubscription, Long> getRepository() {
+		return courseSubscriptionRepository;
 	}
 
 }

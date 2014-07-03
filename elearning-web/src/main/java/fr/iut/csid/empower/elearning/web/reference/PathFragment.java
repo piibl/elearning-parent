@@ -14,8 +14,10 @@ public enum PathFragment {
 	// Paths communs
 	HOME("home"), DENIED("denied"),
 	// Tableaux de bord
-	ADMIN_DASHBOARD("dashboards/admin"), STUDENT_DASHBOARD("dashboards/student"), TEACHER_DASHBOARD("dashboards/teacher"), NOTSUBSCRIBED(
+	DASHBOARD("dashboard"), ADMIN_DASHBOARD("dashboards/admin"), STUDENT_DASHBOARD("dashboards/student"), TEACHER_DASHBOARD("dashboards/teacher"), NOTSUBSCRIBED(
 			"not-subscribed"), SUBSCRIBED("subscribed"), NOTIFICATIONS("notifications"), NEWS("news"), RESOURCES("resources"),
+	// Partial, vue partielle et rendus fragmentaires
+	PARTIAL("partial")
 
 	;
 

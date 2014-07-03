@@ -126,4 +126,15 @@ public class StudentServiceImpl extends AbstractCrudService<Student, Long> imple
 		}
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public Course findSubscribedCourse(Long courseId) {
+		Course course = courseRepository.findOne(courseId);
+		course.setSubscriptions(courseSubscriptionRepository.findByCourse(course));
+		course.setCoursesTeaching(courseTeachingRepository.findByCourse(course));
+		course.setSessions(courseSessionRepository.findByOwnerCourseOrderBySessionRankAsc(course));
+		return course;
+
+	}
+
 }

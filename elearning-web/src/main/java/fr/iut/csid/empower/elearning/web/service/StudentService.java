@@ -34,4 +34,13 @@ public interface StudentService extends DTOSupport<Student, Long, UserDTO> {
 	 */
 	public List<Course> findSubscribedCourses(Long studentId);
 
+	/**
+	 * Retourne un cours auquel l'étudiant est inscrit
+	 * 
+	 * @param studentId
+	 *            : id de l'étudiant
+	 * @return
+	 */
+	public Course findSubscribedCourse(Long courseId);
+
 }

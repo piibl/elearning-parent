@@ -44,12 +44,9 @@ public class CourseResourceAssembler extends AbstractResourceAssembler<Course, R
 		// Adressage pour accéder aux sessions d'un cours
 		Link sessionsLink = linkBuilderFactory.linkTo(CourseController.class).slash(course.getId()).slash(PathFragment.SESSIONS.getPath())
 				.withRel(Relation.SESSIONS.getName());
-		// Adressage pour la modification d'une session
-		Link subscribeLink = linkBuilderFactory.linkTo(CourseController.class).slash(course.getId()).slash(PathFragment.SUBSCRIBE.getPath())
-				.withRel(Relation.SUBSCRIBE.getName());
 		// TODO notes
 		// TODO étudiants / profs rattachés
-		return new Resource<Course>(course, selfLink, coursesLink, deleteLink, editLink, sessionsLink, subscribeLink);
+		return new Resource<Course>(course, selfLink, coursesLink, deleteLink, editLink, sessionsLink);
 	}
 
 }

@@ -121,7 +121,9 @@
 			<h3 class="modal-title">Modifier un cours</h3>
 		</div>
 		<form class="editForm" th:action="${course.getLink('edit').href}"
-			method="post" role="form">
+			method="post" role="form"
+			th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"
+			data-target_render="#ajaxPanel">
 			<div class="modal-body">
 
 				<div class="form-group">
