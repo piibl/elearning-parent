@@ -10,25 +10,33 @@
 			<!-- Le cadre de rendu est délégué au template appelant -->
 			<div th:fragment="display-notifications">
 				<!-- Corps -->
-				<!-- <h3 sec:authorize="hasRole('ROLE_STUDENT')">Liste des cours disponibles</h3>
-				<h3 sec:authorize="hasRole('ROLE_TEACHER')">Vos cours</h3>
-				<h3 sec:authorize="hasRole('ROLE_ADMIN')">Liste des cours</h3> -->
 				<div>
-					<p th:if="${#lists.isEmpty(notifications)}">Vous n'avez aucune
-						notification.</p>
-					<!-- <p sec:authorize="hasRole('ROLE_TEACHER')" th:if="${#lists.isEmpty(notifications)}">Vous n'avez pas de cours.</p>
-					<p sec:authorize="hasRole('ROLE_ADMIN')" th:if="${#lists.isEmpty(notifications)}">Aucun cours n'est
-						enregistré sur la plateforme.</p> -->
+					<p th:if="${#lists.isEmpty(notifications)}">Vous n'avez aucune notification.</p>
 					<div th:unless="${#lists.isEmpty(notifications)}">
-						<div class="bordered-bottom" th:each="singleNews : ${news}">
-							<h5 th:text="${notification.content.subject}">Bryan123</h5>
-							<p th:text="${notification.content.body}">Bryan123</p>
-						</div>
+						<table class="table table-striped table-hover">
+							<thead>
+								<th>Objet</th>
+								<!-- <th>Détail</th>
+								<th>Supprimer</th> -->
+							</thead>
+							<tbody>
+								<tr th:each="notification : ${notifications}">
+									<td class="span4" th:text="${notification.subject}">Bryan123</td>
+									<!-- <td class="span2"><a class="detailsLink"
+										href="./view.html" th:href="${notification.getLink('self').href}"><i
+											class="glyphicon glyphicon-list-alt"></i></a></td> -->
+									<!-- <td class="span2"><a class="deleteLink"
+										href="./delete.html"
+										th:href="${notification.getLink('delete').href}" data-redirect_url="none" th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"><i
+											class="glyphicon glyphicon-remove"></i></a></td> -->
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
 			<!-- Le cadre de rendu est délégué au template appelant -->
-			<!-- <div th:fragment="display-details">
+			<div th:fragment="display-details">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
@@ -40,28 +48,16 @@
 						<thead>
 								<th>Sujet</th>
 								<th>Message</th>
-								<th sec:authorize="hasRole('ROLE_TEACHER')">Editer</th>
-								<th sec:authorize="hasRole('ROLE_TEACHER')">Supprimer</th>
-								<th sec:authorize="hasRole('ROLE_STUDENT')">S'inscrire</th>
+								<th>Supprimer</th>
 							</thead>
 							<tbody>
 								<tr th:each="notification : ${notifications}">
 									<td class="span4" th:text="${notification.content.notificationSubject}">Bryan123</td>
 									<td class="span4" th:text="${notification.content.notificationBody}">Bryan123</td>
-									<td class="span2"><a class="sessionsLink" href="./sessions.html"
-										th:href="${notification.getLink('sessions').href}"><i
-											class="glyphicon glyphicon-tags"></i></a></td>
-									<td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a class="editLink" href="./edit.html"
-										th:href="${notification.getLink('edit').href}"><i
-											class="glyphicon glyphicon-pencil"></i></a></td>
 									<td class="span2" sec:authorize="hasRole('ROLE_TEACHER')"><a class="deleteLink"
 										href="./delete.html"
 										th:href="${notification.getLink('delete').href}" data-redirect_url="none" th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"><i
 											class="glyphicon glyphicon-remove"></i></a></td>
-									<td class="span2" sec:authorize="hasRole('ROLE_STUDENT')"><a class="subscribeLink"
-										href="./subscribe.html"
-										th:href="${notification.getLink('subscribe').href}" data-redirect_url="none" th:attr="data-redirect_url=${othersAvailablesCoursesLink != null ? othersAvailablesCoursesLink.href : 'none'}"><i
-											class="glyphicon glyphicon-plus-sign"></i></a></td>
 								</tr>
 							</tbody>
 					</table>
@@ -71,12 +67,8 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
 				</div>
-			</div> -->
+			</div>
 		</div>
 	</div>
-
-
-
-	
 </body>
 </html>
