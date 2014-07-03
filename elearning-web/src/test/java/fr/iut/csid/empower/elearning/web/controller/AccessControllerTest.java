@@ -24,7 +24,7 @@ import fr.iut.csid.empower.elearning.web.reference.PathFragment;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = { WebTest.SPRING_CONFIG_HSQL, WebTest.SPRING_SECURITY_CONFIG })
+@ContextConfiguration(locations = { WebTest.SPRING_CONFIG_HSQL })
 public class AccessControllerTest {
 
 	@Inject
@@ -41,7 +41,7 @@ public class AccessControllerTest {
 	}
 
 	@Test
-	public void testGetHomePage() throws Exception {
+	public void testGetDeniedAccessPage() throws Exception {
 		// Trivial...
 		mockMvc.perform(get("/denied")).andExpect(status().isOk()).andExpect(view().name(PathFragment.DENIED.getPath()));
 	}

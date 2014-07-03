@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import fr.iut.csid.empower.elearning.core.domain.user.Administrator;
-import fr.iut.csid.empower.elearning.core.service.CrudService;
 import fr.iut.csid.empower.elearning.web.controller.domain.AbstractDomainController;
 import fr.iut.csid.empower.elearning.web.dto.impl.UserDTO;
 import fr.iut.csid.empower.elearning.web.link.BatchResourceAssembler;

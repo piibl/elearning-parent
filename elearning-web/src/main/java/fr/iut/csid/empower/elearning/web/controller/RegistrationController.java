@@ -32,8 +32,8 @@ public class RegistrationController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String registerStudent(@RequestBody UserDTO user, Model model) {
 		model.addAttribute("loginNewUser", studentService.createFromDTO(user).getLogin());
+
 		// Retourne la page d'accueil
 		return registrationSuccessMessage;
 	}
-
 }
