@@ -6,7 +6,7 @@ package config;
 public class WebTest {
 
 	public static final String SPRING_CONFIG_HSQL = "/test_spring-config-hsql.xml";
-	public static final String SPRING_CONFIG_INIT_DATA = "/config-initdata.xml";
+	public static final String SPRING_SECURITY_CONFIG = "/test_security-context.xml";
 
 	/**
 	 * TransactionManager courant
