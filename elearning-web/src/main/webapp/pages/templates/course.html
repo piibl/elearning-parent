@@ -47,7 +47,7 @@
 											<tr th:each="courseSession : ${course.content.sessions}">
 												<td class="span4"
 													th:text="${courseSession.sessionRank + '.'}">Bryan123</td>
-												<td class="span4" th:text="${courseSession.label}">Bryan123</td>
+												<td class="span4"><a th:href="${baseLink.href + '/' + course.content.id +'/sessions/'+ courseSession.sessionRank}" th:text="${courseSession.label}"></a></td>
 												<td class="text-center">Non</td>
 
 											</tr>
@@ -58,12 +58,12 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-12">
-						<h3 class="bordered-bottom">Prochains cours présentiels planifiés</h3>
-						<p class=text-danger>Aucun cours présentiel n'est planifié</p>
-					</div>
 					<div class="col-lg-6">
 						<div class="jumbotron" th:utext="${course.content.summary}"></div>
+					</div>
+					<div class="col-lg-12">
+						<h3 class="bordered-bottom">Prochains cours présentiels planifiés</h3>
+						<p class="text-danger">Aucun cours présentiel n'est planifié</p>
 					</div>
 				</div>
 

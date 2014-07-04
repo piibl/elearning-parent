@@ -11,7 +11,9 @@
 			<h3 class="modal-title">Modification d'un enseignant</h3>
 		</div>
 		<form class="editForm" th:action="${teacher.getLink('edit').href}"
-			method="post" role="form">
+			method="post" role="form" data-redirect_url="none"
+			th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"
+			data-target_render="#ajaxPanel">
 			<div class="modal-body">
 
 				<div class="form-group">
@@ -48,7 +50,9 @@
 		</div>
 		<form class="editForm"
 			th:action="${administrator.getLink('edit').href}" method="post"
-			role="form">
+			role="form" data-redirect_url="none"
+			th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"
+			data-target_render="#ajaxPanel">
 			<div class="modal-body">
 				<div class="form-group">
 					<label for="firstName"
@@ -85,7 +89,9 @@
 			<h3 class="modal-title">Modification d'un profil étudiant</h3>
 		</div>
 		<form class="editForm" th:action="${student.getLink('edit').href}"
-			method="post" role="form">
+			method="post" role="form" data-redirect_url="none"
+			th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"
+			data-target_render="#ajaxPanel">
 			<div class="modal-body">
 
 				<div class="form-group">
@@ -162,7 +168,9 @@
 		</div>
 		<form class="editForm"
 			th:action="${courseSession.getLink('edit').href}" method="post"
-			role="form">
+			role="form" data-redirect_url="none"
+			th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"
+			data-target_render="#ajaxPanel">
 			<div class="modal-body">
 
 				<div class="form-group">
@@ -171,26 +179,30 @@
 						required="required"
 						th:placeholder="${courseSession.content.label}" />
 				</div>
-				<!-- 				<div class="form-group">
-					<label for="startDate">Date de début</label><input name="startDate" type="date"
-						class="form-control" autofocus="autofocus" required="required"
-						th:placeholder="${courseSession.content.startDate} />
-				</div>
-				<div class="form-group">
-					<label for="endDate">Date de fin</label><input name="endDate" type="date"
-						class="form-control" autofocus="autofocus" required="required"
-						th:placeholder="${courseSession.content.endDate} />
-				</div> -->
-
 				<div class="form-group">
 					<input name="ownerId" type="hidden" th:value="${ownerEntity.id}" />
 				</div>
+				<div class="form-group">
+					<label for="summary">Descriptif</label>
+					<textarea id="editor" name="summary" class="form-control"
+						autofocus="autofocus" required="required" />
+				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="submit" class="btn btn-primary btn-lg" role="button">Valider
-					les modifications</button>
+				<button type="submit" class="btn btn-primary btn-lg" role="button">Suivant</button>
 			</div>
 		</form>
+		<!-- wysiwyg API + hotkeys -->
+		<script src="../assets/js/wysihtml5-0.3.0.min.js"
+			th:src="@{/assets/js/wysihtml5-0.3.0.min.js}"></script>
+		<script src="../assets/js/bootstrap3-wysihtml5.js"
+			th:src="@{/assets/js/bootstrap3-wysihtml5.js}"></script>
+		<!-- Initialisation des API -->
+		<script class="script"
+			src="../assets/js/locales/bootstrap-wysihtml5.fr-FR.js"
+			th:src="@{/assets/js/locales/bootstrap-wysihtml5.fr-FR.js}"></script>
+		<script class="script" src="../assets/js/elearning-wysiwyg.js"
+			th:src="@{/assets/js/elearning-wysiwyg.js}"></script>
 	</div>
 </body>
 </html>

@@ -12,15 +12,91 @@
 		<div class="row row-offcanvas row-offcanvas-left">
 			<!-- Cours, page principale -->
 			<div id="ajaxMessage"></div>
-			<!-- Cours, page cours souscrits -->
+			<!-- Cours -->
 			<div>
-				<div class="col-md-12">
-					<div id=""
-						th:include="templates/partial/courses-partial :: subscribed-partial" class="ajax-enabled">
+				<div class="bordered-bottom">
+					<h1 th:text="${courseSession.label}">Cours</h1>
+				</div>
+				<div class="row top-20">
+					<div class="col-lg-12">
+						<p class="text-left">
+							<i class="glyphicon glyphicon-chevron-right"></i> Chapitre du
+							cours : <strong th:text="${courseSession.ownerCourse.label}">Titre
+								du cours</strong>
+						</p>
 					</div>
+					<div class="col-lg-6">
+						<div class="jumbotron" th:utext="${courseSession.summary}"></div>
+					</div>
+					<div class="col-lg-6">
+						<h3 class="bordered-bottom">Prochains cours présentiels
+							planifiés</h3>
+						<p class="text-danger">Aucun cours présentiel n'est planifié</p>
+					</div>
+				</div>
+				<div class="row top-20">
+					<div class="col-lg-6">
+						<h3 class="bordered-bottom">Evènements à venir</h3>
+						<p class="text-danger">Aucun évènement prévu... pour l'instant
+							!</p>
+					</div>
+					<div class="col-lg-6">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Contrôles en cours</h3>
+							</div>
+							<div class="panel-body">
+								<p class="text-success text-center" th:if="${exams == null}">Aucune
+									session d'examen n'a été ouverte.</p>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+				<div class="row top-20">
+					<div class="col-lg-12">
+						<p class="h2 bordered-bottom">Ressources du chapitre</p>
+					</div>
+					<div class="col-lg-8 lg-offset-2 bordered-bottom">
+						<p th:if="${#lists.isEmpty(resources)}">Aucune ressource n'est
+							enregistrée pour ce chapitre</p>
+						<div th:unless="${#lists.isEmpty(resources)}">
+							<table class="table table-striped table-hover">
+								<thead>
+									<th>Nom</th>
+									<th>Type</th>
+									<th class="text-center">Taille (ko)</th>
+									<th class="text-center">Téléchargement</th>
+								</thead>
+								<tbody>
+									<tr th:each="resource : ${resources}">
+										<td class="span4"
+											th:text="${resource.content.originalFilename}">Bryan123</td>
+										<td class="span4" th:text="${resource.content.fileType}">Bryan123</td>
+										<td class="span4 text-center" th:text="${resource.content.fileSize}">Bryan123</td>
+										<td class="span2 text-center"><a href="./download.html"
+											th:href="${resource.getLink('self').href}"><i
+												class="glyphicon glyphicon-download-alt"></i></a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+					<div class="col-lg-12">
+						<p class="h3 bordered-bottom">Contrôles archivés</p>
+					</div>
+					<div class="col-lg-8 lg-offset-2">
+						<p th:if="${archivedExams == null}">Vous n'avez aucun contrôle
+							archivé.</p>
+
+					</div>
+
 				</div>
 			</div>
 		</div>
+
 		<footer th:include="fragment/common :: [//footer]"></footer>
 	</div>
 </body>

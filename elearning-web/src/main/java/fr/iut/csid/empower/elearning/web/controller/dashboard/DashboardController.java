@@ -48,4 +48,5 @@ public class DashboardController {
 		// Retourne la page d'accueil, comportement par défaut si non loggué
 		return PathFragment.HOME.getPath();
 	}
+
 }

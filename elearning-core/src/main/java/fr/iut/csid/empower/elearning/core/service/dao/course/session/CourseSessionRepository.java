@@ -25,4 +25,13 @@ public interface CourseSessionRepository extends JpaRepository<CourseSession, Lo
 	 */
 	public int countByOwnerCourse(Course course);
 
+	/**
+	 * Retourne la session au rang donné pour le cours donné
+	 * 
+	 * @param course
+	 * @param sessionRank
+	 * @return
+	 */
+	public CourseSession findByOwnerCourseAndSessionRank(Course course, Long sessionRank);
+
 }

@@ -17,10 +17,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import fr.iut.csid.empower.elearning.core.domain.course.Course;
+import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
 import fr.iut.csid.empower.elearning.core.domain.user.Student;
 import fr.iut.csid.empower.elearning.web.link.assembler.CourseResourceAssembler;
+import fr.iut.csid.empower.elearning.web.link.assembler.SessionResourceAssembler;
 import fr.iut.csid.empower.elearning.web.reference.PathFragment;
+import fr.iut.csid.empower.elearning.web.service.CourseSessionService;
 import fr.iut.csid.empower.elearning.web.service.CourseSubscriptionService;
+import fr.iut.csid.empower.elearning.web.service.ResourceService;
 import fr.iut.csid.empower.elearning.web.service.StudentService;
 
 @Controller
@@ -30,6 +34,7 @@ public class StudentDashboardController extends AbstractDashboardController {
 	// paths
 	private static final String coursesView = "templates/courses";
 	private static final String courseView = "templates/course";
+	private static final String sessionView = "templates/session";
 	private static final String partialSubscribedView = "templates/partial/courses-partial :: subscribed-partial";
 	private static final String partialNotSubscribedView = "templates/partial/courses-partial :: not-subscribed-partial";
 	// Services
@@ -37,6 +42,12 @@ public class StudentDashboardController extends AbstractDashboardController {
 	private StudentService studentService;
 	@Inject
 	private CourseSubscriptionService courseSubscriptionService;
+	@Inject
+	private CourseSessionService courseSessionService;
+	@Inject
+	private ResourceService resourceService;
+	@Inject
+	private SessionResourceAssembler sessionResourceAssembler;
 	@Inject
 	private CourseResourceAssembler courseResourceAssembler;
 
@@ -101,8 +112,23 @@ public class StudentDashboardController extends AbstractDashboardController {
 	@RequestMapping(value = "/courses/subscribed/{courseId}", method = RequestMethod.GET)
 	public String getCourseView(Model model, @PathVariable Long courseId, @AuthenticationPrincipal User user) {
 		model.addAttribute("course", courseResourceAssembler.toResource(studentService.findSubscribedCourse(courseId)));
+		model.addAttribute("baseLink",
+				linkBuilderFactory.linkTo(getConcreteClass()).slash(PathFragment.COURSES.getPath()).slash(PathFragment.SUBSCRIBED.getPath())
+						.withSelfRel());
 		// Retourne la vue d'un cours en particulier
 		return courseView;
+	}
+
+	@RequestMapping(value = "/courses/subscribed/{courseId}/sessions/{sessionRank}", method = RequestMethod.GET)
+	public String getSessionView(Model model, @PathVariable Long courseId, @PathVariable Long sessionRank, @AuthenticationPrincipal User user) {
+		CourseSession session = courseSessionService.findByCourseAndSessionRank(courseId, sessionRank);
+		model.addAttribute("courseSession", session);
+		model.addAttribute("resources", sessionResourceAssembler.toResource(resourceService.findByOwner(session.getId())));
+		model.addAttribute("baseLink",
+				linkBuilderFactory.linkTo(getConcreteClass()).slash(PathFragment.COURSES.getPath()).slash(PathFragment.SUBSCRIBED.getPath())
+						.withSelfRel());
+		// Retourne la vue d'un cours en particulier
+		return sessionView;
 	}
 
 	/**

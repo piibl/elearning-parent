@@ -5,4 +5,6 @@ import fr.iut.csid.empower.elearning.web.dto.impl.CourseSessionDTO;
 
 public interface CourseSessionService extends OwnedEntityManagerService<CourseSession, Long, CourseSessionDTO> {
 
+	public CourseSession findByCourseAndSessionRank(Long courseId, Long sessionRank);
+
 }

@@ -21,7 +21,8 @@
 		<intercept-url pattern="/logout" access="permitAll" />
 		<intercept-url pattern="/denied" access="permitAll" />
 		<!-- tableaux de bord -->
-		<intercept-url pattern="/dashboard/**" access="hasAnyRole('ROLE_STUDENT, ROLE_TEACHER, ROLE_ADMIN')" />
+		<!-- <intercept-url pattern="/dashboard/**" access="hasAnyRole('ROLE_STUDENT, ROLE_TEACHER, ROLE_ADMIN')" /> -->
+		<intercept-url pattern="/**" access="hasAnyRole('ROLE_STUDENT, ROLE_TEACHER, ROLE_ADMIN')" />
 
 
 

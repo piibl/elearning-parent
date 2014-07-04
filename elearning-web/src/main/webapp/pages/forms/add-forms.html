@@ -11,7 +11,9 @@
 			<h3 class="modal-title">Ajouter un enseignant</h3>
 		</div>
 		<form class="addForm" th:action="@{/teachers}" method="post"
-			role="form">
+			role="form" data-redirect_url="none"
+			th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"
+			data-target_render="#ajaxPanel">
 			<div class="modal-body" th:include="forms/user-form :: user-form">
 			</div>
 			<div class="modal-footer">
@@ -27,7 +29,9 @@
 			<h3 class="modal-title">Ajouter un administrateur</h3>
 		</div>
 		<form class="addForm" th:action="@{/administrators}" method="post"
-			role="form">
+			role="form" data-redirect_url="none"
+			th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"
+			data-target_render="#ajaxPanel">
 			<div class="modal-body" th:include="forms/user-form :: user-form">
 			</div>
 			<div class="modal-footer">
@@ -43,7 +47,9 @@
 			<h3 class="modal-title">Ajouter un étudiant</h3>
 		</div>
 		<form class="addForm" th:action="@{/students}" method="post"
-			role="form">
+			role="form" data-redirect_url="none"
+			th:attr="data-redirect_url=${redirectLink != null ? redirectLink.href : 'none'}"
+			data-target_render="#ajaxPanel">
 			<div class="modal-body" th:include="forms/user-form :: user-form">
 			</div>
 			<div class="modal-footer">
@@ -118,9 +124,9 @@
 						placeholder="Niveau 1, 2..." />
 				</div>
 				<div class="form-group">
-					<label for="summary">Description</label>
-					<textarea name="summary" class="form-control" autofocus="autofocus"
-						required="required" placeholder="Description du chapitre..." />
+					<label for="summary">Descriptif</label>
+					<textarea id="editor" name="summary" class="form-control"
+						autofocus="autofocus" required="required" />
 				</div>
 
 				<div class="form-group">
@@ -131,7 +137,17 @@
 				<button type="submit" class="btn btn-primary btn-lg" role="button">Valider</button>
 			</div>
 		</form>
-
+		<!-- wysiwyg API + hotkeys -->
+		<script src="../assets/js/wysihtml5-0.3.0.min.js"
+			th:src="@{/assets/js/wysihtml5-0.3.0.min.js}"></script>
+		<script src="../assets/js/bootstrap3-wysihtml5.js"
+			th:src="@{/assets/js/bootstrap3-wysihtml5.js}"></script>
+		<!-- Initialisation des API -->
+		<script class="script"
+			src="../assets/js/locales/bootstrap-wysihtml5.fr-FR.js"
+			th:src="@{/assets/js/locales/bootstrap-wysihtml5.fr-FR.js}"></script>
+		<script class="script" src="../assets/js/elearning-wysiwyg.js"
+			th:src="@{/assets/js/elearning-wysiwyg.js}"></script>
 	</div>
 	<!-- Formulaire d'ajout d'une ressource -->
 	<div th:fragment="add-resource-form">
@@ -150,8 +166,9 @@
 					<input name="ownerId" type="hidden" th:value="${ownerEntity.id}" />
 				</div>
 				<div class="form-group">
-					<span class="btn btn-success btn-file">Ajouter un fichier <i class="glyphicon glyphicon-plus"></i>
-					<input type="file" name="files" multiple=""></input></span>
+					<span class="btn btn-success btn-file">Ajouter un fichier <i
+						class="glyphicon glyphicon-plus"></i> <input type="file"
+						name="files" multiple=""></input></span>
 				</div>
 				<div id="results" class="top-20">
 					<!--  -->

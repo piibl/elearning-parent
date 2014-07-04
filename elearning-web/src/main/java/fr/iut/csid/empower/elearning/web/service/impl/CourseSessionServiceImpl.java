@@ -12,8 +12,6 @@ import fr.iut.csid.empower.elearning.core.domain.course.session.CourseSession;
 import fr.iut.csid.empower.elearning.core.exception.CourseNotExistsException;
 import fr.iut.csid.empower.elearning.core.service.AbstractCrudService;
 import fr.iut.csid.empower.elearning.core.service.dao.course.CourseRepository;
-import fr.iut.csid.empower.elearning.core.service.dao.course.CourseSubscriptionRepository;
-import fr.iut.csid.empower.elearning.core.service.dao.course.CourseTeachingRepository;
 import fr.iut.csid.empower.elearning.core.service.dao.course.session.CourseSessionRepository;
 import fr.iut.csid.empower.elearning.web.dto.impl.CourseSessionDTO;
 import fr.iut.csid.empower.elearning.web.service.CourseSessionService;
@@ -31,26 +29,22 @@ public class CourseSessionServiceImpl extends AbstractCrudService<CourseSession,
 	private CourseRepository courseRepository;
 	@Inject
 	private NotificationService notificationService;
-	@Inject
-	private CourseTeachingRepository courseTeachingRepository;
-	@Inject
-	private CourseSubscriptionRepository courseSubscriptionRepository;
-	
+
 	@Override
 	public CourseSession createFromDTO(CourseSessionDTO entityDTO) {
 		Course ownerCourse = courseRepository.findOne(Long.valueOf(entityDTO.getOwnerId()));
-		CourseSession courseSession = new CourseSession(entityDTO.getLabel(), ownerCourse, courseSessionRepository.countByOwnerCourse(ownerCourse) + 1, null, null, entityDTO.getSummary());
+		CourseSession courseSession = new CourseSession(entityDTO.getLabel(), ownerCourse,
+				courseSessionRepository.countByOwnerCourse(ownerCourse) + 1, null, null, entityDTO.getSummary());
 		if (ownerCourse != null) {
 			courseSessionRepository.save(courseSession);
-			
-			//Notification des enseignants du cours
-			notificationService.createNotificationListTeacher("Création de chapitre", courseTeachingRepository.findByCourse(ownerCourse), "Le chapitre " + courseSession.getLabel() + " a été créé pour le cours " + ownerCourse.getLabel() + ".");
-			
-			//Notification des étudiants du cours
-			notificationService.createNotificationListStudent("Création de chapitre", courseSubscriptionRepository.findByCourse(ownerCourse), "Le chapitre " + courseSession.getLabel() + " a été créé pour le cours " + ownerCourse.getLabel() + ".");
-			
-//			return courseSessionRepository.save(new CourseSession(entityDTO.getLabel(), ownerCourse, courseSessionRepository.countByOwnerCourse(ownerCourse) + 1, null, null, entityDTO.getSummary()));
-			// entityDTO.getStartDate(), entityDTO.getEndDate()));
+
+			// Notification des enseignants du cours
+			notificationService.createNotificationListTeacher("Création de chapitre", ownerCourse, "Le chapitre " + courseSession.getLabel()
+					+ " a été créé pour le cours " + ownerCourse.getLabel() + ".");
+
+			// Notification des étudiants du cours
+			notificationService.createNotificationListStudent("Création de chapitre", ownerCourse, "Le chapitre " + courseSession.getLabel()
+					+ " a été créé pour le cours " + ownerCourse.getLabel() + ".");
 			return courseSession;
 		}
 		return null;
@@ -83,16 +77,24 @@ public class CourseSessionServiceImpl extends AbstractCrudService<CourseSession,
 		}
 		throw new CourseNotExistsException();
 	}
-	
+
 	@Override
 	public void delete(CourseSession courseSession) {
 		super.delete(courseSession);
-		
+
 		Course ownerCourse = courseSession.getOwnerCourse();
-		//Notification des enseignants du cours
-		notificationService.createNotificationListTeacher("Suppression de chapitre", courseTeachingRepository.findByCourse(ownerCourse), "Le chapitre " + courseSession.getLabel() + " a été supprimé pour le cours " + ownerCourse.getLabel() + ".");
-		
-		//Notification des étudiants du cours
-		notificationService.createNotificationListStudent("Suppression de chapitre", courseSubscriptionRepository.findByCourse(ownerCourse), "Le chapitre " + courseSession.getLabel() + " a été supprimé pour le cours " + ownerCourse.getLabel() + ".");
+		// Notification des enseignants du cours
+		notificationService.createNotificationListTeacher("Suppression de chapitre", ownerCourse, "Le chapitre " + courseSession.getLabel()
+				+ " a été supprimé pour le cours " + ownerCourse.getLabel() + ".");
+
+		// Notification des étudiants du cours
+		notificationService.createNotificationListStudent("Suppression de chapitre", ownerCourse, "Le chapitre " + courseSession.getLabel()
+				+ " a été supprimé pour le cours " + ownerCourse.getLabel() + ".");
+	}
+
+	@Override
+	public CourseSession findByCourseAndSessionRank(Long courseId, Long sessionRank) {
+		Course course = courseRepository.findOne(courseId);
+		return courseSessionRepository.findByOwnerCourseAndSessionRank(course, sessionRank);
 	}
 }

@@ -168,7 +168,7 @@ $(document)
 								    targetRender);
 							} else {
 							    $(targetRender)
-								    .append(
+								    .html(
 									    data);
 							    $('#ajaxMessage')
 								    .html(
