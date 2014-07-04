@@ -4,11 +4,14 @@ import java.io.Serializable;
 
 import org.joda.time.DateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import fr.iut.csid.empower.elearning.web.dto.OwnedDTO;
 
 /**
  * Objet tampon servant à la conversion Json -> Objet
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CourseSessionDTO implements Serializable, OwnedDTO<Long> {
 
 	private String label;
